@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">DidCard</string>
+    <string name="create_account">创建账号</string>
+
+    <!--    guide-->
+    <string name="guide_import_account">导入账号</string>
+
+    <!--    create_account-->
+    <string name="create_account_title">创建身份</string>
+    <string name="create_account_input_password">输入密码</string>
+    <string name="create_account_input_password_again">再次输入密码</string>
+</resources>
