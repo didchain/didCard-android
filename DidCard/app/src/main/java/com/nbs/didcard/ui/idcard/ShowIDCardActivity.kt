@@ -1,6 +1,6 @@
 package com.nbs.didcard.ui.idcard
 
-import com.gyf.barlibrary.ImmersionBar
+import android.os.Bundle
 import com.nbs.android.lib.base.BaseActivity
 import com.nbs.didcard.BR
 import com.nbs.didcard.R
@@ -12,7 +12,7 @@ import com.nbs.didcard.databinding.ActivityShowIdCardBinding
  *Description:
  */
 class ShowIDCardActivity : BaseActivity<ShowIDCardViewModel, ActivityShowIdCardBinding>() {
-    override fun getLayoutId(): Int = R.layout.activity_show_id_card
+    override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_show_id_card
 
     override fun initView() {
         mViewModel.title.set(getString(R.string.id_card_title))

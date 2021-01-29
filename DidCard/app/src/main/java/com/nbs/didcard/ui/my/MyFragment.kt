@@ -1,9 +1,8 @@
 package com.nbs.didcard.ui.my
 
-import android.util.Log
 import com.nbs.android.lib.base.BaseFragment
-import com.nbs.didcard.R
 import com.nbs.didcard.BR
+import com.nbs.didcard.R
 import com.nbs.didcard.databinding.FragmentMyBinding
 
 /**
@@ -15,7 +14,6 @@ class MyFragment:BaseFragment<MyViewModel,FragmentMyBinding>() {
     override fun getLayoutId(): Int = R.layout.fragment_my
 
     override fun initView() {
-        Log.d("!!!", "MyFragment: "+System.currentTimeMillis())
         mViewModel.title.set(getString(R.string.my))
     }
 

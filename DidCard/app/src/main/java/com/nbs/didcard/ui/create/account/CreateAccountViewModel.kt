@@ -21,8 +21,7 @@ class CreateAccountViewModel:BaseViewModel() {
         override fun call() {
             if(verifyPassword()){
                 toast("点击了创建按钮")
-                startActivity(SaveAccountActivity::class.java)
-                finish()
+                startActivityAndFinish(SaveAccountActivity::class.java)
             }
 
         }

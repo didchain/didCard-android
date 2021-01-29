@@ -2,15 +2,12 @@ package com.nbs.didcard.ui.scan
 
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.View
-import android.widget.TextView
-import androidx.annotation.NonNull
 import com.journeyapps.barcodescanner.BarcodeView
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.ViewfinderView
 import com.nbs.android.lib.base.BaseActivity
-import com.nbs.didcard.R
 import com.nbs.didcard.BR
+import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivityScanBinding
 import kotlinx.android.synthetic.main.activity_scan.*
 
@@ -21,13 +18,12 @@ import kotlinx.android.synthetic.main.activity_scan.*
  */
 class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
     lateinit var capture: CaptureManager
-    override fun getLayoutId(): Int = R.layout.activity_scan
     var bundle :Bundle?=null
-
-    override fun onContentViewBefor(savedInstanceState: Bundle?) {
-        super.onContentViewBefor(savedInstanceState)
+    override fun getLayoutId(savedInstanceState: Bundle?): Int {
         bundle = savedInstanceState
+        return R.layout.activity_scan
     }
+
     override fun initView() {
         mViewModel.title.set(getString(R.string.import_id))
         mViewModel.showBackImage.set(true)

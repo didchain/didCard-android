@@ -1,5 +1,6 @@
 package com.nbs.didcard.ui.main
 
+import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,7 +18,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val titles = arrayOf(R.string.main_home, R.string.main_my)
     private val icons = arrayOf(R.drawable.tab_home_selector, R.drawable.tab_my_selector)
 
-    override fun getLayoutId(): Int = R.layout.activity_main
+    override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_main
 
     override fun initView() {
         tablayout.setupWithViewPager(viewpager)

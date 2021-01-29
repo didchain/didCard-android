@@ -3,6 +3,7 @@ package com.nbs.android.lib.base
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -15,7 +16,6 @@ import com.kongzue.dialog.v3.WaitDialog
 import com.nbs.android.lib.R
 import com.nbs.android.lib.utils.AppManager
 import com.nbs.android.lib.utils.toast
-import java.lang.reflect.ParameterizedType
 
 /**
  * @description:
@@ -41,8 +41,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppManager.addActivity(this)
-        onContentViewBefor(savedInstanceState)
-        mDataBinding = DataBindingUtil.setContentView(this, getLayoutId())
+        mDataBinding = DataBindingUtil.setContentView(this, getLayoutId(savedInstanceState))
         mDataBinding.lifecycleOwner = this
         if (statusBarStyle() == STATUSBAR_STYLE_TRANSPARENT){
             ImmersionBar.with(this).transparentBar().statusBarDarkFont(true).init()
@@ -51,7 +50,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
         }else if(statusBarStyle() == STATUSBAR_STYLE_GRAY){
             ImmersionBar.with(this).statusBarColor(R.color.color_f8f8f9).statusBarDarkFont(true).fitsSystemWindows(true).init()
         }
-            lifecycle.addObserver(mViewModel)
+        lifecycle.addObserver(mViewModel)
         viewModelId = initVariableId()
         mDataBinding.setVariable(viewModelId, mViewModel)
         registorUIChangeLiveDataCallBack()
@@ -60,7 +59,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
         initObserve()
     }
 
-    abstract fun getLayoutId(): Int
+    abstract fun getLayoutId(savedInstanceState: Bundle?): Int
 
     abstract fun initView()
 
@@ -69,7 +68,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
     abstract fun statusBarStyle(): Int
 
     abstract fun initVariableId(): Int
-    protected open fun onContentViewBefor(savedInstanceState: Bundle?) {}
 
     open fun <T : ViewModel> createViewModel(cls: Class<T>): T {
         return ViewModelProvider(this).get(cls)
@@ -100,7 +98,11 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
         mViewModel.uc.startActivityEvent.observe(this, Observer { params ->
             val clz = params[ParameterField.CLASS] as Class<*>
             val bundle = params[ParameterField.BUNDLE] as Bundle?
+            val finishActivity = params[ParameterField.FINISH] as Boolean
             startActivity(clz, bundle)
+            if(finishActivity){
+                finish()
+            }
         })
 
         mViewModel.uc.startWebActivityEvent.observe(this, Observer { url ->

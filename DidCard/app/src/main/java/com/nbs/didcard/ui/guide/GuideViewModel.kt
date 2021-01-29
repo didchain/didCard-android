@@ -16,8 +16,7 @@ class GuideViewModel : BaseViewModel() {
     val clickCreate = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             toast("点击了创建按钮")
-            startActivity(CreateAccountActivity::class.java)
-            finish()
+            startActivityAndFinish(CreateAccountActivity::class.java)
         }
     })
     val clickImport = BindingCommand<Any>(object : BindingAction {

@@ -1,9 +1,9 @@
 package com.nbs.didcard.ui.idmanager
 
-import com.gyf.barlibrary.ImmersionBar
+import android.os.Bundle
 import com.nbs.android.lib.base.BaseActivity
-import com.nbs.didcard.R
 import com.nbs.didcard.BR
+import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivityUpdatePasswordBinding
 
 /**
@@ -12,7 +12,7 @@ import com.nbs.didcard.databinding.ActivityUpdatePasswordBinding
  *Description:
  */
 class UpdatePasswordActivity:BaseActivity<UpdatePasswordViewModel,ActivityUpdatePasswordBinding>() {
-    override fun getLayoutId(): Int = R.layout.activity_update_password
+    override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_update_password
 
     override fun initView() {
         mViewModel.title.set(getString(R.string.id_card_manager_update_password))

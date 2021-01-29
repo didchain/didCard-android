@@ -17,7 +17,6 @@ object AppManager {
 
     fun removeActivity(activity: Activity) {
         hideSoftKeyBoard(activity)
-        activity.finish()
         mActivities.remove(activity)
     }
 

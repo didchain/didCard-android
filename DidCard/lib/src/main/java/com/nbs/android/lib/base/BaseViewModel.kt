@@ -94,7 +94,11 @@ abstract class BaseViewModel: ViewModel(), IBaseViewModel {
      * @param clz 所跳转的目的Activity类
      */
     open fun startActivity(clz: Class<*>) {
-        startActivity(clz, null)
+        startActivity(clz, null,false)
+    }
+
+    open fun startActivityAndFinish(clz: Class<*>) {
+        startActivity(clz, null,true)
     }
 
     /**
@@ -103,9 +107,10 @@ abstract class BaseViewModel: ViewModel(), IBaseViewModel {
      * @param clz    所跳转的目的Activity类
      * @param bundle 跳转所携带的信息
      */
-    open fun startActivity(clz: Class<*>, bundle: Bundle?) {
+    open fun startActivity(clz: Class<*>, bundle: Bundle?,finish:Boolean=false) {
         val params: MutableMap<String, Any> = HashMap()
         params[ParameterField.CLASS] = clz
+        params[ParameterField.FINISH] = finish
         if (bundle != null) {
             params[ParameterField.BUNDLE] = bundle
         }
@@ -151,6 +156,7 @@ abstract class BaseViewModel: ViewModel(), IBaseViewModel {
         val startActivityEvent: SingleLiveEvent<Map<String, Any>> by lazy {
             SingleLiveEvent<Map<String, Any>>()
         }
+
         val startWebActivityEvent: SingleLiveEvent<String> by lazy {
             SingleLiveEvent<String>()
         }
@@ -204,5 +210,6 @@ abstract class BaseViewModel: ViewModel(), IBaseViewModel {
 object ParameterField {
     var CLASS = "CLASS"
     var BUNDLE = "BUNDLE"
+    var FINISH = "FINISH"
 }
 

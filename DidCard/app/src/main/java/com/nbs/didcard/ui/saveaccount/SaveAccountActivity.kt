@@ -2,7 +2,9 @@ package com.nbs.didcard.ui.saveaccount
 
 import android.Manifest
 import android.content.Intent
+import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.nbs.android.lib.base.BaseActivity
 import com.nbs.android.lib.utils.toast
@@ -21,7 +23,7 @@ import pub.devrel.easypermissions.EasyPermissions
  */
 class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccountBinding>() {
 
-    override fun getLayoutId(): Int = R.layout.activity_save_account
+    override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_save_account
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_GRAY
     override fun initVariableId(): Int = BR.viewModel
 
@@ -78,4 +80,8 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
         get() = createViewModel(SaveAccountViewModel::class.java)
 
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("!!!", "onDestroy: ")
+    }
 }

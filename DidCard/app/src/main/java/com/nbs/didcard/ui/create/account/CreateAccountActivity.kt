@@ -1,6 +1,6 @@
 package com.nbs.didcard.ui.create.account
 
-import com.gyf.barlibrary.ImmersionBar
+import android.os.Bundle
 import com.nbs.android.lib.base.BaseActivity
 import com.nbs.didcard.BR
 import com.nbs.didcard.R
@@ -12,7 +12,7 @@ import com.nbs.didcard.databinding.ActivityCreateAccountBinding
  *Description:
  */
 class CreateAccountActivity:BaseActivity<CreateAccountViewModel,ActivityCreateAccountBinding>() {
-    override fun getLayoutId(): Int = R.layout.activity_create_account
+    override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_create_account
 
     override fun initView() {
     }

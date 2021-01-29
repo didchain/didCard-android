@@ -1,6 +1,5 @@
 package com.nbs.didcard.ui.saveaccount
 
-import android.util.Log
 import com.nbs.android.lib.base.BaseViewModel
 import com.nbs.android.lib.command.BindingAction
 import com.nbs.android.lib.command.BindingCommand
@@ -25,10 +24,7 @@ class SaveAccountViewModel:BaseViewModel() {
 
     val clickSkip = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            showToast("跳过")
-            Log.d("!!!", "initView: "+System.currentTimeMillis())
-            startActivity(MainActivity::class.java)
-            finish()
+            startActivityAndFinish(MainActivity::class.java)
         }
     })
 
