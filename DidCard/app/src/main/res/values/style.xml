@@ -9,17 +9,33 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_marginStart">@dimen/margin_start</item>
         <item name="android:layout_marginEnd">@dimen/margin_end</item>
-        <item name="layout_constraintStart_toStartOf">parent</item>
-        <item name="layout_constraintEnd_toEndOf">parent</item>
     </style>
 
     <style name="YellowButtonStyle" parent="ButtonStyle">
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
         <item name="android:textColor">@color/color_0c123d</item>
         <item name="android:background">@drawable/button_bg_yellow</item>
     </style>
 
     <style name="NavyBlueButtonStyle" parent="ButtonStyle">
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
         <item name="android:textColor">@color/yellow</item>
+        <item name="android:background">@drawable/button_bg_0c123d</item>
+    </style>
+
+    <style name="IdCardYellowButtonStyle" parent="ButtonStyle">
+        <item name="android:textColor">@color/color_0c123d</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_marginStart">26dp</item>
+        <item name="android:background">@drawable/button_bg_yellow</item>
+    </style>
+
+    <style name="IdNavyBlueButtonStyle" parent="ButtonStyle">
+        <item name="android:textColor">@color/yellow</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:titleMarginEnd">26dp</item>
         <item name="android:background">@drawable/button_bg_0c123d</item>
     </style>
 
@@ -38,7 +54,82 @@
         <item name="layout_constraintStart_toStartOf">parent</item>
         <item name="layout_constraintEnd_toEndOf">parent</item>
     </style>
+
     <style name="PasswordEditTextStyle" parent="EditTextStyle">
         <item name="android:inputType">textPassword</item>
+    </style>
+
+    <style name="CardViewStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_start</item>
+        <item name="android:layout_marginEnd">@dimen/margin_end</item>
+        <item name="cardCornerRadius">@dimen/card_radius</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="TextViewStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/color_0c123d</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="IdCardManagerTextViewStyle" parent="TextViewStyle">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:drawableEnd">@drawable/arrow_right</item>
+        <item name="android:drawableBottom">@drawable/split_line</item>
+    </style>
+
+
+    <style name="MyTextViewStyle" parent="TextViewStyle">
+        <item name="android:layout_height">42dp</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+    </style>
+
+
+    <style name="MyTextViewTitleStyle" parent="TextViewStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_9b9c9f</item>
+    </style>
+
+    <style name="MyTextViewDrawBottomStyle" parent="TextViewStyle">
+        <item name="android:layout_height">42dp</item>
+        <item name="android:drawableBottom">@drawable/split_line</item>
+    </style>
+
+    <style name="MyTextViewShowArrowStyle" parent="TextViewStyle">
+        <item name="android:layout_height">42dp</item>
+        <item name="android:drawableBottom">@drawable/split_line</item>
+        <item name="android:drawableEnd">@drawable/arrow_right</item>
+    </style>
+
+    <style name="MyConstantLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingTop">14dp</item>
+    </style>
+
+    <style name="MySwitchStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/switch_bg</item>
+        <item name="trackTint">@android:color/transparent</item>
+        <item name="showText">false</item>
+        <item name="thumbTint">@color/white</item>
+        <item name="thumbTintMode">multiply</item>
+        <item name="splitTrack">false</item>
     </style>
 </resources>

@@ -1,12 +1,76 @@
 <resources>
-    <string name="app_name">DidCard</string>
+    <string name="app_name">区块链身份证</string>
     <string name="create_account">创建账号</string>
+    <string name="sure">确定</string>
+    <string name="my">我的</string>
+    <string name="tip">提示</string>
+    <string name="request_write_external_permission">获取相册读写权限</string>
+    <string name="password_different">两次密码不一致</string>
+    <string name="import_id">导入身份证</string>
+    <string name="import_album">相册</string>
 
+    <!--    home-->
+    <string name="main_home">首页</string>
+    <string name="main_my">我的</string>
+    <string name="main_id_card">身份证号:</string>
+    <string name="main_id_card_qr">身份证二维码</string>
     <!--    guide-->
     <string name="guide_import_account">导入账号</string>
 
     <!--    create_account-->
     <string name="create_account_title">创建身份</string>
-    <string name="create_account_input_password">输入密码</string>
-    <string name="create_account_input_password_again">再次输入密码</string>
+    <string name="create_account_input_password">请输入密码</string>
+    <string name="create_account_input_password_again">请再次输入密码</string>
+
+    <!--    update password-->
+    <string name="update_password_input_old_password">输入旧密码</string>
+    <string name="update_password_input_new_password">输入新密码</string>
+    <string name="update_password_input_confirm_password">再次输入新密码</string>
+
+    <!--    authorization-->
+    <string name="authorization_address">被授权人地址</string>
+    <string name="authorization_service_title">可服务列表</string>
+    <string name="authorization_add">添加</string>
+
+    <!--    id_card-->
+    <string name="id_card_title">身份证号</string>
+    <string name="id_card_share">分享</string>
+    <string name="id_card_save">保存</string>
+
+    <!--    id_card_manager-->
+    <string name="id_card_manager_new">新建身份证</string>
+    <string name="id_card_manager_import">导入身份证QR</string>
+    <string name="id_card_manager_export">导出身份证QR</string>
+    <string name="id_card_manager_update_password">修改密码</string>
+    <string name="id_card_manager_show">查看身份文件</string>
+
+
+    <!--    my-->
+    <string name="my_name">姓名：</string>
+    <string name="my_id_card">身份证号：</string>
+    <string name="my_authorization">授权他人：</string>
+    <string name="my_status">状态</string>
+    <string name="my_not_certified">未认证</string>
+    <string name="my_certified">已认证</string>
+    <string name="my_identity_management">身份管理</string>
+    <string name="my_no_secret">免密</string>
+    <string name="my_fingerprint">指纹识别</string>
+    <string name="my_face_id">Face ID</string>
+    <string name="my_customer_service">客服</string>
+    <string name="my_feed_back">意见反馈</string>
+    <string name="my_about">关于我们</string>
+    <string name="my_help">帮助</string>
+
+    <!--    save_account-->
+    <string name="save_account_des">删除APP\n无密码\n与比特币钱包一致\n丢失将无法找回</string>
+    <string name="save_account">备份到相册</string>
+    <string name="save_account_skip">跳过</string>
+    <string name="save_account_line">-</string>
+    <!--    home-->
+    <string name="home_service">便民服务</string>
+    <string name="home_notice">公告</string>
+    <string name="home_registered">挂号预约</string>
+    <string name="home_hotel">酒店预约</string>
+
+
 </resources>

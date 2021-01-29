@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="card_radius">8dp</dimen>
+    <dimen name="button_bg_radius">8dp</dimen>
+    <dimen name="edit_text_bg_radius">8dp</dimen>
+
     <dimen name="button_height">48dp</dimen>
+    <dimen name="input_height">48dp</dimen>
+
     <dimen name="margin_start">18dp</dimen>
     <dimen name="margin_end">18dp</dimen>
-    <dimen name="input_height">48dp</dimen>
-    <dimen name="edit_text_bg_radius">8dp</dimen>
-    <dimen name="button_bg_radius">8dp</dimen>
+
     <dimen name="padding_start">16dp</dimen>
     <dimen name="padding_end">16dp</dimen>
 </resources>

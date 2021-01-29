@@ -1,50 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="Autofill,MissingConstraints,contentDescription">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="48dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="@dimen/margin_start"
-        android:layout_marginTop="63dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
+        <variable
+            name="viewModel"
+            type="com.nbs.didcard.ui.create.account.CreateAccountViewModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_start"
-        android:text="@string/create_account_title"
-        android:textColor="@color/color_0c123d"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:ignore="Autofill,MissingConstraints,contentDescription">
 
-    <EditText
-        android:id="@+id/password"
-        style="@style/PasswordEditTextStyle"
-        android:layout_marginTop="16dp"
-        android:hint="@string/create_account_input_password"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-         />
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_start"
+            android:layout_marginTop="63dp"
+            android:src="@drawable/logo_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/confirmPassword"
-        style="@style/PasswordEditTextStyle"
-        android:layout_marginTop="16dp"
-        android:hint="@string/create_account_input_password_again"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_start"
+            android:layout_marginTop="16dp"
+            android:text="@string/create_account_title"
+            android:textColor="@color/color_0c123d"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/icon" />
 
-    <TextView
-        style="@style/YellowButtonStyle"
-        android:layout_marginTop="16dp"
-        android:text="@string/create_account"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPassword"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/password"
+            style="@style/PasswordEditTextStyle"
+            android:layout_marginTop="16dp"
+            android:text="@={viewModel.password}"
+            android:hint="@string/create_account_input_password"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <EditText
+            android:id="@+id/confirmPassword"
+            style="@style/PasswordEditTextStyle"
+            android:layout_marginTop="16dp"
+            android:text="@={viewModel.confirmPassword}"
+            android:hint="@string/create_account_input_password_again"
+            app:layout_constraintTop_toBottomOf="@+id/password" />
+
+        <TextView
+            style="@style/YellowButtonStyle"
+            android:layout_marginTop="16dp"
+            onClickCommand="@{viewModel.clickCreate}"
+            android:text="@string/create_account"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

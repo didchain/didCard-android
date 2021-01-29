@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nbs.didcard.ui.idmanager.IDCardManagerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:ignore="MissingConstraints">
+
+        <include
+            android:id="@+id/title_layout"
+            layout="@layout/layout_title"
+            app:viewModel="@{viewModel}" />
+
+        <TextView
+            android:id="@+id/newIdCard"
+            style="@style/IdCardManagerTextViewStyle"
+            onClickCommand="@{viewModel.clickNewIdCard}"
+            android:text="@string/id_card_manager_new"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
+        <TextView
+            android:id="@+id/importIdCard"
+            style="@style/IdCardManagerTextViewStyle"
+            onClickCommand="@{viewModel.clickImport}"
+            android:text="@string/id_card_manager_import"
+            app:layout_constraintTop_toBottomOf="@+id/newIdCard" />
+
+        <TextView
+            android:id="@+id/exportIdCard"
+            style="@style/IdCardManagerTextViewStyle"
+            onClickCommand="@{viewModel.clickExport}"
+            android:text="@string/id_card_manager_export"
+            app:layout_constraintTop_toBottomOf="@+id/importIdCard" />
+
+        <TextView
+            android:id="@+id/updatePassword"
+            style="@style/IdCardManagerTextViewStyle"
+            onClickCommand="@{viewModel.clickUpdatePassword}"
+            android:text="@string/id_card_manager_update_password"
+            app:layout_constraintTop_toBottomOf="@+id/exportIdCard" />
+
+        <TextView
+            android:id="@+id/showIdCard"
+            style="@style/IdCardManagerTextViewStyle"
+            onClickCommand="@{viewModel.clickShowIdCard}"
+            android:text="@string/id_card_manager_show"
+            app:layout_constraintTop_toBottomOf="@+id/updatePassword" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

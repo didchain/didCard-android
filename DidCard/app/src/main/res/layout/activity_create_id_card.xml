@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="Autofill,MissingConstraints"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.nbs.didcard.ui.create.account.CreateAccountViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+       >
+        <include
+            layout="@layout/layout_title"
+            app:viewModel="@{viewModel}"
+            android:id="@+id/title_layout" />
+        <EditText
+            android:id="@+id/password"
+            style="@style/PasswordEditTextStyle"
+            android:text="@={viewModel.password}"
+            android:layout_marginTop="16dp"
+            android:hint="@string/create_account_input_password"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            />
+
+        <EditText
+            android:id="@+id/confirmPassword"
+            style="@style/PasswordEditTextStyle"
+            android:layout_marginTop="16dp"
+            android:text="@={viewModel.confirmPassword}"
+            android:hint="@string/create_account_input_password_again"
+            app:layout_constraintTop_toBottomOf="@+id/password" />
+
+        <TextView
+            style="@style/YellowButtonStyle"
+            android:layout_marginTop="16dp"
+            onClickCommand="@{viewModel.clickCreate}"
+            android:text="@string/create_account"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
