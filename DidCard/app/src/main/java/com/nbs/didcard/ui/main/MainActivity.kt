@@ -12,14 +12,16 @@ import com.nbs.didcard.databinding.ActivityMainBinding
 import com.nbs.didcard.ui.home.HomeFragment
 import com.nbs.didcard.ui.my.MyFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
+
     val fragments = arrayListOf<Fragment>()
     private val titles = arrayOf(R.string.main_home, R.string.main_my)
     private val icons = arrayOf(R.drawable.tab_home_selector, R.drawable.tab_my_selector)
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_main
-
+    override val mViewModel: MainViewModel by inject()
     override fun initView() {
         tablayout.setupWithViewPager(viewpager)
 
@@ -58,7 +60,5 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         return view
     }
 
-    override val mViewModel: MainViewModel
-        get() = createViewModel(MainViewModel::class.java)
 
 }

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.nbs.didcard.ui.create.account.CreateAccountViewModel" />
@@ -14,20 +15,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-       >
+        android:background="@color/white">
+
         <include
-            layout="@layout/layout_title"
+            layout="@layout/title_layout"
             app:viewModel="@{viewModel}"
-            android:id="@+id/title_layout" />
+            android:id="@+id/titleLayout" />
+
         <EditText
             android:id="@+id/password"
             style="@style/PasswordEditTextStyle"
             android:text="@={viewModel.password}"
             android:layout_marginTop="16dp"
             android:hint="@string/create_account_input_password"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/titleLayout" />
 
         <EditText
             android:id="@+id/confirmPassword"

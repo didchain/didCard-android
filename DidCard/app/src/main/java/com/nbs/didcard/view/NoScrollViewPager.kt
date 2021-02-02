@@ -7,8 +7,6 @@ import android.view.MotionEvent
 import androidx.viewpager.widget.ViewPager
 
 
-
-
 /**
  *Author:Mr'x
  *Time:

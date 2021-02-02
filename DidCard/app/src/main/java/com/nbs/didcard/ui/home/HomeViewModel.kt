@@ -15,16 +15,41 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding
  *Time:
  *Description:
  */
-class HomeViewModel:BaseViewModel() {
+class HomeViewModel : BaseViewModel() {
     val id = ObservableField<String>("130423199000900934")
 
     val items: ObservableList<HomeItemViewModel> = ObservableArrayList()
     val itemBinding = ItemBinding.of<HomeItemViewModel>(BR.item, R.layout.item_service)
+
     init {
 
-        items.add(HomeItemViewModel(this, ServiceBean(DidCardApp.instance.getString(R.string.home_notice),R.drawable.notice_icon)))
-        items.add(HomeItemViewModel(this, ServiceBean(DidCardApp.instance.getString(R.string.home_registered),R.drawable.hospital_icon)))
-        items.add(HomeItemViewModel(this, ServiceBean(DidCardApp.instance.getString(R.string.home_hotel),R.drawable.hotel_icon)))
+        items.add(
+            HomeItemViewModel(
+                this,
+                ServiceBean(
+                    DidCardApp.instance.getString(R.string.home_notice),
+                    R.drawable.notice_icon
+                )
+            )
+        )
+        items.add(
+            HomeItemViewModel(
+                this,
+                ServiceBean(
+                    DidCardApp.instance.getString(R.string.home_registered),
+                    R.drawable.hospital_icon
+                )
+            )
+        )
+        items.add(
+            HomeItemViewModel(
+                this,
+                ServiceBean(
+                    DidCardApp.instance.getString(R.string.home_hotel),
+                    R.drawable.hotel_icon
+                )
+            )
+        )
     }
 
 }

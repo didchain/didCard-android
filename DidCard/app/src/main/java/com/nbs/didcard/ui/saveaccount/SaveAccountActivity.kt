@@ -12,6 +12,7 @@ import com.nbs.didcard.BR
 import com.nbs.didcard.Constants
 import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivitySaveAccountBinding
+import org.koin.android.ext.android.inject
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -26,6 +27,7 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_save_account
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_GRAY
     override fun initVariableId(): Int = BR.viewModel
+    override val mViewModel: SaveAccountViewModel by inject()
 
     override fun initView() {
     }
@@ -76,12 +78,11 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
         toast("授权了写权限")
     }
 
-    override val mViewModel: SaveAccountViewModel
-        get() = createViewModel(SaveAccountViewModel::class.java)
-
 
     override fun onDestroy() {
         super.onDestroy()
         Log.d("!!!", "onDestroy: ")
     }
+
+
 }

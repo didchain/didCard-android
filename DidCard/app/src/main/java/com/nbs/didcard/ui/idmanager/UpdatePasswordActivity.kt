@@ -5,15 +5,18 @@ import com.nbs.android.lib.base.BaseActivity
 import com.nbs.didcard.BR
 import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivityUpdatePasswordBinding
+import org.koin.android.ext.android.inject
 
 /**
  *Author:Mr'x
  *Time:
  *Description:
  */
-class UpdatePasswordActivity:BaseActivity<UpdatePasswordViewModel,ActivityUpdatePasswordBinding>() {
-    override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_update_password
+class UpdatePasswordActivity :
+    BaseActivity<UpdatePasswordViewModel, ActivityUpdatePasswordBinding>() {
 
+    override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_update_password
+    override val mViewModel: UpdatePasswordViewModel by inject()
     override fun initView() {
         mViewModel.title.set(getString(R.string.id_card_manager_update_password))
         mViewModel.showBackImage.set(true)
@@ -27,6 +30,5 @@ class UpdatePasswordActivity:BaseActivity<UpdatePasswordViewModel,ActivityUpdate
 
     override fun initVariableId(): Int = BR.viewModel
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_WHITE
-    override val mViewModel: UpdatePasswordViewModel
-        get() = createViewModel(UpdatePasswordViewModel::class.java)
+
 }

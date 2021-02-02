@@ -11,7 +11,7 @@ import com.nbs.didcard.ui.idcard.ShowIDCardActivity
  *Time:
  *Description:
  */
-class IDCardManagerViewModel:BaseViewModel() {
+class IDCardManagerViewModel : BaseViewModel() {
 
     val clickNewIdCard = BindingCommand<Any>(object : BindingAction {
         override fun call() {

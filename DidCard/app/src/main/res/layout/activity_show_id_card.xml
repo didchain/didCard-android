@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.nbs.didcard.ui.idcard.ShowIDCardViewModel" />
@@ -15,13 +16,15 @@
         android:layout_height="match_parent"
         android:background="@color/color_f8f8f9"
         tools:ignore="MissingConstraints">
+
         <include
-            layout="@layout/layout_title"
+            layout="@layout/title_layout"
             app:viewModel="@{viewModel}"
-            android:id="@+id/title_layout" />
+            android:id="@+id/titleLayout" />
+
         <androidx.cardview.widget.CardView
             style="@style/CardViewStyle"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            app:layout_constraintTop_toBottomOf="@+id/titleLayout"
             android:layout_marginTop="72dp"
             android:layout_marginStart="44dp"
             android:layout_marginEnd="44dp">
@@ -51,11 +54,13 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_0c123d"
                     android:textSize="17sp" />
+
                 <View
                     android:layout_width="match_parent"
                     android:background="@color/color_f0f1f3"
                     android:layout_marginTop="13dp"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp" />
+
                 <com.nbs.didcard.view.QRImageView
                     android:id="@+id/idQR"
                     android:layout_marginTop="24dp"

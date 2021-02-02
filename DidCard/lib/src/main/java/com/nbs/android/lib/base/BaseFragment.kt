@@ -27,11 +27,12 @@ import java.lang.reflect.ParameterizedType
  * @date :   2020/11/3 9:21 AM
  */
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment() {
-    protected abstract val mViewModel: VM
+
     protected lateinit var mDatabinding: DB
     lateinit var mActivity: AppCompatActivity
     private  var dialog: TipDialog? = null
     private var isShown = false
+    protected abstract val mViewModel: VM
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

@@ -14,11 +14,11 @@ class ShowIDCardViewModel : BaseViewModel() {
     val idCard = ObservableField<String>()
     val clickShare = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-                showToast("点击了分享")
+            showToast("点击了分享")
         }
     })
 
-    val clickSave= BindingCommand<Any>(object : BindingAction {
+    val clickSave = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             showToast("点击了保存")
         }

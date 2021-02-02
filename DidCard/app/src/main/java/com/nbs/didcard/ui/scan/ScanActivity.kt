@@ -10,6 +10,7 @@ import com.nbs.didcard.BR
 import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivityScanBinding
 import kotlinx.android.synthetic.main.activity_scan.*
+import org.koin.android.ext.android.inject
 
 /**
  *Author:Mr'x
@@ -17,20 +18,22 @@ import kotlinx.android.synthetic.main.activity_scan.*
  *Description:
  */
 class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
-    lateinit var capture: CaptureManager
-    var bundle :Bundle?=null
+
+    val capture: CaptureManager by lazy { CaptureManager(this, zxing_barcode_scanner) }
+    var bundle: Bundle? = null
     override fun getLayoutId(savedInstanceState: Bundle?): Int {
         bundle = savedInstanceState
         return R.layout.activity_scan
     }
+
+    override val mViewModel: ScanViewModel by inject()
 
     override fun initView() {
         mViewModel.title.set(getString(R.string.import_id))
         mViewModel.showBackImage.set(true)
         mViewModel.showRightText.set(true)
         mViewModel.rightText.set(getString(R.string.import_album))
-        title_layout.setBackgroundColor(resources.getColor(R.color.white,null))
-        capture = CaptureManager(this, zxing_barcode_scanner)
+        titleLayout.setBackgroundColor(resources.getColor(R.color.white, null))
         capture.initializeFromIntent(intent, bundle)
         capture.decode()
         zxing_barcode_scanner.findViewById<ViewfinderView>(R.id.zxing_viewfinder_view)
@@ -69,7 +72,11 @@ class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         capture.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
@@ -78,6 +85,5 @@ class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
         return zxing_barcode_scanner.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)
     }
 
-    override val mViewModel: ScanViewModel
-        get() = createViewModel(ScanViewModel::class.java)
+
 }

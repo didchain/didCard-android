@@ -17,8 +17,8 @@
         tools:ignore="MissingConstraints">
 
         <include
-            android:id="@+id/title_layout"
-            layout="@layout/layout_title"
+            android:id="@+id/titleLayout"
+            layout="@layout/title_layout"
             app:viewModel="@{viewModel}" />
 
         <TextView
@@ -26,7 +26,7 @@
             style="@style/IdCardManagerTextViewStyle"
             onClickCommand="@{viewModel.clickNewIdCard}"
             android:text="@string/id_card_manager_new"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/titleLayout" />
 
         <TextView
             android:id="@+id/importIdCard"

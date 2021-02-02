@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.nbs.didcard.ui.saveaccount.SaveAccountViewModel" />
@@ -26,6 +27,7 @@
             android:layout_marginStart="35dp"
             android:layout_height="wrap_content"
             app:drawableTopCompat="@drawable/tip_img" />
+
         <TextView
             android:id="@+id/des"
             app:layout_constraintTop_toBottomOf="@+id/tip"
@@ -37,7 +39,8 @@
             android:textColor="@color/color_0c123d"
             android:textSize="24sp"
             android:text="@string/save_account_des"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             app:layout_constraintEnd_toStartOf="@+id/des"
             android:layout_width="wrap_content"
@@ -46,7 +49,8 @@
             app:layout_constraintTop_toBottomOf="@+id/tip"
             android:textSize="24sp"
             android:textColor="@color/yellow"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/saveToAlbum"
             android:text="@string/save_account"

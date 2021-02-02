@@ -71,6 +71,7 @@
     <string name="home_notice">公告</string>
     <string name="home_registered">挂号预约</string>
     <string name="home_hotel">酒店预约</string>
+    <string name="create_account_tip">提示：\n本身份为区块链身份系统，创建时无需网络无需验证，\n无密码找回功能</string>
 
 
 </resources>

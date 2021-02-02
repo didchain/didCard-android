@@ -4,15 +4,17 @@ import com.nbs.android.lib.base.BaseFragment
 import com.nbs.didcard.BR
 import com.nbs.didcard.R
 import com.nbs.didcard.databinding.FragmentMyBinding
+import org.koin.android.ext.android.inject
 
 /**
  *Author:Mr'x
  *Time:
  *Description:
  */
-class MyFragment:BaseFragment<MyViewModel,FragmentMyBinding>() {
-    override fun getLayoutId(): Int = R.layout.fragment_my
+class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
+    override fun getLayoutId(): Int = R.layout.fragment_my
+    override val mViewModel: MyViewModel by inject()
     override fun initView() {
         mViewModel.title.set(getString(R.string.my))
     }
@@ -25,6 +27,5 @@ class MyFragment:BaseFragment<MyViewModel,FragmentMyBinding>() {
     override fun initObserve() {
     }
 
-    override val mViewModel: MyViewModel
-        get() = createViewModel(MyViewModel::class.java)
+
 }

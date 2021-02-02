@@ -8,5 +8,6 @@ import com.nbs.didcard.bean.ServiceBean
  *Time:
  *Description:
  */
-class HomeItemViewModel(viewModel: HomeViewModel, val serviceBean: ServiceBean) : ItemViewModel<HomeViewModel>(viewModel) {
+class HomeItemViewModel(viewModel: HomeViewModel, val serviceBean: ServiceBean) :
+    ItemViewModel<HomeViewModel>(viewModel) {
 }

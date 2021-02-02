@@ -10,7 +10,7 @@ import com.nbs.didcard.ui.idmanager.IDCardManagerActivity
  *Time:
  *Description:
  */
-class MyViewModel:BaseViewModel() {
+class MyViewModel : BaseViewModel() {
 
     val clickIDCardManager = BindingCommand<Any>(object : BindingAction {
         override fun call() {

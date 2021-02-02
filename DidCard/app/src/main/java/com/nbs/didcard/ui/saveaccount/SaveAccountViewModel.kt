@@ -11,7 +11,7 @@ import com.nbs.didcard.ui.main.MainActivity
  *Time:
  *Description:
  */
-class SaveAccountViewModel:BaseViewModel() {
+class SaveAccountViewModel : BaseViewModel() {
     val saveAlbumEvent = SingleLiveEvent<Any>()
     val clickSaveAlbum = BindingCommand<Any>(object : BindingAction {
         override fun call() {
@@ -28,7 +28,7 @@ class SaveAccountViewModel:BaseViewModel() {
         }
     })
 
-    fun saveAlbum(){
+    fun saveAlbum() {
 //        BitmapUtils.saveBitmapToAlbum()
     }
 }

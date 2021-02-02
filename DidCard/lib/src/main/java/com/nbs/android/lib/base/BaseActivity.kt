@@ -16,6 +16,8 @@ import com.kongzue.dialog.v3.WaitDialog
 import com.nbs.android.lib.R
 import com.nbs.android.lib.utils.AppManager
 import com.nbs.android.lib.utils.toast
+import org.koin.android.ext.android.inject
+import java.lang.reflect.ParameterizedType
 
 /**
  * @description:
@@ -24,19 +26,14 @@ import com.nbs.android.lib.utils.toast
  */
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompatActivity() {
     val TAG = this.javaClass.name
-    protected lateinit var mDataBinding: DB
+    protected  lateinit var mDataBinding: DB
     private var viewModelId = 0
     protected var dialog: TipDialog? = null
     protected val STATUSBAR_STYLE_TRANSPARENT = 1
     protected val STATUSBAR_STYLE_WHITE = 2
     protected val STATUSBAR_STYLE_GRAY = 3
 
-    protected abstract val mViewModel: VM
-
-//    protected val mViewModel: VM by lazy {
-//        val types = (this.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments
-//        createViewModel(types[0] as Class<VM>)
-//    }
+    protected abstract val mViewModel :VM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

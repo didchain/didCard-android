@@ -10,7 +10,7 @@ import com.nbs.didcard.ui.scan.ScanActivity
  *Time:
  *Description:
  */
-class MainViewModel:BaseViewModel() {
+class MainViewModel : BaseViewModel() {
     val clickQR = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             startActivity(ScanActivity::class.java)

@@ -5,6 +5,7 @@ import com.nbs.android.lib.base.BaseActivity
 import com.nbs.didcard.BR
 import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivityShowIdCardBinding
+import org.koin.android.ext.android.inject
 
 /**
  *Author:Mr'x
@@ -12,7 +13,9 @@ import com.nbs.didcard.databinding.ActivityShowIdCardBinding
  *Description:
  */
 class ShowIDCardActivity : BaseActivity<ShowIDCardViewModel, ActivityShowIdCardBinding>() {
+
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_show_id_card
+    override val mViewModel: ShowIDCardViewModel by inject()
 
     override fun initView() {
         mViewModel.title.set(getString(R.string.id_card_title))
@@ -27,6 +30,5 @@ class ShowIDCardActivity : BaseActivity<ShowIDCardViewModel, ActivityShowIdCardB
 
     override fun initVariableId(): Int = BR.viewModel
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_GRAY
-    override val mViewModel: ShowIDCardViewModel
-        get() = createViewModel(ShowIDCardViewModel::class.java)
+
 }
