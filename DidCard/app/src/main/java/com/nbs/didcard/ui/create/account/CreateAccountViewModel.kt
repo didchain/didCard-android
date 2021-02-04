@@ -24,9 +24,11 @@ CreateAccountViewModel : BaseViewModel() {
     val clickCreate = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             if (verifyPassword()) {
+                showDialog(R.string.loading)
                 toast("点击了创建按钮")
 //                name = "xixixi"
                 startActivityAndFinish(SaveAccountActivity::class.java)
+//                dismissDialog()
             }
 
         }

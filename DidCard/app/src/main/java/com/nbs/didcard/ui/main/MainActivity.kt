@@ -22,14 +22,16 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_main
     override val mViewModel: MainViewModel by inject()
+    val myFragment by inject<MyFragment>()
+    val homeFragment by inject<HomeFragment>()
     override fun initView() {
         tablayout.setupWithViewPager(viewpager)
 
     }
 
     override fun initData() {
-        fragments.add(HomeFragment())
-        fragments.add(MyFragment())
+        fragments.add(homeFragment)
+        fragments.add(myFragment)
         viewpager.adapter = MainPagerAdapter(supportFragmentManager, fragments)
         tablayout.setupWithViewPager(viewpager, false)
 

@@ -2,9 +2,9 @@ package com.nbs.android.lib.base
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.kongzue.dialog.v3.TipDialog
-import com.kongzue.dialog.v3.WaitDialog
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
+import com.lxj.xpopup.impl.LoadingPopupView
 import com.nbs.android.lib.R
 import com.nbs.android.lib.utils.toast
-import java.lang.reflect.ParameterizedType
 
 /**
  * @description:
@@ -30,7 +30,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
 
     protected lateinit var mDatabinding: DB
     lateinit var mActivity: AppCompatActivity
-    private  var dialog: TipDialog? = null
+    private  lateinit var loadingDialog: LoadingPopupView
     private var isShown = false
     protected abstract val mViewModel: VM
 
@@ -157,15 +157,21 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
         showDialog(getString(titleId))
     }
     fun showDialog(title:String){
-        dismissDialog()
-        dialog= WaitDialog.show(mActivity,title)
-        dialog?.cancelable = false
+        if(this::loadingDialog.isInitialized && loadingDialog.isShow){
+            loadingDialog.setTitle(title)
+            return
+        }
+        loadingDialog= XPopup.Builder(mActivity)
+            .dismissOnBackPressed(false)
+            .asLoading(title)
+            .show() as LoadingPopupView
+
 
     }
 
     open fun dismissDialog() {
-        if (dialog != null && dialog!!.isShow) {
-            dialog?.doDismiss()
+        if (loadingDialog != null && loadingDialog?.isShow!!) {
+            loadingDialog?.dismiss()
         }
     }
 

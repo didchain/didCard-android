@@ -22,3 +22,7 @@
 
  -keep class com.gyf.barlibrary.* {*;}
  -dontwarn com.gyf.barlibrary.**
+
+#xpopup
+ -dontwarn com.lxj.xpopup.widget.**
+ -keep class com.lxj.xpopup.widget.**{*;}

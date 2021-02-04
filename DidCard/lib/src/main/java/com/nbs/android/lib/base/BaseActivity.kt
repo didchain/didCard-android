@@ -1,9 +1,9 @@
 package com.nbs.android.lib.base
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -11,13 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gyf.barlibrary.ImmersionBar
-import com.kongzue.dialog.v3.TipDialog
-import com.kongzue.dialog.v3.WaitDialog
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
+import com.lxj.xpopup.impl.LoadingPopupView
 import com.nbs.android.lib.R
 import com.nbs.android.lib.utils.AppManager
 import com.nbs.android.lib.utils.toast
-import org.koin.android.ext.android.inject
-import java.lang.reflect.ParameterizedType
 
 /**
  * @description:
@@ -28,11 +27,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
     val TAG = this.javaClass.name
     protected  lateinit var mDataBinding: DB
     private var viewModelId = 0
-    protected var dialog: TipDialog? = null
     protected val STATUSBAR_STYLE_TRANSPARENT = 1
     protected val STATUSBAR_STYLE_WHITE = 2
     protected val STATUSBAR_STYLE_GRAY = 3
-
+    private  lateinit var loadingDialog: LoadingPopupView
     protected abstract val mViewModel :VM
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,14 +114,19 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
 
     @JvmOverloads
     open fun showDialog(title: String = getString(R.string.loading), cancelable: Boolean = true) {
-        dismissDialog()
-        dialog = WaitDialog.show(this, title)
-        dialog?.cancelable = cancelable
+        if(this::loadingDialog.isInitialized && loadingDialog.isShow){
+            loadingDialog.setTitle(title)
+            return
+        }
+        loadingDialog= XPopup.Builder(this)
+            .dismissOnBackPressed(false)
+            .asLoading(title)
+            .show() as LoadingPopupView
     }
 
     open fun dismissDialog() {
-        if (dialog != null && dialog!!.isShow) {
-            dialog?.doDismiss()
+        if (loadingDialog != null && loadingDialog.isShow) {
+            loadingDialog.dismiss()
         }
     }
 
