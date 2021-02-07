@@ -48,7 +48,7 @@
     <!--    my-->
     <string name="my_name">姓名：</string>
     <string name="my_id_card">身份证号：</string>
-    <string name="my_authorization">授权他人：</string>
+    <string name="my_authorization">授权他人</string>
     <string name="my_status">状态</string>
     <string name="my_not_certified">未认证</string>
     <string name="my_certified">已认证</string>
@@ -66,12 +66,21 @@
     <string name="save_account">备份到相册</string>
     <string name="save_account_skip">跳过</string>
     <string name="save_account_line">-</string>
+    <string name="save_account_success">保存成功</string>
+    <string name="save_account_failure">保存失败</string>
     <!--    home-->
     <string name="home_service">便民服务</string>
     <string name="home_notice">公告</string>
     <string name="home_registered">挂号预约</string>
     <string name="home_hotel">酒店预约</string>
-    <string name="create_account_tip">提示：\n本身份为区块链身份系统，创建时无需网络无需验证，\n无密码找回功能</string>
+    <string name="home_lock_title">点击解锁二维码</string>
 
+    <string name="create_account_tip">提示：\n本身份为区块链身份系统，创建时无需网络无需验证，\n无密码找回功能</string>
+    <string name="import_success">身份证导入成功</string>
+    <string name="export_success">身份证导出成功</string>
+    <string name="home_unlock">解锁</string>
+
+    <!--    Splash-->
+    <string name="splash_load_error">获取身份失败</string>
 
 </resources>

@@ -1,2 +1,3 @@
+include ':golib'
 include ':app',':lib'
 rootProject.name = "DidCard"

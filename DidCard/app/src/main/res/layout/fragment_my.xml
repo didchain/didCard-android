@@ -10,206 +10,208 @@
             type="com.nbs.didcard.ui.my.MyViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:background="@color/color_f8f8f9"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
+        android:background="@color/white">
 
-        <include
-            layout="@layout/title_layout"
-            app:viewModel="@{viewModel}"
-            android:id="@+id/titleLayout" />
+        <TextView
+            android:id="@+id/title"
+            style="@style/MyTitleStyle"
+            android:text="@string/my"
+            tools:ignore="MissingConstraints" />
 
-        <androidx.core.widget.NestedScrollView
+        <TextView
+            android:id="@+id/nameTitle"
+            style="@style/MyTextViewTitleStyle"
+            android:text="@string/my_name"
+            android:layout_marginTop="7dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:overScrollMode="never"
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/name"
+            style="@style/TextViewStyle"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameTitle" />
+
+        <TextView
+            android:id="@+id/idCardTitle"
+            style="@style/MyTextViewTitleStyle"
+            android:text="@string/my_id_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
+
+        <TextView
+            android:id="@+id/idCard"
+            style="@style/TextViewStyle"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idCardTitle" />
+
+        <TextView
+            android:id="@+id/authorizationTitle"
+            style="@style/TextViewStyle"
+            onClickCommand="@{viewModel.clickAuthorization}"
+            android:layout_height="44dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/button_bg_yellow"
+            android:paddingStart="15dp"
+            android:text="@string/my_authorization"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idCard" />
+
+        <ImageView
+            onClickCommand="@{viewModel.clickAuthorization}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/next_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/authorizationTitle"
+            app:layout_constraintEnd_toEndOf="@+id/authorizationTitle"
+            app:layout_constraintTop_toTopOf="@+id/authorizationTitle" />
+
+        <TextView
+            android:id="@+id/authorization"
+            style="@style/TextViewStyle"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/authorizationTitle" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/color_f8f8f9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/authorization" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/midCardView"
+            style="@style/CardViewStyle"
+            android:layout_marginTop="12dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/authorization"
             tools:ignore="MissingConstraints">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@android:color/transparent"
-                android:layout_height="match_parent">
+                android:id="@+id/midConstraintLayout"
+                style="@style/MyConstantLayoutStyle">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/topCardView"
-                    style="@style/CardViewStyle">
+                <TextView
+                    android:id="@+id/statusTitle"
+                    style="@style/MyTextViewDrawBottomStyle"
+                    android:text="@string/my_status"
+                    app:layout_constraintStart_toStartOf="@+id/midConstraintLayout" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/topConstraintLayout"
-                        style="@style/MyConstantLayoutStyle">
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/certifie_bg"
+                    android:paddingStart="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/my_not_certified"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/statusTitle"
+                    app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
+                    app:layout_constraintTop_toTopOf="@+id/statusTitle" />
 
-                        <TextView
-                            android:id="@+id/nameTitle"
-                            style="@style/MyTextViewTitleStyle"
-                            android:text="@string/my_name"
-                            app:layout_constraintStart_toStartOf="@+id/topConstraintLayout"
-                            app:layout_constraintTop_toTopOf="@+id/topConstraintLayout" />
+                <TextView
+                    android:id="@+id/identityManagement"
+                    style="@style/MyTextViewShowArrowStyle"
+                    onClickCommand="@{viewModel.clickIDCardManager}"
+                    android:text="@string/my_identity_management"
+                    app:layout_constraintStart_toStartOf="@+id/midConstraintLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/statusTitle" />
 
-                        <TextView
-                            android:id="@+id/name"
-                            style="@style/TextViewStyle"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintStart_toStartOf="@+id/topConstraintLayout"
-                            app:layout_constraintTop_toBottomOf="@+id/nameTitle" />
+                <TextView
+                    android:id="@+id/noSecret"
+                    style="@style/MyTextViewDrawBottomStyle"
+                    onClickCommand="@{viewModel.clickNoSecret}"
+                    android:text="@string/my_no_secret"
+                    app:layout_constraintStart_toStartOf="@+id/midConstraintLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/identityManagement" />
 
-                        <TextView
-                            android:id="@+id/idCardTitle"
-                            style="@style/MyTextViewTitleStyle"
-                            android:text="@string/my_id_card"
-                            app:layout_constraintStart_toStartOf="@+id/topConstraintLayout"
-                            app:layout_constraintTop_toBottomOf="@+id/name" />
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/noScretSwitch"
+                    style="@style/MySwitchStyle"
+                    app:layout_constraintBottom_toBottomOf="@+id/noSecret"
+                    app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
+                    app:layout_constraintTop_toTopOf="@+id/noSecret"
+                    app:onCheckedChangeCommand="@{viewModel.onCheckedNoScret}"
+                    app:switchState="@{viewModel.openNoScret}" />
 
-                        <TextView
-                            android:id="@+id/idCard"
-                            style="@style/TextViewStyle"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintStart_toStartOf="@+id/topConstraintLayout"
-                            app:layout_constraintTop_toBottomOf="@+id/idCardTitle" />
+                <TextView
+                    android:id="@+id/fingerprint"
+                    style="@style/MyTextViewDrawBottomStyle"
+                    android:text="@string/my_fingerprint"
+                    app:layout_constraintStart_toStartOf="@+id/midConstraintLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/noSecret" />
 
-                        <TextView
-                            android:id="@+id/authorizationTitle"
-                            style="@style/MyTextViewTitleStyle"
-                            android:text="@string/my_authorization"
-                            app:layout_constraintStart_toStartOf="@+id/topConstraintLayout"
-                            app:layout_constraintTop_toBottomOf="@+id/idCard" />
-
-                        <TextView
-                            android:id="@+id/authorization"
-                            style="@style/TextViewStyle"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintStart_toStartOf="@+id/topConstraintLayout"
-                            app:layout_constraintTop_toBottomOf="@+id/authorizationTitle" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/midCardView"
-                    style="@style/CardViewStyle"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintTop_toBottomOf="@+id/topCardView">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/midConstraintLayout"
-                        style="@style/MyConstantLayoutStyle">
-
-                        <TextView
-                            android:id="@+id/statusTitle"
-                            style="@style/MyTextViewDrawBottomStyle"
-                            android:text="@string/my_status"
-                            app:layout_constraintStart_toStartOf="@+id/midConstraintLayout" />
-
-                        <TextView
-                            android:id="@+id/status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/certifie_bg"
-                            android:paddingStart="8dp"
-                            android:paddingTop="2dp"
-                            android:paddingEnd="8dp"
-                            android:paddingBottom="2dp"
-                            android:text="@string/my_not_certified"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/statusTitle"
-                            app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
-                            app:layout_constraintTop_toTopOf="@+id/statusTitle" />
-
-                        <TextView
-                            android:id="@+id/identityManagement"
-                            style="@style/MyTextViewShowArrowStyle"
-                            onClickCommand="@{viewModel.clickIDCardManager}"
-                            android:text="@string/my_identity_management"
-                            app:layout_constraintStart_toStartOf="@+id/midConstraintLayout"
-                            app:layout_constraintTop_toBottomOf="@+id/statusTitle" />
-
-                        <TextView
-                            android:id="@+id/noSecret"
-                            style="@style/MyTextViewDrawBottomStyle"
-                            android:text="@string/my_no_secret"
-                            onClickCommand="@{viewModel.clickNoSecret}"
-                            app:layout_constraintStart_toStartOf="@+id/midConstraintLayout"
-                            app:layout_constraintTop_toBottomOf="@+id/identityManagement" />
-
-                        <TextView
-                            android:id="@+id/fingerprint"
-                            style="@style/MyTextViewDrawBottomStyle"
-                            android:text="@string/my_fingerprint"
-                            app:layout_constraintStart_toStartOf="@+id/midConstraintLayout"
-                            app:layout_constraintTop_toBottomOf="@+id/noSecret" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/fingerprintSwitch"
-                            style="@style/MySwitchStyle"
-                            app:layout_constraintTop_toTopOf="@+id/fingerprint"
-                            app:layout_constraintBottom_toBottomOf="@+id/fingerprint"
-                            app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout" />
-
-                        <TextView
-                            android:id="@+id/faceId"
-                            style="@style/MyTextViewDrawBottomStyle"
-                            android:text="@string/my_face_id"
-                            app:layout_constraintStart_toStartOf="@+id/midConstraintLayout"
-                            app:layout_constraintTop_toBottomOf="@+id/fingerprint" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/faceIdSwitch"
-                            style="@style/MySwitchStyle"
-                            app:layout_constraintTop_toTopOf="@+id/faceId"
-                            app:layout_constraintBottom_toBottomOf="@+id/faceId"
-                            app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/bottomCardView"
-                    style="@style/CardViewStyle"
-
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintTop_toBottomOf="@+id/midCardView">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/bottomConstraintLayout"
-                        style="@style/MyConstantLayoutStyle">
-
-                        <TextView
-                            android:id="@+id/customerService"
-                            onClickCommand="@{viewModel.clickCustomerService}"
-                            style="@style/MyTextViewShowArrowStyle"
-                            android:text="@string/my_customer_service" />
-
-                        <TextView
-                            android:id="@+id/feedBack"
-                            style="@style/MyTextViewShowArrowStyle"
-                            onClickCommand="@{viewModel.clickFeedBack}"
-                            android:text="@string/my_feed_back"
-                            app:layout_constraintTop_toBottomOf="@+id/customerService" />
-
-                        <TextView
-                            android:id="@+id/about"
-                            style="@style/MyTextViewShowArrowStyle"
-                            onClickCommand="@{viewModel.clickAbout}"
-                            android:text="@string/my_about"
-                            app:layout_constraintTop_toBottomOf="@+id/feedBack" />
-
-                        <TextView
-                            android:id="@+id/help"
-                            style="@style/MyTextViewShowArrowStyle"
-                            onClickCommand="@{viewModel.clickHelp}"
-                            android:text="@string/my_help"
-                            app:layout_constraintTop_toBottomOf="@+id/about" />
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/fingerprintSwitch"
+                    style="@style/MySwitchStyle"
+                    app:layout_constraintBottom_toBottomOf="@+id/fingerprint"
+                    app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
+                    app:layout_constraintTop_toTopOf="@+id/fingerprint"
+                    app:onCheckedChangeCommand="@{viewModel.onCheckedFingerprint}"
+                    app:switchState="@{viewModel.openFingerprint}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
-    </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bottomCardView"
+            style="@style/CardViewStyle"
+
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/midCardView"
+            tools:ignore="MissingConstraints">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bottomConstraintLayout"
+                style="@style/MyConstantLayoutStyle"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/customerService"
+                    style="@style/MyTextViewShowArrowStyle"
+                    android:text="@string/my_customer_service" />
+
+                <TextView
+                    android:id="@+id/feedBack"
+                    style="@style/MyTextViewShowArrowStyle"
+                    onClickCommand="@{viewModel.clickFeedBack}"
+                    android:text="@string/my_feed_back"
+                    app:layout_constraintTop_toBottomOf="@+id/customerService" />
+
+                <TextView
+                    android:id="@+id/about"
+                    style="@style/MyTextViewShowArrowStyle"
+                    onClickCommand="@{viewModel.clickAbout}"
+                    android:text="@string/my_about"
+                    app:layout_constraintTop_toBottomOf="@+id/feedBack" />
+
+                <TextView
+                    android:id="@+id/help"
+                    style="@style/MyTextViewShowArrowStyle"
+                    onClickCommand="@{viewModel.clickHelp}"
+                    android:text="@string/my_help"
+                    app:layout_constraintTop_toBottomOf="@+id/about" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

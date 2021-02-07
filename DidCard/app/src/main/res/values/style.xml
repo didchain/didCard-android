@@ -100,6 +100,9 @@
     <style name="MyTextViewTitleStyle" parent="TextViewStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/color_9b9c9f</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
     </style>
 
     <style name="MyTextViewDrawBottomStyle" parent="TextViewStyle">
@@ -132,4 +135,18 @@
         <item name="thumbTintMode">multiply</item>
         <item name="splitTrack">false</item>
     </style>
+
+    <style name="HomeTitleStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_0c123d</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginTop">28dp</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+    </style>
+
+    <style name="MyTitleStyle" parent="HomeTitleStyle" />
 </resources>

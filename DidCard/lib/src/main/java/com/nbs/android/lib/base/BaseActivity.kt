@@ -125,7 +125,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
     }
 
     open fun dismissDialog() {
-        if (loadingDialog != null && loadingDialog.isShow) {
+        if (this::loadingDialog.isInitialized && loadingDialog != null && loadingDialog.isShow) {
             loadingDialog.dismiss()
         }
     }

@@ -1,10 +1,7 @@
 package com.nbs.didcard.ui.saveaccount
 
 import android.Manifest
-import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.nbs.android.lib.base.BaseActivity
 import com.nbs.android.lib.utils.toast
@@ -12,7 +9,12 @@ import com.nbs.didcard.BR
 import com.nbs.didcard.Constants
 import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivitySaveAccountBinding
+import com.nbs.didcard.ui.main.MainActivity
+import com.nbs.didcard.utils.CardUtils
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -27,7 +29,7 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_save_account
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_GRAY
     override fun initVariableId(): Int = BR.viewModel
-    override val mViewModel: SaveAccountViewModel by inject()
+    override val mViewModel: SaveAccountViewModel by viewModel()
 
     override fun initView() {
     }
@@ -39,20 +41,25 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
             if (!checkExternalPermission()) {
                 requestExternalPermission()
             } else {
-//                BitmapUtils.saveBitmapToAlbum(this,BitmapUtils.stringToQRBitmap("111111"),"hahah")
-                toast("授权了写权限")
-                val intent =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                startActivityForResult(intent, 1)
+                saveCard()
+
+            }
+        })
+
+        mViewModel.saveAlbumResultEvent.observe(this, Observer<Boolean> { isSaved ->
+            if (isSaved) {
+                toast(getString(R.string.save_account_success))
+                startActivity(MainActivity::class.java)
+                finish()
+            } else {
+                toast(getString(R.string.save_account_failure))
             }
         })
     }
 
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // 将结果转发给 EasyPermissions
@@ -73,15 +80,12 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
     }
 
     @AfterPermissionGranted(Constants.WRITE_EXTERNAL_PERMISSION_CODE)
-    fun saveAccount() {
-        //        mViewModel.saveAlbum
-        toast("授权了写权限")
-    }
+    fun saveCard() {
+        MainScope().launch {
+            val card = CardUtils.loadCardByPath(CardUtils.getCardPath(this@SaveAccountActivity))
+            mViewModel.saveCard2Album(card)
+        }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("!!!", "onDestroy: ")
     }
 
 

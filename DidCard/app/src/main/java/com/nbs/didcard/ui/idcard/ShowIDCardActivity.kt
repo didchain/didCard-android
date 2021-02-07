@@ -6,6 +6,7 @@ import com.nbs.didcard.BR
 import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivityShowIdCardBinding
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  *Author:Mr'x
@@ -15,7 +16,7 @@ import org.koin.android.ext.android.inject
 class ShowIDCardActivity : BaseActivity<ShowIDCardViewModel, ActivityShowIdCardBinding>() {
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_show_id_card
-    override val mViewModel: ShowIDCardViewModel by inject()
+    override val mViewModel: ShowIDCardViewModel by viewModel()
 
     override fun initView() {
         mViewModel.title.set(getString(R.string.id_card_title))

@@ -170,7 +170,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
     }
 
     open fun dismissDialog() {
-        if (loadingDialog != null && loadingDialog?.isShow!!) {
+        if (this::loadingDialog.isInitialized && loadingDialog != null && loadingDialog?.isShow!!) {
             loadingDialog?.dismiss()
         }
     }

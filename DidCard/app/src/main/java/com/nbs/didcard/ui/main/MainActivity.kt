@@ -13,6 +13,7 @@ import com.nbs.didcard.ui.home.HomeFragment
 import com.nbs.didcard.ui.my.MyFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
@@ -21,7 +22,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val icons = arrayOf(R.drawable.tab_home_selector, R.drawable.tab_my_selector)
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_main
-    override val mViewModel: MainViewModel by inject()
+    override val mViewModel: MainViewModel by viewModel()
     val myFragment by inject<MyFragment>()
     val homeFragment by inject<HomeFragment>()
     override fun initView() {
@@ -43,7 +44,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun initObserve() {
     }
 
-    override fun statusBarStyle(): Int = STATUSBAR_STYLE_GRAY
+    override fun statusBarStyle(): Int = STATUSBAR_STYLE_TRANSPARENT
 
     override fun initVariableId(): Int = BR.viewModel
 

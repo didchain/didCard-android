@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(path: ':lib')
+    implementation project(path: ':golib')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -52,11 +53,14 @@ dependencies {
     implementation 'pub.devrel:easypermissions:3.0.0'
 
     implementation "org.koin:koin-core:$koin_version"
-    implementation "org.koin:koin-core-ext:$koin_version"
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-ext:$koin_version"
+    implementation "org.koin:koin-androidx-ext:$koin_version"//扩展功能
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
-    implementation "org.koin:koin-androidx-workmanager:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"//使用范围控制添加
+
+
+    api 'com.squareup.moshi:moshi-kotlin:1.11.0'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.11.0'
 
 
 }

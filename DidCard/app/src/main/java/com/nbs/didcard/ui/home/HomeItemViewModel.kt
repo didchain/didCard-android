@@ -9,5 +9,4 @@ import com.nbs.didcard.bean.ServiceBean
  *Description:
  */
 class HomeItemViewModel(viewModel: HomeViewModel, val serviceBean: ServiceBean) :
-    ItemViewModel<HomeViewModel>(viewModel) {
-}
+    ItemViewModel<HomeViewModel>(viewModel) {}

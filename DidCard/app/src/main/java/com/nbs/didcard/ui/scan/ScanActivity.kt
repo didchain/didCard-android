@@ -11,6 +11,7 @@ import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivityScanBinding
 import kotlinx.android.synthetic.main.activity_scan.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  *Author:Mr'x
@@ -26,7 +27,7 @@ class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
         return R.layout.activity_scan
     }
 
-    override val mViewModel: ScanViewModel by inject()
+    override val mViewModel: ScanViewModel by viewModel()
 
     override fun initView() {
         mViewModel.title.set(getString(R.string.import_id))
@@ -49,7 +50,7 @@ class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_WHITE
 
     override fun initVariableId(): Int = BR.viewModel
-//    val vap:CaptureActivity
+    //    val vap:CaptureActivity
 
     override fun onResume() {
         super.onResume()
@@ -73,9 +74,7 @@ class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
 
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         capture.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }

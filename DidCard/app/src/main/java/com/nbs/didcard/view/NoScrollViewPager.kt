@@ -22,7 +22,7 @@ class NoScrollViewPager(context: Context, attrs: AttributeSet?) : ViewPager(cont
     }
 
     override fun scrollTo(x: Int, y: Int) {
-//        if(noScroll){  //加上判断无法用 setCurrentItem 方法切换
+        //        if(noScroll){  //加上判断无法用 setCurrentItem 方法切换
         super.scrollTo(x, y)
         //        }
     }

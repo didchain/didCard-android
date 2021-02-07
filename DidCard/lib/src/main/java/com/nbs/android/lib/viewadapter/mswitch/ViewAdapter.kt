@@ -1,12 +1,13 @@
 package com.nbs.android.lib.viewadapter.mswitch
 
 import android.widget.Switch
+import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.BindingAdapter
 import com.nbs.android.lib.command.BindingCommand
 
 
 @BindingAdapter("switchState")
-fun setSwitchState(mSwitch: Switch, isChecked: Boolean) {
+fun setSwitchState(mSwitch: SwitchCompat, isChecked: Boolean) {
     mSwitch.isChecked = isChecked
 }
 
@@ -17,15 +18,10 @@ fun setSwitchState(mSwitch: Switch, isChecked: Boolean) {
  * @param changeListener 事件绑定命令
  */
 @BindingAdapter("onCheckedChangeCommand")
-fun onCheckedChangeCommand(
-    mSwitch: Switch,
-    changeListener: BindingCommand<Boolean?>?
-) {
+fun onCheckedChangeCommand(mSwitch: SwitchCompat, changeListener: BindingCommand<Boolean?>?) {
     if (changeListener != null) {
         mSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            changeListener.execute(
-                isChecked
-            )
+            changeListener.execute(isChecked)
         }
     }
 }

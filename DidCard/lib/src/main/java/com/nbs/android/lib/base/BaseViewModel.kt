@@ -5,15 +5,12 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.nbs.android.lib.command.BindingAction
 import com.nbs.android.lib.command.BindingCommand
 import com.nbs.android.lib.event.SingleLiveEvent
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -23,7 +20,7 @@ import java.util.*
  * @date :   2020/11/3 8:15 AM
  */
 
-abstract class BaseViewModel: ViewModel(), IBaseViewModel {
+abstract class BaseViewModel : ViewModel(), IBaseViewModel {
     var title = ObservableField<String>("")
     val showBackImage = ObservableField<Boolean>(false)
     val showRightText = ObservableField<Boolean>(false)
@@ -94,11 +91,11 @@ abstract class BaseViewModel: ViewModel(), IBaseViewModel {
      * @param clz 所跳转的目的Activity类
      */
     open fun startActivity(clz: Class<*>) {
-        startActivity(clz, null,false)
+        startActivity(clz, null, false)
     }
 
     open fun startActivityAndFinish(clz: Class<*>) {
-        startActivity(clz, null,true)
+        startActivity(clz, null, true)
     }
 
     /**
@@ -107,7 +104,7 @@ abstract class BaseViewModel: ViewModel(), IBaseViewModel {
      * @param clz    所跳转的目的Activity类
      * @param bundle 跳转所携带的信息
      */
-    open fun startActivity(clz: Class<*>, bundle: Bundle?,finish:Boolean=false) {
+    open fun startActivity(clz: Class<*>, bundle: Bundle?, finish: Boolean = false) {
         val params: MutableMap<String, Any> = HashMap()
         params[ParameterField.CLASS] = clz
         params[ParameterField.FINISH] = finish
@@ -198,6 +195,7 @@ abstract class BaseViewModel: ViewModel(), IBaseViewModel {
     private val mCompositeDisposable: CompositeDisposable by lazy {
         CompositeDisposable()
     }
+
     open fun addSubscribe(disposable: Disposable) {
         mCompositeDisposable.add(disposable)
     }
