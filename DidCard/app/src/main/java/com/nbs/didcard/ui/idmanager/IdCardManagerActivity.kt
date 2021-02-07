@@ -8,7 +8,6 @@ import com.nbs.didcard.BR
 import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivityIdCardManagerBinding
 import com.nbs.didcard.view.ImportSuccessPop
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**

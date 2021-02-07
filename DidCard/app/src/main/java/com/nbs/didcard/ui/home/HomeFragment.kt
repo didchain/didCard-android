@@ -9,14 +9,15 @@ import com.nbs.didcard.databinding.FragmentHomeBinding
 import com.nbs.didcard.utils.BitmapUtils
 import com.nbs.didcard.view.PasswordPop
 import kotlinx.android.synthetic.main.fragment_home.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 
 /**
  *Author:Mr'x
  *Time:
  *Description:
  */
+@KoinApiExtension
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override fun getLayoutId(): Int = R.layout.fragment_home

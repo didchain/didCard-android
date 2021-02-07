@@ -13,7 +13,6 @@ import com.nbs.didcard.ui.main.MainActivity
 import com.nbs.didcard.utils.CardUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions

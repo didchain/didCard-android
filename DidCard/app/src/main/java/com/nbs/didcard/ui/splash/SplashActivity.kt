@@ -7,14 +7,15 @@ import com.nbs.didcard.BR
 import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivitySplashBinding
 import com.nbs.didcard.ui.guide.GuideActivity
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 
 /**
  *Author:Mr'x
  *Time:
  *Description:
  */
+@KoinApiExtension
 class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
     override val mViewModel: SplashViewModel by viewModel()
 

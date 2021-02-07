@@ -8,19 +8,19 @@ import com.nbs.didcard.ui.main.MainActivity
 import com.nbs.didcard.utils.CardUtils
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 /**
  *Author:Mr'x
  *Time:
  *Description:
  */
-class SplashViewModel(val guideModel: GuideModel) : BaseViewModel() {
-
-    val hasAccount: Boolean
-
-    init {
-        hasAccount = CardUtils.hasCard(CardUtils.getCardPath(context()))
-    }
+@KoinApiExtension
+class SplashViewModel : BaseViewModel(), KoinComponent {
+    private val guideModel: GuideModel by inject()
+    val hasAccount: Boolean = CardUtils.hasCard(CardUtils.getCardPath(context()))
 
     fun loadCard() {
         guideModel.loadCard(CardUtils.getCardPath(context()))

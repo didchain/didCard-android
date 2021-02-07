@@ -76,9 +76,9 @@ class DidCardApp : BaseApplication() {
             single { HomeModel() }
             single { GuideModel() }
 
-            viewModel { CreateCardViewModel(get()) }
+            viewModel { CreateCardViewModel() }
             viewModel { GuideViewModel() }
-            viewModel { HomeViewModel(get()) }
+            viewModel { HomeViewModel() }
             viewModel { ShowIDCardViewModel() }
             viewModel { IDCardManagerViewModel() }
             viewModel { MainViewModel() }
@@ -87,7 +87,7 @@ class DidCardApp : BaseApplication() {
             viewModel { MyViewModel() }
             viewModel { ScanViewModel() }
             viewModel { AuthorizationViewModel() }
-            viewModel { SplashViewModel(get()) }
+            viewModel { SplashViewModel() }
 
 
             fragment { MyFragment() }

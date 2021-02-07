@@ -17,22 +17,26 @@ import com.nbs.didcard.utils.SharedPref
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import me.tatarka.bindingcollectionadapter2.ItemBinding
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 /**
  *Author:Mr'x
  *Time:
  *Description:
  */
-class HomeViewModel(val model: HomeModel) : BaseViewModel() {
-    val id = ObservableField<String>()
-    val showLock = ObservableField<Boolean>(true)
-    val itemTitles =
+@KoinApiExtension
+class HomeViewModel : BaseViewModel(), KoinComponent {
+    private val model: HomeModel by inject()
+    private val itemTitles =
         arrayListOf(R.string.home_notice, R.string.home_registered, R.string.home_hotel)
-    val itemIcons =
+    private val itemIcons =
         arrayListOf(R.drawable.notice_icon, R.drawable.hospital_icon, R.drawable.hotel_icon)
     val showPasswordEvent = SingleLiveEvent<Boolean>()
-    var openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
-
+    private var openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
+    val id = ObservableField<String>()
+    val showLock = ObservableField<Boolean>(true)
     val items: ObservableList<HomeItemViewModel> = ObservableArrayList()
     val itemBinding = ItemBinding.of<HomeItemViewModel>(BR.item, R.layout.item_service)
 

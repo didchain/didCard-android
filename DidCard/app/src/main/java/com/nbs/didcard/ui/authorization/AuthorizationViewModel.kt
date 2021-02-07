@@ -7,4 +7,4 @@ import com.nbs.android.lib.base.BaseViewModel
  *Time:
  *Description:
  */
-class AuthorizationViewModel : BaseViewModel() {}
+class AuthorizationViewModel : BaseViewModel()

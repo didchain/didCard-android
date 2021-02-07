@@ -7,6 +7,4 @@ import com.nbs.android.lib.base.BaseViewModel
  *Time:
  *Description:
  */
-class ScanViewModel : BaseViewModel() {
-
-}
+class ScanViewModel : BaseViewModel()

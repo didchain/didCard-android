@@ -17,14 +17,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
-    val fragments = arrayListOf<Fragment>()
+    private val fragments = arrayListOf<Fragment>()
     private val titles = arrayOf(R.string.main_home, R.string.main_my)
     private val icons = arrayOf(R.drawable.tab_home_selector, R.drawable.tab_my_selector)
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_main
     override val mViewModel: MainViewModel by viewModel()
-    val myFragment by inject<MyFragment>()
-    val homeFragment by inject<HomeFragment>()
+    private val myFragment by inject<MyFragment>()
+    private val homeFragment by inject<HomeFragment>()
     override fun initView() {
         tablayout.setupWithViewPager(viewpager)
 
@@ -49,11 +49,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun initVariableId(): Int = BR.viewModel
 
     fun getItemView(index: Int, titleId: Int, iconId: Int): View {
-        val view: View
-        if (index == 0) {
-            view = View.inflate(this, R.layout.item_tab_home, null)
+        val view: View = if (index == 0) {
+            View.inflate(this, R.layout.item_tab_home, null)
         } else {
-            view = View.inflate(this, R.layout.item_tab_my, null)
+            View.inflate(this, R.layout.item_tab_my, null)
         }
 
         val icon = view.findViewById<ImageView>(R.id.icon)

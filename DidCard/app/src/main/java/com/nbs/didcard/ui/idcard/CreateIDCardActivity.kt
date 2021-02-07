@@ -6,14 +6,15 @@ import com.nbs.didcard.BR
 import com.nbs.didcard.R
 import com.nbs.didcard.databinding.ActivityCreateIdCardBinding
 import com.nbs.didcard.ui.create.account.CreateCardViewModel
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 
 /**
  *Author:Mr'x
  *Time:
  *Description:
  */
+@KoinApiExtension
 class CreateIDCardActivity : BaseActivity<CreateCardViewModel, ActivityCreateIdCardBinding>() {
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_create_id_card

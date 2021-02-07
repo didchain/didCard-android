@@ -13,13 +13,18 @@ import com.nbs.didcard.utils.SharedPref
 import com.orhanobut.logger.Logger
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 /**
  *Author:Mr'x
  *Time:
  *Description:
  */
-class CreateCardViewModel(val model: CreateCardModel) : BaseViewModel() {
+@KoinApiExtension
+class CreateCardViewModel : BaseViewModel(), KoinComponent {
+    private val model: CreateCardModel by inject()
     val password = ObservableField<String>("")
     var name: String by SharedPref(context(), "name", "haha")
     val confirmPassword = ObservableField<String>("")
