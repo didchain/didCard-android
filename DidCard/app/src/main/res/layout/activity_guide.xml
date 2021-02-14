@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.nbs.didcard.ui.guide.GuideViewModel" />
+            type="com.didchain.didcard.ui.guide.GuideViewModel" />
 
     </data>
 

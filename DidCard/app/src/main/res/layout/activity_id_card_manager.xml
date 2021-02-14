@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.nbs.didcard.ui.idmanager.IDCardManagerViewModel" />
+            type="com.didchain.didcard.ui.idmanager.IDCardManagerViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

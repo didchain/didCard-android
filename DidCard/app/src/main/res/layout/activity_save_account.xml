@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.nbs.didcard.ui.saveaccount.SaveAccountViewModel" />
+            type="com.didchain.didcard.ui.saveaccount.SaveAccountViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

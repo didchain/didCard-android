@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.nbs.didcard.ui.home.HomeItemViewModel" />
+            type="com.didchain.didcard.ui.home.HomeItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

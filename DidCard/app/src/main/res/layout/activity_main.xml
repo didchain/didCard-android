@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.nbs.didcard.ui.main.MainViewModel" />
+            type="com.didchain.didcard.ui.main.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.main.MainActivity">
 
-        <com.nbs.didcard.view.NoScrollViewPager
+        <com.didchain.didcard.view.NoScrollViewPager
             android:id="@+id/viewpager"
             android:layout_width="0dp"
             app:layout_constraintStart_toStartOf="parent"

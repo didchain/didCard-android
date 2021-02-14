@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.nbs.didcard.ui.splash.SplashViewModel" />
+            type="com.didchain.didcard.ui.splash.SplashViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

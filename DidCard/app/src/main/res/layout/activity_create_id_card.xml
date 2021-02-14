@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.nbs.didcard.ui.create.account.CreateCardViewModel" />
+            type="com.didchain.didcard.ui.create.account.CreateCardViewModel" />
 
     </data>
 

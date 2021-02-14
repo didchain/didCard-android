@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.nbs.android.lib.base.BaseViewModel" />
+            type="com.didchain.android.lib.base.BaseViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

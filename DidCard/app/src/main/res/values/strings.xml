@@ -5,9 +5,14 @@
     <string name="my">我的</string>
     <string name="tip">提示</string>
     <string name="request_write_external_permission">获取相册读写权限</string>
+    <string name="request_wlocation_permission">获取定位权限</string>
     <string name="password_different">两次密码不一致</string>
     <string name="import_id">导入身份证</string>
     <string name="import_album">相册</string>
+    <string name="import_apply_album_permission">申请读取相册权限</string>
+    <string name="import_apply_camera_permission">申请使用相机权限</string>
+    <string name="import_qr_error">身份证二维码不正确</string>
+    <string name="open_error">开启失败</string>
 
     <!--    home-->
     <string name="main_home">首页</string>
@@ -16,6 +21,9 @@
     <string name="main_id_card_qr">身份证二维码</string>
     <!--    guide-->
     <string name="guide_import_account">导入账号</string>
+    <string name="guide_dialog_title">选择导入方式</string>
+    <string name="guide_import_album">相册</string>
+    <string name="guide_import_camera">扫描二维码</string>
 
     <!--    create_account-->
     <string name="create_account_title">创建身份</string>
@@ -36,6 +44,7 @@
     <string name="id_card_title">身份证号</string>
     <string name="id_card_share">分享</string>
     <string name="id_card_save">保存</string>
+    <string name="id_card_load_error">加载身份信息失败</string>
 
     <!--    id_card_manager-->
     <string name="id_card_manager_new">新建身份证</string>
@@ -74,6 +83,7 @@
     <string name="home_registered">挂号预约</string>
     <string name="home_hotel">酒店预约</string>
     <string name="home_lock_title">点击解锁二维码</string>
+    <string name="home_location">正在定位…</string>
 
     <string name="create_account_tip">提示：\n本身份为区块链身份系统，创建时无需网络无需验证，\n无密码找回功能</string>
     <string name="import_success">身份证导入成功</string>
@@ -82,5 +92,8 @@
 
     <!--    Splash-->
     <string name="splash_load_error">获取身份失败</string>
+    <string name="home_no_location">手机定位服务未开启，无法获取到您的准确位置信息，是否前往开启？</string>
+    <string name="cancel">取消</string>
+    <string name="home_go_open">去开启</string>
 
 </resources>

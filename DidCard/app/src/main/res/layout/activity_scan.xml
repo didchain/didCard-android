@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.nbs.didcard.ui.scan.ScanViewModel" />
+            type="com.didchain.didcard.ui.scan.ScanViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
