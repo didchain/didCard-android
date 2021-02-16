@@ -71,12 +71,12 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
         EasyPermissions.requestPermissions(
             this,
             getString(R.string.request_write_external_permission),
-            Constants.WRITE_EXTERNAL_PERMISSION_CODE,
+            Constants.CODE_WRITE_EXTERNAL_PERMISSION,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
     }
 
-    @AfterPermissionGranted(Constants.WRITE_EXTERNAL_PERMISSION_CODE)
+    @AfterPermissionGranted(Constants.CODE_WRITE_EXTERNAL_PERMISSION)
     fun saveCard() {
         MainScope().launch {
             val card = CardUtils.loadCardByPath(CardUtils.getCardPath(this@SaveAccountActivity))

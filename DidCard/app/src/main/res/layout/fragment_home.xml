@@ -39,128 +39,144 @@
             app:layout_constraintBottom_toBottomOf="@+id/title"
             app:drawableStartCompat="@drawable/address_nav_icon" />
 
-        <TextView
-            android:id="@+id/idCardTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/main_id_card"
-            android:textColor="@color/color_9b9c9f"
-            android:textSize="14sp"
-            android:textStyle="bold"
+        <androidx.core.widget.NestedScrollView
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
-
-        <TextView
-            android:id="@+id/idCard"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginEnd="14dp"
-            android:text="@{viewModel.id}"
-            android:textColor="@color/color_0c123d"
-            android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/idCardTitle" />
-
-        <TextView
-            isVisible="@{viewModel.showLock}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
-            android:text="@string/home_lock_title"
-            android:textColor="@color/color_0c123d"
-            app:layout_constraintBottom_toBottomOf="@+id/lock"
-            app:layout_constraintEnd_toEndOf="@+id/lock"
-            app:layout_constraintStart_toStartOf="@+id/lock"
-            app:layout_constraintTop_toTopOf="@+id/lock" />
-
-
-
-        <androidx.cardview.widget.CardView
-            style="@style/CardViewStyle"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/qrBg"
-            tools:ignore="MissingConstraints">
-
-            <LinearLayout
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:scrollbars="none"
+            android:overScrollMode="never"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
+                android:layout_marginBottom="20dp"
+                android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/idCardTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="11dp"
-                    android:text="@string/home_service"
-                    android:textColor="@color/color_0c123d"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/main_id_card"
+                    android:textColor="@color/color_9b9c9f"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:background="@color/color_f0f1f3" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/idCard"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:overScrollMode="never"
-                    app:itemBinding="@{viewModel.itemBinding}"
-                    app:items="@{viewModel.items}"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:text="@{viewModel.id}"
+                    android:textColor="@color/color_0c123d"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/idCardTitle" />
 
-        <com.didchain.didcard.view.SquareImageView
-            android:id="@+id/qrBg"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/qr_bg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/idCard" />
-
-        <com.didchain.didcard.view.QRImageView
-            android:id="@+id/rq"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="47dp"
-            android:layout_marginEnd="16dp"
-            android:padding="2dp"
-            app:layout_constraintBottom_toBottomOf="@+id/qrBg"
-            app:layout_constraintEnd_toEndOf="@+id/qrBg"
-            app:layout_constraintStart_toStartOf="@+id/qrBg"
-            app:layout_constraintTop_toTopOf="@+id/qrBg" />
+                <TextView
+                    isVisible="@{viewModel.showLock}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="120dp"
+                    android:text="@string/home_lock_title"
+                    android:textColor="@color/color_0c123d"
+                    app:layout_constraintBottom_toBottomOf="@+id/lock"
+                    app:layout_constraintEnd_toEndOf="@+id/lock"
+                    app:layout_constraintStart_toStartOf="@+id/lock"
+                    app:layout_constraintTop_toTopOf="@+id/lock" />
 
 
 
+                <androidx.cardview.widget.CardView
+                    style="@style/CardViewStyle"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/qrBg"
+                    tools:ignore="MissingConstraints">
 
-        <com.didchain.didcard.view.SquareImageView
-            android:id="@+id/lock"
-            isVisible="@{viewModel.showLock}"
-            onClickCommand="@{viewModel.clickUnLock}"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="47dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/color_e6ffffff"
-            android:scaleType="center"
-            android:src="@drawable/lock_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/qrBg"
-            app:layout_constraintEnd_toEndOf="@+id/qrBg"
-            app:layout_constraintStart_toStartOf="@+id/qrBg"
-            app:layout_constraintTop_toTopOf="@+id/qrBg" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="11dp"
+                            android:text="@string/home_service"
+                            android:textColor="@color/color_0c123d"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@color/color_f0f1f3" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:overScrollMode="never"
+                            app:itemBinding="@{viewModel.itemBinding}"
+                            app:items="@{viewModel.items}"
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:spanCount="3" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <com.didchain.didcard.view.SquareImageView
+                    android:id="@+id/qrBg"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/qr_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/idCard" />
+
+                <com.didchain.didcard.view.QRImageView
+                    android:id="@+id/rq"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="47dp"
+                    android:layout_marginEnd="16dp"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/qrBg"
+                    app:layout_constraintEnd_toEndOf="@+id/qrBg"
+                    app:layout_constraintStart_toStartOf="@+id/qrBg"
+                    app:layout_constraintTop_toTopOf="@+id/qrBg" />
+
+
+
+
+                <com.didchain.didcard.view.SquareImageView
+                    android:id="@+id/lock"
+                    isVisible="@{viewModel.showLock}"
+                    onClickCommand="@{viewModel.clickUnLock}"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="47dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/color_e6ffffff"
+                    android:scaleType="center"
+                    android:src="@drawable/lock_icon"
+                    app:layout_constraintBottom_toBottomOf="@+id/qrBg"
+                    app:layout_constraintEnd_toEndOf="@+id/qrBg"
+                    app:layout_constraintStart_toStartOf="@+id/qrBg"
+                    app:layout_constraintTop_toTopOf="@+id/qrBg" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

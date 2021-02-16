@@ -14,6 +14,7 @@ import com.didchain.didcard.ui.idmanager.IDCardManagerViewModel
 import com.didchain.didcard.ui.idmanager.UpdatePasswordViewModel
 import com.didchain.didcard.ui.main.MainViewModel
 import com.didchain.didcard.ui.my.MyFragment
+import com.didchain.didcard.ui.my.MyModel
 import com.didchain.didcard.ui.my.MyViewModel
 import com.didchain.didcard.ui.saveaccount.SaveAccountViewModel
 import com.didchain.didcard.ui.scan.ScanViewModel
@@ -75,6 +76,7 @@ class DidCardApp : BaseApplication() {
             single { CreateCardModel() }
             single { HomeModel() }
             single { GuideModel() }
+            single { MyModel() }
 
             viewModel { CreateCardViewModel() }
             viewModel { GuideViewModel() }

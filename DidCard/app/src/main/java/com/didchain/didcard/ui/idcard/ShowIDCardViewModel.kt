@@ -12,8 +12,11 @@ import com.didchain.didcard.provider.context
 import com.didchain.didcard.utils.BitmapUtils
 import com.didchain.didcard.utils.CardUtils
 import com.didchain.didcard.utils.JsonUtils
+import com.orhanobut.logger.Logger
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  *Author:Mr'x
@@ -37,17 +40,24 @@ class ShowIDCardViewModel : BaseViewModel() {
     })
 
     private fun saveIDCard() {
-        if(!TextUtils.isEmpty(qrJson)){
-            val isSave = BitmapUtils.saveBitmapToAlbum(
-                context(),
-                BitmapUtils.stringToQRBitmap(qrJson),
-                context().getString(R.string.app_name)
-            )
-            if (isSave) {
-                showToast(R.string.save_account_success)
-            } else {
-                showToast(R.string.save_account_failure)
+        if (!TextUtils.isEmpty(qrJson)) {
+            MainScope().launch {
+                withContext(Dispatchers.IO) {
+                    Logger.d("~~~~~~~~~~~~~~~~~~~~~~~"+Thread.currentThread().name)
+                    val isSave = BitmapUtils.saveBitmapToAlbum(
+                        context(),
+                        BitmapUtils.stringToQRBitmap(qrJson),
+                        context().getString(R.string.app_name)
+                    )
+                    if (isSave) {
+                        showToast(R.string.save_account_success)
+                    } else {
+                        showToast(R.string.save_account_failure)
+                    }
+                }
             }
+
+
         }
     }
 
@@ -56,10 +66,10 @@ class ShowIDCardViewModel : BaseViewModel() {
             idCard.set(CardUtils.getId(context()))
             val cardPath = CardUtils.getCardPath(context())
             val cardBean = CardUtils.loadCardBeanByPath(cardPath)
-            if(cardBean != null){
+            if (cardBean != null) {
                 qrJson = JsonUtils.object2Json(cardBean, CardBean::class.java)
                 idCardJsonEvent.postValue(qrJson)
-            }else{
+            } else {
                 showToast(R.string.id_card_load_error)
             }
 

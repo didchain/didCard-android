@@ -111,13 +111,13 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
     }
 
     @JvmOverloads
-    open fun showDialog(title: String = getString(R.string.loading), cancelable: Boolean = true) {
+    open fun showDialog(title: String , cancelable: Boolean = true) {
         if(this::loadingDialog.isInitialized && loadingDialog.isShow){
             loadingDialog.setTitle(title)
             return
         }
         loadingDialog= XPopup.Builder(this)
-            .dismissOnBackPressed(false)
+            .dismissOnBackPressed(cancelable)
             .asLoading(title)
             .show() as LoadingPopupView
     }

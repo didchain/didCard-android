@@ -9,9 +9,12 @@ object Constants {
     val TIME_OUT: Long = 40
     const val CODE_OPEN_ALBUM = 100
     const val CODE_OPEN_CAMERA = 101
-    const val WRITE_EXTERNAL_PERMISSION_CODE = 1
-    const val LOCATION_PERMISSION_CODE = 2
+    const val CODE_WRITE_EXTERNAL_PERMISSION = 1
+    const val CODE_LOCATION_PERMISSION = 2
+
     const val KEY_OPEN_FINGERPRINT = "key_open_fingerprint"
     const val KEY_OPEN_NO_SCRET = "key_open_no_scret"
+    const val KEY_ENCRYPTED_PASSWORD = "key_password"
+
     const val TAG_NAME = "ID_GO_TAG"
 }

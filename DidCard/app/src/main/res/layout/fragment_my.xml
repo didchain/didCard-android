@@ -47,8 +47,12 @@
         <TextView
             android:id="@+id/idCard"
             style="@style/TextViewStyle"
+            android:text="@{viewModel.id}"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             app:layout_constraintTop_toBottomOf="@+id/idCardTitle" />
 
         <TextView
@@ -148,8 +152,9 @@
                     app:layout_constraintBottom_toBottomOf="@+id/noSecret"
                     app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
                     app:layout_constraintTop_toTopOf="@+id/noSecret"
+                    app:switchState="@{viewModel.openNoScretObservable}"
                     app:onCheckedChangeCommand="@{viewModel.onCheckedNoScret}"
-                    app:switchState="@{viewModel.openNoScret}" />
+                    />
 
                 <TextView
                     android:id="@+id/fingerprint"
@@ -164,8 +169,9 @@
                     app:layout_constraintBottom_toBottomOf="@+id/fingerprint"
                     app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
                     app:layout_constraintTop_toTopOf="@+id/fingerprint"
+                    app:switchState="@{viewModel.openFingerprintObservable}"
                     app:onCheckedChangeCommand="@{viewModel.onCheckedFingerprint}"
-                    app:switchState="@{viewModel.openFingerprint}" />
+                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

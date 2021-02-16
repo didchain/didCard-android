@@ -17,7 +17,6 @@ import com.didchain.didcard.provider.context
 import com.didchain.didcard.utils.SharedPref
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.internal.operators.single.SingleObserveOn
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import me.tatarka.bindingcollectionadapter2.ItemBinding
@@ -57,7 +56,7 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
         }
 
         MainScope().launch {
-            cardBean = model.getCard()
+            cardBean = model.getIDCard()
             id.set(cardBean?.did)
         }
 

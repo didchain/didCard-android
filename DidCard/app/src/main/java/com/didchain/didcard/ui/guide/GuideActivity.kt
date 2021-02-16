@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.lifecycle.Observer
 import com.didchain.android.lib.base.BaseActivity
 import com.didchain.android.lib.utils.toast
@@ -129,8 +130,8 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
 
 
     private fun showPasswordDialog(walletStr: String) {
-        DialogUtils.showPasswordDialog(this,object : PasswordPop.OpenListener{
-            override fun open(password: String) {
+        DialogUtils.showPasswordDialog(this,object : PasswordPop.InputPasswordListener{
+            override fun input(password: String) {
                 mViewModel.importIdCard(walletStr,password)
             }
 

@@ -29,7 +29,7 @@ class IDCardManagerActivity : BaseActivity<IDCardManagerViewModel, ActivityIdCar
 
     override fun initObserve() {
         mViewModel.exportSuccessEvent.observe(this, Observer {
-            XPopup.Builder(this).isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
+            XPopup.Builder(this).isDestroyOnDismiss(true)
                 .asCustom(ImportSuccessPop(this)).show()
         })
     }

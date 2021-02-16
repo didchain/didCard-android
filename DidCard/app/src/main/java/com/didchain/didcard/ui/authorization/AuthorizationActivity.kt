@@ -28,7 +28,7 @@ class AuthorizationActivity : BaseActivity<AuthorizationViewModel, ActivityAutho
     override fun initObserve() {
     }
 
-    override fun statusBarStyle(): Int = STATUSBAR_STYLE_WHITE
+    override fun statusBarStyle(): Int = STATUSBAR_STYLE_GRAY
 
     override fun initVariableId(): Int = BR.viewModel
 

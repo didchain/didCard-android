@@ -1,5 +1,7 @@
 package com.didchain.android.lib.viewadapter.mswitch
 
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.BindingAdapter
 import com.didchain.android.lib.command.BindingCommand
@@ -19,8 +21,12 @@ fun setSwitchState(mSwitch: SwitchCompat, isChecked: Boolean) {
 @BindingAdapter("onCheckedChangeCommand")
 fun onCheckedChangeCommand(mSwitch: SwitchCompat, changeListener: BindingCommand<Boolean?>?) {
     if (changeListener != null) {
-        mSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            changeListener.execute(isChecked)
-        }
+        //延迟设置监听。防止第一次设置值也去执行回调
+        Handler(Looper.getMainLooper()).postDelayed({
+            mSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+                changeListener.execute(isChecked)
+            }
+        },200)
+
     }
 }

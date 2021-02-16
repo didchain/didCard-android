@@ -1,11 +1,14 @@
 package com.didchain.didcard.utils
 
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.didchain.didcard.R
 import com.didchain.didcard.view.PasswordPop
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.interfaces.OnSelectListener
+import com.lxj.xpopup.interfaces.SimpleCallback
+import com.orhanobut.logger.Logger
 
 /**
  *Author:Mr'x
@@ -17,6 +20,35 @@ object DialogUtils {
     const val POSITION_CAMERA = 1
     const val POSITION_CANCEL = 2
 
+    internal class IDCardXPopupListener : SimpleCallback() {
+        override fun onCreated(pv: BasePopupView) {
+            Logger.d("tag", "弹窗创建了")
+        }
+
+        override fun onShow(popupView: BasePopupView) {
+            Logger.d("tag","onShow")
+        }
+
+        override fun onDismiss(popupView: BasePopupView) {
+            Logger.d("tag", "onDismiss")
+        }
+
+        override fun beforeDismiss(popupView: BasePopupView) {
+            Logger.d("tag", "准备消失的时候执行")
+        }
+
+        //如果你自己想拦截返回按键事件，则重写这个方法，返回true即可
+        override fun onBackPressed(popupView: BasePopupView): Boolean {
+            return false
+        }
+
+        override fun onKeyBoardStateChanged(
+            popupView: BasePopupView, height: Int
+        ) {
+            super.onKeyBoardStateChanged(popupView, height)
+            Logger.d("tag", "onKeyBoardStateChanged height: $height")
+        }
+    }
     fun showImportDialot(activity: AppCompatActivity, selectListener: OnSelectListener) {
         XPopup.Builder(activity).asBottomList(
             activity.getString(R.string.guide_dialog_title), arrayOf(
@@ -27,8 +59,8 @@ object DialogUtils {
         ).show()
     }
 
-    fun showPasswordDialog(activity: AppCompatActivity, listener: PasswordPop.OpenListener): BasePopupView {
-       return XPopup.Builder(activity).isDestroyOnDismiss(true).asCustom(PasswordPop(activity, listener))
+    fun showPasswordDialog(activity: AppCompatActivity, listener: PasswordPop.InputPasswordListener,xpopListener:SimpleCallback = IDCardXPopupListener()): BasePopupView {
+       return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(true).setPopupCallback(xpopListener).isDestroyOnDismiss(true).asCustom(PasswordPop(activity, listener))
             .show()
 
     }

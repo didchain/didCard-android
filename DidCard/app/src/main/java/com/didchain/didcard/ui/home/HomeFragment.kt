@@ -15,7 +15,9 @@ import com.didchain.didcard.DidCardApp
 import com.didchain.didcard.R
 import com.didchain.didcard.bean.SignatureBean
 import com.didchain.didcard.databinding.FragmentHomeBinding
+import com.didchain.didcard.provider.context
 import com.didchain.didcard.utils.DialogUtils
+import com.didchain.didcard.utils.EncryptedPreference
 import com.didchain.didcard.utils.JsonUtils
 import com.didchain.didcard.view.PasswordPop
 import com.lxj.xpopup.XPopup
@@ -88,7 +90,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         mViewModel.title.set(getString(R.string.app_name))
         mViewModel.city.set(getString(R.string.home_location))
         rq.setLineColor(resources.getColor(R.color.color_0c123d, null))
-
+        Log.d("~~~~~~", EncryptedPreference(context()).getString(Constants.KEY_ENCRYPTED_PASSWORD,""))
     }
 
     override fun initData() {
@@ -133,13 +135,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         if (!isLocationEnabled()) {
             toOpenGPS()
         }
+
     }
 
     private fun showPasswordDialog() {
         passwordDialog =
-            DialogUtils.showPasswordDialog(mActivity, object : PasswordPop.OpenListener {
+            DialogUtils.showPasswordDialog(mActivity, object : PasswordPop.InputPasswordListener {
 
-                override fun open(password: String) {
+                override fun input(password: String) {
                     mViewModel.openIdCard(password)
                 }
 
@@ -162,12 +165,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         EasyPermissions.requestPermissions(
             this,
             getString(R.string.request_wlocation_permission),
-            Constants.LOCATION_PERMISSION_CODE,
+            Constants.CODE_LOCATION_PERMISSION,
             Manifest.permission.ACCESS_FINE_LOCATION
         )
     }
 
-    @AfterPermissionGranted(Constants.LOCATION_PERMISSION_CODE)
+    @AfterPermissionGranted(Constants.CODE_LOCATION_PERMISSION)
     fun getLocation() {
         locationClient.startLocation()
     }

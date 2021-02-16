@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
+import com.didchain.android.lib.R
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
 import com.didchain.android.lib.event.SingleLiveEvent
@@ -65,11 +66,11 @@ abstract class BaseViewModel : ViewModel(), IBaseViewModel {
         uc.toastEvent.postValue(msgId)
     }
 
-    open fun showDialog(titleId: Int) {
+    open fun showDialog(titleId: Int= R.string.empty) {
         uc.showDialogEvent.postValue(titleId)
     }
 
-    open fun showDialogNotCancel(titleId: Int) {
+    open fun showDialogNotCancel(titleId: Int= R.string.empty) {
         uc.showDialogNotCancelEvent.postValue(titleId)
     }
 
