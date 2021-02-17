@@ -153,8 +153,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
                     app:layout_constraintTop_toTopOf="@+id/noSecret"
                     app:switchState="@{viewModel.openNoScretObservable}"
-                    app:onCheckedChangeCommand="@{viewModel.onCheckedNoScret}"
-                    />
+                    app:onCheckedChangeCommand="@{viewModel.onCheckedNoScret}" />
 
                 <TextView
                     android:id="@+id/fingerprint"
@@ -169,9 +168,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/fingerprint"
                     app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
                     app:layout_constraintTop_toTopOf="@+id/fingerprint"
-                    app:switchState="@{viewModel.openFingerprintObservable}"
-                    app:onCheckedChangeCommand="@{viewModel.onCheckedFingerprint}"
-                     />
+                    app:switchState="@{viewModel.openFingerPrintObservable}"
+                    app:onCheckedChangeCommand="@{viewModel.onCheckedFingerprint}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

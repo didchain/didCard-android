@@ -1,8 +1,8 @@
 package com.didchain.didcard.view
 
 import android.content.Context
-import com.lxj.xpopup.core.CenterPopupView
 import com.didchain.didcard.R
+import com.lxj.xpopup.core.CenterPopupView
 
 /**
  *Author:Mr'x

@@ -1,7 +1,9 @@
 <resources>
+    <!--    common-->
     <string name="app_name">区块链身份证</string>
     <string name="create_account">创建账号</string>
     <string name="sure">确定</string>
+    <string name="cancel">取消</string>
     <string name="my">我的</string>
     <string name="tip">提示</string>
     <string name="request_write_external_permission">获取相册读写权限</string>
@@ -13,6 +15,9 @@
     <string name="import_apply_camera_permission">申请使用相机权限</string>
     <string name="import_qr_error">身份证二维码不正确</string>
     <string name="open_error">开启失败</string>
+    <string name="fingerprint_recognition_title">指纹识别</string>
+    <string name="fingerprint_recognition_subtitle">请手指放入指纹识别处</string>
+    <string name="fingerprint_recognition_use_password">使用密码</string>
 
     <!--    home-->
     <string name="main_home">首页</string>
@@ -69,6 +74,9 @@
     <string name="my_feed_back">意见反馈</string>
     <string name="my_about">关于我们</string>
     <string name="my_help">帮助</string>
+    <string name="my_no_support_fingerprint">当前手机不支持指纹识别</string>
+    <string name="my_no_fingerprint">你尚未录入指纹，请先在手机系统中录入指纹，再返回本页面开启指纹解锁</string>
+    <string name="my_input">去录入</string>
 
     <!--    save_account-->
     <string name="save_account_des">删除APP\n无密码\n与比特币钱包一致\n丢失将无法找回</string>
@@ -93,7 +101,7 @@
     <!--    Splash-->
     <string name="splash_load_error">获取身份失败</string>
     <string name="home_no_location">手机定位服务未开启，无法获取到您的准确位置信息，是否前往开启？</string>
-    <string name="cancel">取消</string>
+
     <string name="home_go_open">去开启</string>
 
 </resources>

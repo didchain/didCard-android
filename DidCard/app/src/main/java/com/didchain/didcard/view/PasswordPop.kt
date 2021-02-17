@@ -18,7 +18,8 @@ import com.lxj.xpopup.core.CenterPopupView
  *Time:
  *Description:
  */
-class PasswordPop(context: Context, val listener: InputPasswordListener) : CenterPopupView(context) {
+class PasswordPop(context: Context, val listener: InputPasswordListener) :
+    CenterPopupView(context) {
     interface InputPasswordListener {
         fun input(password: String)
     }
@@ -31,7 +32,7 @@ class PasswordPop(context: Context, val listener: InputPasswordListener) : Cente
         super.onCreate()
         val password = findViewById<EditText>(R.id.password)
         findViewById<TextView>(R.id.unlock).setOnClickListener {
-            if(TextUtils.isEmpty(password.text.toString().trim())){
+            if (TextUtils.isEmpty(password.text.toString().trim())) {
                 toast(context.getString(R.string.create_account_input_password))
                 return@setOnClickListener
             }

@@ -4,8 +4,8 @@ import android.content.Context
 import android.widget.EditText
 import android.widget.TextView
 import androidgolib.Androidgolib
-import com.lxj.xpopup.core.CenterPopupView
 import com.didchain.didcard.R
+import com.lxj.xpopup.core.CenterPopupView
 import com.orhanobut.logger.Logger
 
 /**

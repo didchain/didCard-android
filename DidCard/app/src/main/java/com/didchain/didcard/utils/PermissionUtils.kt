@@ -17,7 +17,7 @@ object PermissionUtils {
 
 
     fun hasCameraPermission(ctx: Context): Boolean {
-        return EasyPermissions.hasPermissions(ctx,Manifest.permission.CAMERA)
+        return EasyPermissions.hasPermissions(ctx, Manifest.permission.CAMERA)
     }
 
 }

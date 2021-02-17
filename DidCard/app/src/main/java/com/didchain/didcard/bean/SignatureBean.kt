@@ -9,4 +9,9 @@ import com.squareup.moshi.JsonClass
  *Description:
  */
 @JsonClass(generateAdapter = true)
-data class SignatureBean(@Json(name = "time_tamp")val timeStamp:Long,val latitude: Double, val longitude: Double,val did:String)
+data class SignatureBean(
+    @Json(name = "time_tamp") val timeStamp: Long,
+    val latitude: Double,
+    val longitude: Double,
+    val did: String
+)

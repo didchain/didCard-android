@@ -2,13 +2,13 @@ package com.didchain.didcard.ui.scan
 
 import android.os.Bundle
 import android.view.KeyEvent
-import com.journeyapps.barcodescanner.BarcodeView
-import com.journeyapps.barcodescanner.CaptureManager
-import com.journeyapps.barcodescanner.ViewfinderView
 import com.didchain.android.lib.base.BaseActivity
 import com.didchain.didcard.BR
 import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivityScanBinding
+import com.journeyapps.barcodescanner.BarcodeView
+import com.journeyapps.barcodescanner.CaptureManager
+import com.journeyapps.barcodescanner.ViewfinderView
 import kotlinx.android.synthetic.main.activity_scan.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

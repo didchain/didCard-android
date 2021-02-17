@@ -43,7 +43,7 @@ class ShowIDCardViewModel : BaseViewModel() {
         if (!TextUtils.isEmpty(qrJson)) {
             MainScope().launch {
                 withContext(Dispatchers.IO) {
-                    Logger.d("~~~~~~~~~~~~~~~~~~~~~~~"+Thread.currentThread().name)
+                    Logger.d("~~~~~~~~~~~~~~~~~~~~~~~" + Thread.currentThread().name)
                     val isSave = BitmapUtils.saveBitmapToAlbum(
                         context(),
                         BitmapUtils.stringToQRBitmap(qrJson),

@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.lifecycle.Observer
 import com.didchain.android.lib.base.BaseActivity
 import com.didchain.android.lib.utils.toast
@@ -41,17 +40,15 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
     }
 
     override fun initObserve() {
-        mViewModel.showImportDialog.observe(this,
-            Observer {
-                DialogUtils.showImportDialot(this,
-                    OnSelectListener { position, text ->
-                        if(DialogUtils.POSITION_ALBUM == position){
-                            requestLocalMemoryPermission()
-                        }else if(DialogUtils.POSITION_CAMERA == position){
-                            requestCameraPermission()
-                        }
-                    })
+        mViewModel.showImportDialog.observe(this, Observer {
+            DialogUtils.showImportDialot(this, OnSelectListener { position, text ->
+                if (DialogUtils.POSITION_ALBUM == position) {
+                    requestLocalMemoryPermission()
+                } else if (DialogUtils.POSITION_CAMERA == position) {
+                    requestCameraPermission()
+                }
             })
+        })
     }
 
     override fun initVariableId(): Int = BR.viewModel
@@ -62,7 +59,12 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
         if (PermissionUtils.hasStoragePermission(this)) {
             CardUtils.openAlbum(this)
         } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.import_apply_album_permission), Constants.CODE_OPEN_ALBUM, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_apply_album_permission),
+                Constants.CODE_OPEN_ALBUM,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
         }
     }
 
@@ -77,13 +79,21 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
             ii.setBarcodeImageEnabled(true)
             ii.initiateScan()
         } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.import_apply_camera_permission), Constants.CODE_OPEN_CAMERA, Manifest.permission.CAMERA)
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_apply_camera_permission),
+                Constants.CODE_OPEN_CAMERA,
+                Manifest.permission.CAMERA
+            )
         }
     }
 
 
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
@@ -91,7 +101,7 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(resultCode != Activity.RESULT_OK){
+        if (resultCode != Activity.RESULT_OK) {
             return
         }
 
@@ -101,7 +111,8 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
             }
             loadIdCardFromUri(data.data)
         } else {
-            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return
+            val result =
+                IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return
             if (result.contents == null) {
                 return
             }
@@ -130,9 +141,9 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
 
 
     private fun showPasswordDialog(walletStr: String) {
-        DialogUtils.showPasswordDialog(this,object : PasswordPop.InputPasswordListener{
+        DialogUtils.showPasswordDialog(this, object : PasswordPop.InputPasswordListener {
             override fun input(password: String) {
-                mViewModel.importIdCard(walletStr,password)
+                mViewModel.importIdCard(walletStr, password)
             }
 
         })

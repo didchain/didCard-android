@@ -29,15 +29,17 @@ import org.koin.core.component.inject
 class MyViewModel : BaseViewModel(), KoinComponent {
     val model: MyModel by inject()
     val id = ObservableField<String>()
-    var openFingerprint: Boolean by SharedPref(context(), Constants.KEY_OPEN_FINGERPRINT, false)
+    var openFingerPrint: Boolean by SharedPref(context(), Constants.KEY_OPEN_FINGERPRINT, false)
     var openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
-    var openFingerprintObservable: ObservableBoolean
+    var openFingerPrintObservable: ObservableBoolean
     var openNoScretObservable: ObservableBoolean
-    val showPasswordDialog = SingleLiveEvent<Boolean>()
-    val dismissPasswordDialog = SingleLiveEvent<Boolean>()
+    val showPasswordDialogEvent = SingleLiveEvent<Boolean>()
+    val dismissPasswordDialogEvent = SingleLiveEvent<Boolean>()
+    val fingerPrintEvent = SingleLiveEvent<Boolean>()
+    val showfingerPrintDialogEvent = SingleLiveEvent<String>()
 
     init {
-        openFingerprintObservable = ObservableBoolean(openFingerprint)
+        openFingerPrintObservable = ObservableBoolean(openFingerPrint)
         openNoScretObservable = ObservableBoolean(openNoScret)
         MainScope().launch {
             id.set(model.getIDCard()?.did)
@@ -52,8 +54,10 @@ class MyViewModel : BaseViewModel(), KoinComponent {
 
     val onCheckedFingerprint = BindingCommand(bindConsumer = object : BindingConsumer<Boolean> {
         override fun call(isChecked: Boolean) {
-            openFingerprintObservable.set(isChecked)
-            openNoScretObservable.set(isChecked)
+            openFingerPrintObservable.set(isChecked)
+            if (isChecked) {
+                fingerPrintEvent.postValue(isChecked)
+            }
         }
 
     })
@@ -61,7 +65,7 @@ class MyViewModel : BaseViewModel(), KoinComponent {
     val onCheckedNoScret = BindingCommand(bindConsumer = object : BindingConsumer<Boolean> {
         override fun call(isChecked: Boolean) {
             if (isChecked) {
-                showPasswordDialog.postValue(isChecked)
+                showPasswordDialogEvent.postValue(isChecked)
             } else {
                 openNoScret = false
             }
@@ -100,14 +104,22 @@ class MyViewModel : BaseViewModel(), KoinComponent {
         }
     })
 
-    fun openIdCard(password: String) {
+    fun openIdCard(password: String, isOpenNoScret: Boolean) {
         showDialog()
         model.openIdCard(password).subscribe(object : SingleObserver<Boolean> {
             override fun onSuccess(t: Boolean) {
                 dismissDialog()
-                EncryptedPreference(context()).putString(Constants.KEY_ENCRYPTED_PASSWORD, password)
-                openNoScret = true
-                dismissPasswordDialog.call()
+                dismissPasswordDialogEvent.call()
+                if (isOpenNoScret) {
+                    EncryptedPreference(context()).putString(
+                        Constants.KEY_ENCRYPTED_PASSWORD,
+                        password
+                    )
+                    openNoScret = true
+                } else {
+                    showfingerPrintDialogEvent.postValue(password)
+                }
+
             }
 
             override fun onSubscribe(d: Disposable) {

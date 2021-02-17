@@ -4,9 +4,9 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
-import com.journeyapps.barcodescanner.ViewfinderView
 import com.didchain.android.lib.utils.dp
 import com.didchain.didcard.R
+import com.journeyapps.barcodescanner.ViewfinderView
 
 /**
  *Author:Mr'x

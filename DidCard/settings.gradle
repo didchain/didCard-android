@@ -1,4 +1,2 @@
-include ':gaodemap'
-include ':golib'
-include ':app',':lib'
+include ':app',':lib',':golib',':gaodemap'
 rootProject.name = "DidCard"

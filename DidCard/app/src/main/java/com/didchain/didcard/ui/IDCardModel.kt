@@ -14,13 +14,13 @@ import io.reactivex.rxjava3.core.SingleOnSubscribe
  *Time:
  *Description:
  */
-open class IDCardModel:BaseModel() {
+open class IDCardModel : BaseModel() {
     suspend fun getIDCard(): CardBean? {
         return CardUtils.loadCardBeanByPath(CardUtils.getCardPath(context()))
     }
 
     fun openIdCard(password: String): Single<Boolean> {
-        return  Single.create(SingleOnSubscribe<Boolean> { emitter ->
+        return Single.create(SingleOnSubscribe<Boolean> { emitter ->
             Androidgolib.open(password)
             emitter.onSuccess(true)
         }).compose(CommonSchedulers.io2mainAndTimeout<Boolean>())

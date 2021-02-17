@@ -22,7 +22,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.util.LinkedHashMap
+import java.util.*
 
 /**
  *Author:Mr'x
@@ -68,7 +68,7 @@ object CardUtils {
         return File(path).exists()
     }
 
-    fun openAlbum(activity:Activity) {
+    fun openAlbum(activity: Activity) {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         activity.startActivityForResult(intent, Constants.CODE_OPEN_ALBUM)
     }

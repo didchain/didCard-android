@@ -19,9 +19,9 @@ class GuideModel {
         }).compose(CommonSchedulers.io2mainAndTimeout<Boolean>())
     }
 
-    fun import(idCardJson: String,password: String): Single<String> {
+    fun import(idCardJson: String, password: String): Single<String> {
         return Single.create(SingleOnSubscribe<String> { emitter ->
-            val id = String(Androidgolib.import_(password,idCardJson))
+            val id = String(Androidgolib.import_(password, idCardJson))
             emitter.onSuccess(id)
         }).compose(CommonSchedulers.io2mainAndTimeout<String>())
     }

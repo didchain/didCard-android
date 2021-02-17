@@ -1,11 +1,12 @@
 package com.didchain.didcard.utils
 
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.didchain.didcard.R
 import com.didchain.didcard.view.PasswordPop
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
+import com.lxj.xpopup.interfaces.OnCancelListener
+import com.lxj.xpopup.interfaces.OnConfirmListener
 import com.lxj.xpopup.interfaces.OnSelectListener
 import com.lxj.xpopup.interfaces.SimpleCallback
 import com.orhanobut.logger.Logger
@@ -26,7 +27,7 @@ object DialogUtils {
         }
 
         override fun onShow(popupView: BasePopupView) {
-            Logger.d("tag","onShow")
+            Logger.d("tag", "onShow")
         }
 
         override fun onDismiss(popupView: BasePopupView) {
@@ -49,6 +50,7 @@ object DialogUtils {
             Logger.d("tag", "onKeyBoardStateChanged height: $height")
         }
     }
+
     fun showImportDialot(activity: AppCompatActivity, selectListener: OnSelectListener) {
         XPopup.Builder(activity).asBottomList(
             activity.getString(R.string.guide_dialog_title), arrayOf(
@@ -59,9 +61,33 @@ object DialogUtils {
         ).show()
     }
 
-    fun showPasswordDialog(activity: AppCompatActivity, listener: PasswordPop.InputPasswordListener,xpopListener:SimpleCallback = IDCardXPopupListener()): BasePopupView {
-       return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(true).setPopupCallback(xpopListener).isDestroyOnDismiss(true).asCustom(PasswordPop(activity, listener))
-            .show()
+    fun showPasswordDialog(
+        activity: AppCompatActivity,
+        listener: PasswordPop.InputPasswordListener,
+        xpopListener: SimpleCallback = IDCardXPopupListener()
+    ): BasePopupView {
+        return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(true)
+            .setPopupCallback(xpopListener).isDestroyOnDismiss(true)
+            .asCustom(PasswordPop(activity, listener)).show()
+
+    }
+
+
+    fun showStartFingerPrintsDialog(
+        activity: AppCompatActivity,
+        confirmListerer: OnConfirmListener,
+        cancelListener: OnCancelListener
+    ): BasePopupView {
+        return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(false)
+            .isDestroyOnDismiss(true).asConfirm(
+                "",
+                activity.getString(R.string.my_no_fingerprint),
+                activity.getString(R.string.cancel),
+                activity.getString(R.string.my_input),
+                confirmListerer,
+                cancelListener,
+                false
+            ).show()
 
     }
 }

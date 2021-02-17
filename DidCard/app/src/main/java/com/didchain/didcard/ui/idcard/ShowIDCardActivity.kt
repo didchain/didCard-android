@@ -30,7 +30,7 @@ class ShowIDCardActivity : BaseActivity<ShowIDCardViewModel, ActivityShowIdCardB
 
     override fun initObserve() {
 
-        mViewModel.idCardJsonEvent.observe(this,object: Observer<String> {
+        mViewModel.idCardJsonEvent.observe(this, object : Observer<String> {
             override fun onChanged(qrjson: String?) {
                 qrjson?.let {
                     idQR.setImageBitmap(BitmapUtils.stringToQRBitmap(it))

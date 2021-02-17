@@ -37,9 +37,10 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
     private val itemIcons = arrayListOf(R.drawable.notice_icon, R.drawable.hospital_icon, R.drawable.hotel_icon)
     val showPasswordEvent = SingleLiveEvent<Boolean>()
     val dismissPasswordEvent = SingleLiveEvent<Boolean>()
-    private var openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
+    val openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
+    val openFingerPrint: Boolean by SharedPref(context(), Constants.KEY_OPEN_FINGERPRINT, false)
     val id = ObservableField<String>()
-    val city = ObservableField<String>()
+    val city = ObservableField<String>(context().getString(R.string.home_location))
     val showLock = ObservableField<Boolean>(true)
     val items: ObservableList<HomeItemViewModel> = ObservableArrayList()
     val itemBinding = ItemBinding.of<HomeItemViewModel>(BR.item, R.layout.item_service)
@@ -70,11 +71,10 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
     })
 
     fun openIdCard(password: String) {
-        model.openIdCard(password).subscribe(object: SingleObserver<Boolean> {
+        model.openIdCard(password).subscribe(object : SingleObserver<Boolean> {
             override fun onSuccess(t: Boolean) {
                 showLock.set(false)
                 dismissPasswordEvent.call()
-                crateIdCardQr()
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -82,13 +82,11 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
             }
 
             override fun onError(e: Throwable) {
-                showErrorToast(R.string.open_error,e)
+                showErrorToast(R.string.open_error, e)
             }
 
         })
     }
 
-    private fun crateIdCardQr() {
 
-    }
 }

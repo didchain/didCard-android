@@ -25,7 +25,7 @@ import com.didchain.android.lib.utils.toast
  * @date :   2020/11/3 9:21 AM
  */
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment() {
-
+    val TAG = this.javaClass.name
     protected lateinit var mDatabinding: DB
     lateinit var mActivity: AppCompatActivity
     private  lateinit var loadingDialog: LoadingPopupView

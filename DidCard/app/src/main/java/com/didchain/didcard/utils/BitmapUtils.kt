@@ -9,9 +9,9 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import com.didchain.android.lib.utils.dp
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import com.didchain.android.lib.utils.dp
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -27,7 +27,7 @@ import java.io.OutputStream
 object BitmapUtils {
     private const val DCIM = "/DCIM/Camera/"
 
-     fun stringToQRBitmap(data: String): Bitmap {
+    fun stringToQRBitmap(data: String): Bitmap {
         val barcodeEncoder = BarcodeEncoder()
         return barcodeEncoder.encodeBitmap(
             data, BarcodeFormat.QR_CODE, 400.dp.toInt(), 400.dp.toInt()
