@@ -67,7 +67,7 @@
 
 
         <activity
-            android:name=".ui.create.account.CreateCardActivity"
+            android:name=".ui.create.CreateCardActivity"
             android:screenOrientation="portrait" />
 
         <activity

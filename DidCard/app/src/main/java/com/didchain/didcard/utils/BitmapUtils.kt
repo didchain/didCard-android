@@ -12,11 +12,7 @@ import android.util.Log
 import com.didchain.android.lib.utils.dp
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
+import java.io.*
 
 
 /**
@@ -30,7 +26,7 @@ object BitmapUtils {
     fun stringToQRBitmap(data: String): Bitmap {
         val barcodeEncoder = BarcodeEncoder()
         return barcodeEncoder.encodeBitmap(
-            data, BarcodeFormat.QR_CODE, 400.dp.toInt(), 400.dp.toInt()
+                data, BarcodeFormat.QR_CODE, 400.dp.toInt(), 400.dp.toInt()
         )
     }
 
@@ -72,10 +68,10 @@ object BitmapUtils {
                     values.put(MediaStore.Images.Media.DATA, file.getAbsolutePath())
                     values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
                     val uri: Uri? = context.getContentResolver()
-                        .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                            .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
                 } else {
                     MediaStore.Images.Media.insertImage(
-                        context.getContentResolver(), file.getAbsolutePath(), bitName, null
+                            context.getContentResolver(), file.getAbsolutePath(), bitName, null
                     )
                 }
             }
@@ -94,9 +90,9 @@ object BitmapUtils {
 
         }
         context.sendBroadcast(
-            Intent(
-                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$fileName")
-            )
+                Intent(
+                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$fileName")
+                )
         )
 
         return true
@@ -119,7 +115,7 @@ object BitmapUtils {
             //执行insert操作，向系统文件夹中添加文件
             //EXTERNAL_CONTENT_URI代表外部存储器，该值不变
             val uri: Uri? = context.getContentResolver()
-                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                    .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
             if (uri != null) {
                 //若生成了uri，则表示该文件添加成功
                 //使用流将内容写入该uri中即可

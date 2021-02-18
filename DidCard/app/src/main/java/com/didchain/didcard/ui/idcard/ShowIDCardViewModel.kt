@@ -12,7 +12,6 @@ import com.didchain.didcard.provider.context
 import com.didchain.didcard.utils.BitmapUtils
 import com.didchain.didcard.utils.CardUtils
 import com.didchain.didcard.utils.JsonUtils
-import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -43,11 +42,10 @@ class ShowIDCardViewModel : BaseViewModel() {
         if (!TextUtils.isEmpty(qrJson)) {
             MainScope().launch {
                 withContext(Dispatchers.IO) {
-                    Logger.d("~~~~~~~~~~~~~~~~~~~~~~~" + Thread.currentThread().name)
                     val isSave = BitmapUtils.saveBitmapToAlbum(
-                        context(),
-                        BitmapUtils.stringToQRBitmap(qrJson),
-                        context().getString(R.string.app_name)
+                            context(),
+                            BitmapUtils.stringToQRBitmap(qrJson),
+                            context().getString(R.string.app_name)
                     )
                     if (isSave) {
                         showToast(R.string.save_account_success)

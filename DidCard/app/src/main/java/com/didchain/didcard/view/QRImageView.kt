@@ -15,7 +15,7 @@ import com.didchain.didcard.R
  *Description:
  */
 class QRImageView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
     val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = context.resources.getColor(R.color.yellow, null)

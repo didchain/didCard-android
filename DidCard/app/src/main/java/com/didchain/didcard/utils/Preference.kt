@@ -10,11 +10,11 @@ import kotlin.reflect.KProperty
  *Description:
  */
 class SharedPref<T>(
-    private val context: Context,
-    private val name: String,
-    private val defValue: T,
-    private val pref: String = "default",
-    private val commit: Boolean = false
+        private val context: Context,
+        private val name: String,
+        private val defValue: T,
+        private val pref: String = "default",
+        private val commit: Boolean = false
 ) : ReadWriteProperty<Any?, T> {
 
     private val prefs by lazy {
@@ -22,10 +22,10 @@ class SharedPref<T>(
     }
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T =
-        findPreference(findProperName(property))
+            findPreference(findProperName(property))
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) =
-        putPreference(findProperName(property), value)
+            putPreference(findProperName(property), value)
 
     private fun findProperName(property: KProperty<*>) = if (name.isEmpty()) property.name else name
 

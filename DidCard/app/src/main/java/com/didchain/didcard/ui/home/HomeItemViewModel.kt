@@ -11,4 +11,4 @@ import org.koin.core.component.KoinApiExtension
  */
 @KoinApiExtension
 class HomeItemViewModel(viewModel: HomeViewModel, val serviceBean: ServiceBean) :
-    ItemViewModel<HomeViewModel>(viewModel)
+        ItemViewModel<HomeViewModel>(viewModel)

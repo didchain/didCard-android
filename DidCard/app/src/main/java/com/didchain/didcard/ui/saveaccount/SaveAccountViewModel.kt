@@ -34,7 +34,7 @@ class SaveAccountViewModel : BaseViewModel() {
 
     fun saveCard2Album(data: String) {
         val isSave = BitmapUtils.saveBitmapToAlbum(
-            context(), BitmapUtils.stringToQRBitmap(data), context().getString(R.string.app_name)
+                context(), BitmapUtils.stringToQRBitmap(data), context().getString(R.string.app_name)
         )
         if (isSave) {
             saveAlbumResultEvent.postValue(true)

@@ -10,12 +10,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import com.didchain.didcard.Constants
 import com.didchain.didcard.bean.CardBean
-import com.google.zxing.BinaryBitmap
-import com.google.zxing.DecodeHintType
-import com.google.zxing.LuminanceSource
-import com.google.zxing.MultiFormatReader
-import com.google.zxing.RGBLuminanceSource
-import com.google.zxing.Reader
+import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope

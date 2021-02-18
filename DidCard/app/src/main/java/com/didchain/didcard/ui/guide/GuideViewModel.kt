@@ -6,7 +6,7 @@ import com.didchain.android.lib.command.BindingCommand
 import com.didchain.android.lib.event.SingleLiveEvent
 import com.didchain.didcard.R
 import com.didchain.didcard.provider.context
-import com.didchain.didcard.ui.create.account.CreateCardActivity
+import com.didchain.didcard.ui.create.CreateCardActivity
 import com.didchain.didcard.ui.saveaccount.SaveAccountActivity
 import com.didchain.didcard.utils.CardUtils
 import io.reactivex.rxjava3.core.SingleObserver

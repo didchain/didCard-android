@@ -73,7 +73,7 @@ class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
 
 
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+            requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         capture.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }

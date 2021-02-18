@@ -5,7 +5,7 @@ import com.didchain.android.lib.base.BaseActivity
 import com.didchain.didcard.BR
 import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivityCreateIdCardBinding
-import com.didchain.didcard.ui.create.account.CreateCardViewModel
+import com.didchain.didcard.ui.create.CreateCardViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinApiExtension
 

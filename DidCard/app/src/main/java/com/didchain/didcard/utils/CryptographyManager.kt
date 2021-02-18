@@ -18,6 +18,7 @@ package com.didchain.didcard.utils
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import java.nio.charset.Charset
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -86,10 +87,7 @@ private class CryptographyManagerImpl : CryptographyManager {
         return cipher
     }
 
-    override fun getInitializedCipherForDecryption(
-        keyName: String,
-        initializationVector: ByteArray
-    ): Cipher {
+    override fun getInitializedCipherForDecryption(keyName: String, initializationVector: ByteArray): Cipher {
         val cipher = getCipher()
         val secretKey = getOrCreateSecretKey(keyName)
         cipher.init(Cipher.DECRYPT_MODE, secretKey, GCMParameterSpec(128, initializationVector))
@@ -97,13 +95,13 @@ private class CryptographyManagerImpl : CryptographyManager {
     }
 
     override fun encryptData(plaintext: String, cipher: Cipher): EncryptedData {
-        val ciphertext = cipher.doFinal(StringUtils.hexStringToByte(plaintext))
+        val ciphertext = cipher.doFinal(plaintext.toByteArray(Charset.forName("UTF-8")))
         return EncryptedData(ciphertext, cipher.iv)
     }
 
     override fun decryptData(ciphertext: ByteArray, cipher: Cipher): String {
         val plaintext = cipher.doFinal(ciphertext)
-        return StringUtils.bytesToHexString(plaintext)
+        return String(plaintext, Charset.forName("UTF-8"))
     }
 
     private fun getCipher(): Cipher {
@@ -118,9 +116,8 @@ private class CryptographyManagerImpl : CryptographyManager {
         keyStore.getKey(keyName, null)?.let { return it as SecretKey }
 
         // if you reach here, then a new SecretKey must be generated for that keyName
-        val paramsBuilder = KeyGenParameterSpec.Builder(
-            keyName, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-        )
+        val paramsBuilder = KeyGenParameterSpec.Builder(keyName,
+                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
         paramsBuilder.apply {
             setBlockModes(ENCRYPTION_BLOCK_MODE)
             setEncryptionPaddings(ENCRYPTION_PADDING)
@@ -129,9 +126,8 @@ private class CryptographyManagerImpl : CryptographyManager {
         }
 
         val keyGenParams = paramsBuilder.build()
-        val keyGenerator = KeyGenerator.getInstance(
-            KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEYSTORE
-        )
+        val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES,
+                ANDROID_KEYSTORE)
         keyGenerator.init(keyGenParams)
         return keyGenerator.generateKey()
     }

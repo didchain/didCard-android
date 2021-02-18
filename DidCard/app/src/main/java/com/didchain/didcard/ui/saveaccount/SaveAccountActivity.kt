@@ -58,9 +58,9 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
 
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // 将结果转发给 EasyPermissions
@@ -73,10 +73,10 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
 
     private fun requestExternalPermission() {
         EasyPermissions.requestPermissions(
-            this,
-            getString(R.string.request_write_external_permission),
-            Constants.CODE_WRITE_EXTERNAL_PERMISSION,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                this,
+                getString(R.string.request_write_external_permission),
+                Constants.CODE_WRITE_EXTERNAL_PERMISSION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
     }
 

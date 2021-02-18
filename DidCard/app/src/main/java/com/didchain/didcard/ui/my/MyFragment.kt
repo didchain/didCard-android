@@ -33,9 +33,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
     private lateinit var passwordDialog: BasePopupView
-    val biometricManager: BiometricManager by lazy {
-        BiometricManager.from(mActivity)
-    }
+    val biometricManager: BiometricManager by lazy { BiometricManager.from(mActivity) }
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private lateinit var cryptographyManager: CryptographyManager
@@ -65,7 +63,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         mViewModel.fingerPrintEvent.observe(this, object : Observer<Boolean> {
             override fun onChanged(open: Boolean?) {
                 val status =
-                    biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
+                        biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
                 if (status == BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE || status == BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE) {
                     toast(getString(R.string.my_no_support_fingerprint))
                     mViewModel.openFingerPrintObservable.set(false)
@@ -86,20 +84,19 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             cryptographyManager = CryptographyManager()
             biometricPrompt = createBiometricPrompt(password)
             promptInfo = createPromptInfo()
-            val secretKeyName = String.format(Constants.KEY_BIOMETRIC_BY_ID, mViewModel.id)
-            val cipher = cryptographyManager.getInitializedCipherForEncryption(secretKeyName)
+            val cipher = cryptographyManager.getInitializedCipherForEncryption(Constants.KEY_DID_BIOMETRIC)
             biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
         })
     }
 
     private fun createPromptInfo(): BiometricPrompt.PromptInfo {
         return BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.fingerprint_recognition_title))
-            .setSubtitle(getString(R.string.fingerprint_recognition_subtitle))
-            //            .setDescription(getString(R.string.prompt_info_description))
-            .setConfirmationRequired(false).setNegativeButtonText(getString(R.string.cancel))
-            //            .setDeviceCredentialAllowed(true)
-            .build()
+                .setTitle(getString(R.string.fingerprint_recognition_title))
+                .setSubtitle(getString(R.string.fingerprint_recognition_subtitle))
+                //            .setDescription(getString(R.string.prompt_info_description))
+                .setConfirmationRequired(false).setNegativeButtonText(getString(R.string.cancel))
+                //            .setDeviceCredentialAllowed(true)
+                .build()
     }
 
     private fun showStartFingerPrintsDialog() {
@@ -120,23 +117,22 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         startActivity(intent)
     }
 
-    private fun showPasswordDialog(isOpenNoScret: Boolean) {
-        passwordDialog =
-            DialogUtils.showPasswordDialog(mActivity, object : PasswordPop.InputPasswordListener {
-                override fun input(password: String) {
-                    mViewModel.openIdCard(password, isOpenNoScret)
-                }
+    private fun showPasswordDialog(isOpenNoSecret: Boolean) {
+        passwordDialog = DialogUtils.showPasswordDialog(mActivity, object : PasswordPop.InputPasswordListener {
+            override fun input(password: String) {
+                mViewModel.openIdCard(password, isOpenNoSecret)
+            }
 
-            }, object : SimpleCallback() {
-                override fun onBackPressed(popupView: BasePopupView?): Boolean {
-                    if (isOpenNoScret) {
-                        mViewModel.openNoScretObservable.set(!mViewModel.openNoScretObservable.get())
-                    } else {
-                        mViewModel.openFingerPrintObservable.set(false)
-                    }
-                    return false
+        }, object : SimpleCallback() {
+            override fun onBackPressed(popupView: BasePopupView?): Boolean {
+                if (isOpenNoSecret) {
+                    mViewModel.openNoScretObservable.set(!mViewModel.openNoScretObservable.get())
+                } else {
+                    mViewModel.openFingerPrintObservable.set(false)
                 }
-            })
+                return false
+            }
+        })
     }
 
     private fun createBiometricPrompt(password: String): BiometricPrompt {
@@ -146,6 +142,9 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
                 Logger.d(TAG, "$errorCode :: $errString")
+                if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON || errorCode == BiometricPrompt.ERROR_USER_CANCELED || errorCode == BiometricPrompt.ERROR_LOCKOUT) {
+                    mViewModel.openFingerPrintObservable.set(false)
+                }
             }
 
             override fun onAuthenticationFailed() {
@@ -164,17 +163,15 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         return BiometricPrompt(this, executor, callback)
     }
 
+
     private fun processData(password: String, cryptoObject: BiometricPrompt.CryptoObject?) {
         val encryptedData = cryptographyManager.encryptData(password, cryptoObject?.cipher!!)
         val encryptedPreference = EncryptedPreference(mActivity)
-        encryptedPreference.putString(
-            Constants.KEY_BIOMETRIC_PASSWORD,
-            StringUtils.bytesToHexString(encryptedData.ciphertext)
-        )
-        encryptedPreference.putString(
-            Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR,
-            StringUtils.bytesToHexString(encryptedData.initializationVector)
-        )
+        encryptedPreference.putString(Constants.KEY_BIOMETRIC_PASSWORD, StringUtils.bytesToHexString(encryptedData.ciphertext))
+        encryptedPreference.putString(Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR, StringUtils.bytesToHexString(encryptedData.initializationVector))
+
+
     }
+
 
 }

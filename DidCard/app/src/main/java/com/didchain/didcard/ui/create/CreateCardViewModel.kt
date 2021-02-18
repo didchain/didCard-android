@@ -1,4 +1,4 @@
-package com.didchain.didcard.ui.create.account
+package com.didchain.didcard.ui.create
 
 import android.text.TextUtils
 import androidx.databinding.ObservableField
@@ -26,7 +26,6 @@ import org.koin.core.component.inject
 class CreateCardViewModel : BaseViewModel(), KoinComponent {
     private val model: CreateCardModel by inject()
     val password = ObservableField<String>("")
-    var name: String by SharedPref(context(), "name", "haha")
     val confirmPassword = ObservableField<String>("")
 
     val clickCreate = BindingCommand<Any>(object : BindingAction {

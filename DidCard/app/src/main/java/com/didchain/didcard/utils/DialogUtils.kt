@@ -44,7 +44,7 @@ object DialogUtils {
         }
 
         override fun onKeyBoardStateChanged(
-            popupView: BasePopupView, height: Int
+                popupView: BasePopupView, height: Int
         ) {
             super.onKeyBoardStateChanged(popupView, height)
             Logger.d("tag", "onKeyBoardStateChanged height: $height")
@@ -53,41 +53,41 @@ object DialogUtils {
 
     fun showImportDialot(activity: AppCompatActivity, selectListener: OnSelectListener) {
         XPopup.Builder(activity).asBottomList(
-            activity.getString(R.string.guide_dialog_title), arrayOf(
+                activity.getString(R.string.guide_dialog_title), arrayOf(
                 activity.getString(R.string.guide_import_album),
                 activity.getString(R.string.guide_import_camera),
                 activity.getString(R.string.cancel)
-            ), selectListener
+        ), selectListener
         ).show()
     }
 
     fun showPasswordDialog(
-        activity: AppCompatActivity,
-        listener: PasswordPop.InputPasswordListener,
-        xpopListener: SimpleCallback = IDCardXPopupListener()
+            activity: AppCompatActivity,
+            listener: PasswordPop.InputPasswordListener,
+            xpopListener: SimpleCallback = IDCardXPopupListener()
     ): BasePopupView {
         return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(true)
-            .setPopupCallback(xpopListener).isDestroyOnDismiss(true)
-            .asCustom(PasswordPop(activity, listener)).show()
+                .setPopupCallback(xpopListener).isDestroyOnDismiss(true)
+                .asCustom(PasswordPop(activity, listener)).show()
 
     }
 
 
     fun showStartFingerPrintsDialog(
-        activity: AppCompatActivity,
-        confirmListerer: OnConfirmListener,
-        cancelListener: OnCancelListener
+            activity: AppCompatActivity,
+            confirmListerer: OnConfirmListener,
+            cancelListener: OnCancelListener
     ): BasePopupView {
         return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(false)
-            .isDestroyOnDismiss(true).asConfirm(
-                "",
-                activity.getString(R.string.my_no_fingerprint),
-                activity.getString(R.string.cancel),
-                activity.getString(R.string.my_input),
-                confirmListerer,
-                cancelListener,
-                false
-            ).show()
+                .isDestroyOnDismiss(true).asConfirm(
+                        "",
+                        activity.getString(R.string.my_no_fingerprint),
+                        activity.getString(R.string.cancel),
+                        activity.getString(R.string.my_input),
+                        confirmListerer,
+                        cancelListener,
+                        false
+                ).show()
 
     }
 }

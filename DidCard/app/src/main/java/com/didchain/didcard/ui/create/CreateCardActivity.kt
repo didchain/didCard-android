@@ -1,4 +1,4 @@
-package com.didchain.didcard.ui.create.account
+package com.didchain.didcard.ui.create
 
 import android.os.Bundle
 import com.didchain.android.lib.base.BaseActivity

@@ -60,10 +60,10 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
             CardUtils.openAlbum(this)
         } else {
             EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_apply_album_permission),
-                Constants.CODE_OPEN_ALBUM,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    this,
+                    getString(R.string.import_apply_album_permission),
+                    Constants.CODE_OPEN_ALBUM,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
         }
     }
@@ -80,19 +80,19 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
             ii.initiateScan()
         } else {
             EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_apply_camera_permission),
-                Constants.CODE_OPEN_CAMERA,
-                Manifest.permission.CAMERA
+                    this,
+                    getString(R.string.import_apply_camera_permission),
+                    Constants.CODE_OPEN_CAMERA,
+                    Manifest.permission.CAMERA
             )
         }
     }
 
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
@@ -112,7 +112,7 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
             loadIdCardFromUri(data.data)
         } else {
             val result =
-                IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return
+                    IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return
             if (result.contents == null) {
                 return
             }

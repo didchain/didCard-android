@@ -17,7 +17,7 @@ object Constants {
     const val KEY_ENCRYPTED_PASSWORD = "key_password"
     const val KEY_BIOMETRIC_PASSWORD = "key_biometric_password"
     const val KEY_BIOMETRIC_INITIALIZATIONVECTOR = "key_biometric_initializationvector"
-    const val KEY_BIOMETRIC_BY_ID = "key_biometric_%s"
+    const val KEY_DID_BIOMETRIC = "key_did_biometric"
 
     const val TAG_NAME = "ID_GO_TAG"
 }

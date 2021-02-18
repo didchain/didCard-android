@@ -49,10 +49,10 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
         showLock.set(!openNoScret)
         itemTitles.forEachIndexed { index, i ->
             items.add(
-                HomeItemViewModel(
-                    this,
-                    ServiceBean(DidCardApp.instance.getString(itemTitles[index]), itemIcons[index])
-                )
+                    HomeItemViewModel(
+                            this,
+                            ServiceBean(DidCardApp.instance.getString(itemTitles[index]), itemIcons[index])
+                    )
             )
         }
 

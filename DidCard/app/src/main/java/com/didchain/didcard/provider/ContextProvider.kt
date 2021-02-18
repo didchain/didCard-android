@@ -20,7 +20,7 @@ internal class ContextProvider : ContentProvider() {
     }
 
     override fun update(
-        uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?
+            uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?
     ): Int {
         return 0
     }
@@ -38,11 +38,11 @@ internal class ContextProvider : ContentProvider() {
     }
 
     override fun query(
-        uri: Uri,
-        projection: Array<out String>?,
-        selection: String?,
-        selectionArgs: Array<out String>?,
-        sortOrder: String?
+            uri: Uri,
+            projection: Array<out String>?,
+            selection: String?,
+            selectionArgs: Array<out String>?,
+            sortOrder: String?
     ): Cursor? {
         return null
     }

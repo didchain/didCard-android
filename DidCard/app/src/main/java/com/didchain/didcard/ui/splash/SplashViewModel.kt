@@ -24,20 +24,20 @@ class SplashViewModel : BaseViewModel(), KoinComponent {
 
     fun loadCard() {
         guideModel.loadCard(CardUtils.getCardPath(context()))
-            .subscribe(object : SingleObserver<Boolean> {
-                override fun onSuccess(loadResult: Boolean) {
-                    startActivityAndFinish(MainActivity::class.java)
-                }
+                .subscribe(object : SingleObserver<Boolean> {
+                    override fun onSuccess(loadResult: Boolean) {
+                        startActivityAndFinish(MainActivity::class.java)
+                    }
 
-                override fun onSubscribe(d: Disposable) {
-                    addSubscribe(d)
-                }
+                    override fun onSubscribe(d: Disposable) {
+                        addSubscribe(d)
+                    }
 
-                override fun onError(e: Throwable) {
-                    showErrorToast(R.string.splash_load_error, e)
-                    finish()
-                }
+                    override fun onError(e: Throwable) {
+                        showErrorToast(R.string.splash_load_error, e)
+                        finish()
+                    }
 
-            })
+                })
     }
 }

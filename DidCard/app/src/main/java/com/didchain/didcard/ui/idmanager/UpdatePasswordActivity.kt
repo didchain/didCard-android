@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *Description:
  */
 class UpdatePasswordActivity :
-    BaseActivity<UpdatePasswordViewModel, ActivityUpdatePasswordBinding>() {
+        BaseActivity<UpdatePasswordViewModel, ActivityUpdatePasswordBinding>() {
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_update_password
     override val mViewModel: UpdatePasswordViewModel by viewModel()

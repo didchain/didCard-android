@@ -112,8 +112,8 @@ class MyViewModel : BaseViewModel(), KoinComponent {
                 dismissPasswordDialogEvent.call()
                 if (isOpenNoScret) {
                     EncryptedPreference(context()).putString(
-                        Constants.KEY_ENCRYPTED_PASSWORD,
-                        password
+                            Constants.KEY_ENCRYPTED_PASSWORD,
+                            password
                     )
                     openNoScret = true
                 } else {
