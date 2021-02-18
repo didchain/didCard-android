@@ -38,7 +38,7 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
     val showPasswordEvent = SingleLiveEvent<Boolean>()
     val dismissPasswordEvent = SingleLiveEvent<Boolean>()
     val openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
-    val openFingerPrint: Boolean by SharedPref(context(), Constants.KEY_OPEN_FINGERPRINT, false)
+    var openFingerPrint: Boolean by SharedPref(context(), Constants.KEY_OPEN_FINGERPRINT, false)
     val id = ObservableField<String>()
     val city = ObservableField<String>(context().getString(R.string.home_location))
     val showLock = ObservableField<Boolean>(true)

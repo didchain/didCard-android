@@ -82,8 +82,18 @@ private class CryptographyManagerImpl : CryptographyManager {
 
     override fun getInitializedCipherForEncryption(keyName: String): Cipher {
         val cipher = getCipher()
-        val secretKey = getOrCreateSecretKey(keyName)
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+        var secretKey = getOrCreateSecretKey(keyName)
+        try {
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+        }catch (e:Exception){
+            //用户指纹有修改，使用加解密会失败。要移除之前的秘钥对
+            val keyStore = KeyStore.getInstance(ANDROID_KEYSTORE)
+            keyStore.load(null) // Keystore must be loaded before it can be
+            keyStore.deleteEntry(keyName)
+            secretKey = getOrCreateSecretKey(keyName)
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+        }
+
         return cipher
     }
 
@@ -110,11 +120,11 @@ private class CryptographyManagerImpl : CryptographyManager {
     }
 
     private fun getOrCreateSecretKey(keyName: String): SecretKey {
-        // If Secretkey was previously created for that keyName, then grab and return it.
+        // If Secretkey was previously created for that keyName, then
+        // grab and return it.
         val keyStore = KeyStore.getInstance(ANDROID_KEYSTORE)
         keyStore.load(null) // Keystore must be loaded before it can be accessed
         keyStore.getKey(keyName, null)?.let { return it as SecretKey }
-
         // if you reach here, then a new SecretKey must be generated for that keyName
         val paramsBuilder = KeyGenParameterSpec.Builder(keyName,
                 KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)

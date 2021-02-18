@@ -104,8 +104,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             val encryptedVector = encryptedPreference.getString(Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR, "")
             biometricPrompt = createBiometricPrompt(encryptedPassword)
             promptInfo = createPromptInfo()
-            val cipher = cryptographyManager.getInitializedCipherForDecryption(Constants.KEY_DID_BIOMETRIC, StringUtils.hexStringToByte(encryptedVector))
-            biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
+            try {
+                val cipher = cryptographyManager.getInitializedCipherForDecryption(Constants.KEY_DID_BIOMETRIC, StringUtils.hexStringToByte(encryptedVector))
+                biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
+            }catch (e:Exception){
+                Log.d(TAG, "initData: ${e.message}")
+                mViewModel.openFingerPrint = false
+
+            }
+
         }
 
         initLocation()

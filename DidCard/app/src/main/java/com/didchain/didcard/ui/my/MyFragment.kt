@@ -63,7 +63,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         mViewModel.fingerPrintEvent.observe(this, object : Observer<Boolean> {
             override fun onChanged(open: Boolean?) {
                 val status =
-                        biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
+                    biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
                 if (status == BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE || status == BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE) {
                     toast(getString(R.string.my_no_support_fingerprint))
                     mViewModel.openFingerPrintObservable.set(false)
@@ -84,19 +84,24 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             cryptographyManager = CryptographyManager()
             biometricPrompt = createBiometricPrompt(password)
             promptInfo = createPromptInfo()
-            val cipher = cryptographyManager.getInitializedCipherForEncryption(Constants.KEY_DID_BIOMETRIC)
-            biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
+            try {
+                val cipher = cryptographyManager.getInitializedCipherForEncryption(Constants.KEY_DID_BIOMETRIC)
+                biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
+            } catch (e: Exception) {
+
+            }
+
         })
     }
 
     private fun createPromptInfo(): BiometricPrompt.PromptInfo {
         return BiometricPrompt.PromptInfo.Builder()
-                .setTitle(getString(R.string.fingerprint_recognition_title))
-                .setSubtitle(getString(R.string.fingerprint_recognition_subtitle))
-                //            .setDescription(getString(R.string.prompt_info_description))
-                .setConfirmationRequired(false).setNegativeButtonText(getString(R.string.cancel))
-                //            .setDeviceCredentialAllowed(true)
-                .build()
+            .setTitle(getString(R.string.fingerprint_recognition_title))
+            .setSubtitle(getString(R.string.fingerprint_recognition_subtitle))
+            //            .setDescription(getString(R.string.prompt_info_description))
+            .setConfirmationRequired(false).setNegativeButtonText(getString(R.string.cancel))
+            //            .setDeviceCredentialAllowed(true)
+            .build()
     }
 
     private fun showStartFingerPrintsDialog() {
@@ -118,21 +123,22 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     }
 
     private fun showPasswordDialog(isOpenNoSecret: Boolean) {
-        passwordDialog = DialogUtils.showPasswordDialog(mActivity, object : PasswordPop.InputPasswordListener {
-            override fun input(password: String) {
-                mViewModel.openIdCard(password, isOpenNoSecret)
-            }
-
-        }, object : SimpleCallback() {
-            override fun onBackPressed(popupView: BasePopupView?): Boolean {
-                if (isOpenNoSecret) {
-                    mViewModel.openNoScretObservable.set(!mViewModel.openNoScretObservable.get())
-                } else {
-                    mViewModel.openFingerPrintObservable.set(false)
+        passwordDialog =
+            DialogUtils.showPasswordDialog(mActivity, object : PasswordPop.InputPasswordListener {
+                override fun input(password: String) {
+                    mViewModel.openIdCard(password, isOpenNoSecret)
                 }
-                return false
-            }
-        })
+
+            }, object : SimpleCallback() {
+                override fun onBackPressed(popupView: BasePopupView?): Boolean {
+                    if (isOpenNoSecret) {
+                        mViewModel.openNoScretObservable.set(!mViewModel.openNoScretObservable.get())
+                    } else {
+                        mViewModel.openFingerPrintObservable.set(false)
+                    }
+                    return false
+                }
+            })
     }
 
     private fun createBiometricPrompt(password: String): BiometricPrompt {
@@ -167,8 +173,14 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     private fun processData(password: String, cryptoObject: BiometricPrompt.CryptoObject?) {
         val encryptedData = cryptographyManager.encryptData(password, cryptoObject?.cipher!!)
         val encryptedPreference = EncryptedPreference(mActivity)
-        encryptedPreference.putString(Constants.KEY_BIOMETRIC_PASSWORD, StringUtils.bytesToHexString(encryptedData.ciphertext))
-        encryptedPreference.putString(Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR, StringUtils.bytesToHexString(encryptedData.initializationVector))
+        encryptedPreference.putString(
+            Constants.KEY_BIOMETRIC_PASSWORD,
+            StringUtils.bytesToHexString(encryptedData.ciphertext)
+        )
+        encryptedPreference.putString(
+            Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR,
+            StringUtils.bytesToHexString(encryptedData.initializationVector)
+        )
 
 
     }
