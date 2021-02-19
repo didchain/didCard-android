@@ -1,7 +1,11 @@
 package com.didchain.didcard.utils
 
+import android.content.Context
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.didchain.didcard.R
+import com.didchain.didcard.view.ExportSuccessPop
+import com.didchain.didcard.view.ImportSuccessPop
 import com.didchain.didcard.view.PasswordPop
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
@@ -61,11 +65,7 @@ object DialogUtils {
         ).show()
     }
 
-    fun showPasswordDialog(
-            activity: AppCompatActivity,
-            listener: PasswordPop.InputPasswordListener,
-            xpopListener: SimpleCallback = IDCardXPopupListener()
-    ): BasePopupView {
+    fun showPasswordDialog(activity: AppCompatActivity, listener: PasswordPop.InputPasswordListener, xpopListener: SimpleCallback = IDCardXPopupListener()): BasePopupView {
         return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(true)
                 .setPopupCallback(xpopListener).isDestroyOnDismiss(true)
                 .asCustom(PasswordPop(activity, listener)).show()
@@ -73,11 +73,7 @@ object DialogUtils {
     }
 
 
-    fun showStartFingerPrintsDialog(
-            activity: AppCompatActivity,
-            confirmListerer: OnConfirmListener,
-            cancelListener: OnCancelListener
-    ): BasePopupView {
+    fun showStartFingerPrintsDialog(activity: AppCompatActivity, confirmListerer: OnConfirmListener, cancelListener: OnCancelListener): BasePopupView {
         return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(false)
                 .isDestroyOnDismiss(true).asConfirm(
                         "",
@@ -90,4 +86,18 @@ object DialogUtils {
                 ).show()
 
     }
+
+    fun showExportSuccessDialog(context: Context){
+       val exportSuccessPop= XPopup.Builder(context)
+                .isDestroyOnDismiss(true).asCustom(ExportSuccessPop(context)).show()
+        Handler(context.mainLooper).postDelayed({exportSuccessPop.dismiss()},1000)
+    }
+
+    fun showImportSuccessDialog(context: Context){
+        val importSuccessPop= XPopup.Builder(context)
+                .isDestroyOnDismiss(true).asCustom(ImportSuccessPop(context)).show()
+        Handler().postDelayed({importSuccessPop.dismiss()},1000)
+    }
+
+
 }

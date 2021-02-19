@@ -1,20 +1,31 @@
 package com.didchain.didcard.ui.main
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidgolib.Androidgolib
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.didchain.android.lib.base.BaseActivity
+import com.didchain.android.lib.utils.toast
 import com.didchain.didcard.BR
+import com.didchain.didcard.Constants
 import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivityMainBinding
 import com.didchain.didcard.ui.home.HomeFragment
 import com.didchain.didcard.ui.my.MyFragment
+import com.didchain.didcard.ui.scan.ScanActivity
+import com.didchain.didcard.utils.PermissionUtils
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
@@ -43,6 +54,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     override fun initObserve() {
+        mViewModel.openCameraEvent.observe(this,
+            Observer { requestCameraPermission() })
     }
 
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_TRANSPARENT
@@ -63,6 +76,38 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         return view
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+    @AfterPermissionGranted(Constants.CODE_OPEN_CAMERA)
+    fun requestCameraPermission() {
+        if (PermissionUtils.hasCameraPermission(this)) {
+            val ii = IntentIntegrator(this)
+            ii.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            ii.captureActivity = ScanActivity::class.java
+            ii.setCameraId(0)
+            ii.setBarcodeImageEnabled(true)
+            ii.setRequestCode(IntentIntegrator.REQUEST_CODE)
+            ii.initiateScan()
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_apply_camera_permission),
+                Constants.CODE_OPEN_CAMERA,
+                Manifest.permission.CAMERA
+            )
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return
+            if (result.contents == null) {
+                return
+            }
+                toast( result.contents)
+    }
     override fun onDestroy() {
         super.onDestroy()
         Androidgolib.close()

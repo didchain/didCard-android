@@ -8,6 +8,10 @@ import com.didchain.didcard.R
 import com.didchain.didcard.provider.context
 import com.didchain.didcard.ui.main.MainActivity
 import com.didchain.didcard.utils.BitmapUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  *Author:Mr'x
@@ -33,13 +37,19 @@ class SaveAccountViewModel : BaseViewModel() {
     })
 
     fun saveCard2Album(data: String) {
-        val isSave = BitmapUtils.saveBitmapToAlbum(
-                context(), BitmapUtils.stringToQRBitmap(data), context().getString(R.string.app_name)
-        )
-        if (isSave) {
-            saveAlbumResultEvent.postValue(true)
-        } else {
-            saveAlbumResultEvent.postValue(false)
+        MainScope().launch {
+            withContext(Dispatchers.IO) {
+                val isSave = BitmapUtils.saveBitmapToAlbum(
+                    context(),
+                    BitmapUtils.stringToQRBitmap(data),
+                    context().getString(R.string.app_name)
+                )
+                if (isSave) {
+                    saveAlbumResultEvent.postValue(true)
+                } else {
+                    saveAlbumResultEvent.postValue(false)
+                }
+            }
         }
     }
 }

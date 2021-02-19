@@ -6,6 +6,7 @@ import com.didchain.android.lib.base.BaseActivity
 import com.didchain.didcard.BR
 import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivityIdCardManagerBinding
+import com.didchain.didcard.utils.DialogUtils
 import com.didchain.didcard.view.ImportSuccessPop
 import com.lxj.xpopup.XPopup
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -29,7 +30,7 @@ class IDCardManagerActivity : BaseActivity<IDCardManagerViewModel, ActivityIdCar
 
     override fun initObserve() {
         mViewModel.exportSuccessEvent.observe(this, Observer {
-            XPopup.Builder(this).isDestroyOnDismiss(true).asCustom(ImportSuccessPop(this)).show()
+           DialogUtils.showExportSuccessDialog(this)
         })
     }
 
