@@ -11,6 +11,6 @@ import com.lxj.xpopup.core.CenterPopupView
  */
 class ImportSuccessPop(context: Context) : CenterPopupView(context) {
     override fun getImplLayoutId(): Int {
-        return R.layout.layout_import_success
+        return R.layout.dialog_import_success
     }
 }

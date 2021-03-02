@@ -1,6 +1,6 @@
 <resources>
     <!--    common-->
-    <string name="app_name">区块链身份证</string>
+    <string name="app_name">易ID</string>
     <string name="create_account">创建账号</string>
     <string name="sure">确定</string>
     <string name="cancel">取消</string>
@@ -93,7 +93,7 @@
     <string name="home_lock_title">点击解锁二维码</string>
     <string name="home_location">正在定位…</string>
 
-    <string name="create_account_tip">提示：\n本身份为区块链身份系统，创建时无需网络无需验证，\n无密码找回功能</string>
+    <string name="create_account_tip">提示：\n易ID身份系统，创建时无需网络无需验证，\n无密码找回功能</string>
     <string name="import_success">身份证导入成功</string>
     <string name="export_success">身份证导出成功</string>
     <string name="home_unlock">解锁</string>
@@ -103,5 +103,13 @@
     <string name="home_no_location">手机定位服务未开启，无法获取到您的准确位置信息，是否前往开启？</string>
 
     <string name="home_go_open">去开启</string>
+    <string name="developing">开发中...</string>
 
+    <string name="privacy_policy_title"><u>服务协议和隐私政策</u></string>
+    <string name="use_agreement_privacy_authority">我已认真阅读并同意《服务协议》和《隐私政策》</string>
+    <string name="read_privacy_authority">请阅读服务协议和隐私政策并选中</string>
+    <string name="dialog_service_and_privacy_policy_content">请您务必审慎阅读，充分理解\"服务协议\"和\"隐私政策\"各条款，包括但不限于：为了可以把账号信息保存到手机存储，我们需要申请读写手机存储权限，扫描账号二维码信息，我们需要申请摄像头权限，您可以在设置中查看、变更、删除个人信息管理你的授权。
+您可阅读《服务协议》和《隐私政策》了解详细信息。如您同意，请点击“同意”开始接受我们的服务。</string>
+    <string name="not_use">暂不使用</string>
+    <string name="agree">同意</string>
 </resources>

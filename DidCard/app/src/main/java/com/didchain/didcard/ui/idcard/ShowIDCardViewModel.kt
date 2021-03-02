@@ -10,7 +10,7 @@ import com.didchain.didcard.R
 import com.didchain.didcard.bean.CardBean
 import com.didchain.didcard.provider.context
 import com.didchain.didcard.utils.BitmapUtils
-import com.didchain.didcard.utils.CardUtils
+import com.didchain.didcard.utils.IDCardUtils
 import com.didchain.didcard.utils.JsonUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -43,9 +43,9 @@ class ShowIDCardViewModel : BaseViewModel() {
             MainScope().launch {
                 withContext(Dispatchers.IO) {
                     val isSave = BitmapUtils.saveBitmapToAlbum(
-                            context(),
-                            BitmapUtils.stringToQRBitmap(qrJson),
-                            context().getString(R.string.app_name)
+                        context(),
+                        BitmapUtils.stringToQRBitmap(qrJson),
+                        context().getString(R.string.app_name)
                     )
                     if (isSave) {
                         showToast(R.string.save_account_success)
@@ -61,9 +61,9 @@ class ShowIDCardViewModel : BaseViewModel() {
 
     init {
         MainScope().launch {
-            idCard.set(CardUtils.getId(context()))
-            val cardPath = CardUtils.getCardPath(context())
-            val cardBean = CardUtils.loadCardBeanByPath(cardPath)
+            idCard.set(IDCardUtils.getId(context()))
+            val cardPath = IDCardUtils.getIDCardPath(context())
+            val cardBean = IDCardUtils.loadIDCardBeanByPath(cardPath)
             if (cardBean != null) {
                 qrJson = JsonUtils.object2Json(cardBean, CardBean::class.java)
                 idCardJsonEvent.postValue(qrJson)

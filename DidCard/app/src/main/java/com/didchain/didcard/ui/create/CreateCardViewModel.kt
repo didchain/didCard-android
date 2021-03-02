@@ -5,11 +5,12 @@ import androidx.databinding.ObservableField
 import com.didchain.android.lib.base.BaseViewModel
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
+import com.didchain.android.lib.command.BindingConsumer
+import com.didchain.android.lib.utils.AppManager
 import com.didchain.didcard.R
 import com.didchain.didcard.provider.context
 import com.didchain.didcard.ui.saveaccount.SaveAccountActivity
-import com.didchain.didcard.utils.CardUtils
-import com.didchain.didcard.utils.SharedPref
+import com.didchain.didcard.utils.IDCardUtils
 import com.orhanobut.logger.Logger
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
@@ -27,16 +28,29 @@ class CreateCardViewModel : BaseViewModel(), KoinComponent {
     private val model: CreateCardModel by inject()
     val password = ObservableField<String>("")
     val confirmPassword = ObservableField<String>("")
+    var isCheckedPrivacyAuthrrity = false
 
     val clickCreate = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            if (verifyPassword()) {
-                showDialog(R.string.loading)
-                createAccount()
-
+            if (!verifyPassword()) {
+                return
             }
 
+            if (!isCheckedPrivacyAuthrrity) {
+                showToast(R.string.read_privacy_authority)
+                return
+            }
+            showDialog(R.string.loading)
+            createAccount()
         }
+    })
+
+    val checkPrivacyAuthrrity = BindingCommand<Boolean>(null, object : BindingConsumer<Boolean> {
+        override fun call(t: Boolean) {
+            isCheckedPrivacyAuthrrity = t
+        }
+
+
     })
 
     private fun createAccount() {
@@ -59,12 +73,13 @@ class CreateCardViewModel : BaseViewModel(), KoinComponent {
         Logger.d(account)
         saveIdCard(account)
         dismissDialog()
+        AppManager.removeAllActivity()
         startActivityAndFinish(SaveAccountActivity::class.java)
     }
 
     private fun saveIdCard(account: String) {
-        val accountPath = CardUtils.getCardPath(context())
-        CardUtils.saveCard(accountPath, account)
+        val accountPath = IDCardUtils.getIDCardPath(context())
+        IDCardUtils.saveIDCard(accountPath, account)
     }
 
     private fun createAccountFailure(e: Throwable) {

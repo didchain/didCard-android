@@ -10,7 +10,7 @@ import com.didchain.didcard.Constants
 import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivitySaveAccountBinding
 import com.didchain.didcard.ui.main.MainActivity
-import com.didchain.didcard.utils.CardUtils
+import com.didchain.didcard.utils.IDCardUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -58,9 +58,9 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
 
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // 将结果转发给 EasyPermissions
@@ -73,17 +73,18 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
 
     private fun requestExternalPermission() {
         EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.request_write_external_permission),
-                Constants.CODE_WRITE_EXTERNAL_PERMISSION,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            this,
+            getString(R.string.request_write_external_permission),
+            Constants.CODE_WRITE_EXTERNAL_PERMISSION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
     }
 
     @AfterPermissionGranted(Constants.CODE_WRITE_EXTERNAL_PERMISSION)
     fun saveCard() {
         MainScope().launch {
-            val card = CardUtils.loadCardByPath(CardUtils.getCardPath(this@SaveAccountActivity))
+            val card =
+                IDCardUtils.loadIDCardByPath(IDCardUtils.getIDCardPath(this@SaveAccountActivity))
             mViewModel.saveCard2Album(card)
         }
 

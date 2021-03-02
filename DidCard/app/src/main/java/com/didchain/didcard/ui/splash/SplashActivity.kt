@@ -42,4 +42,6 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_TRANSPARENT
 
     override fun initVariableId(): Int = BR.viewModel
+
+
 }

@@ -8,10 +8,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import com.didchain.android.lib.utils.dp
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.orhanobut.logger.Logger
 import java.io.*
 
 
@@ -26,7 +26,7 @@ object BitmapUtils {
     fun stringToQRBitmap(data: String): Bitmap {
         val barcodeEncoder = BarcodeEncoder()
         return barcodeEncoder.encodeBitmap(
-                data, BarcodeFormat.QR_CODE, 400.dp.toInt(), 400.dp.toInt()
+            data, BarcodeFormat.QR_CODE, 400.dp.toInt(), 400.dp.toInt()
         )
     }
 
@@ -37,18 +37,17 @@ object BitmapUtils {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            saveSignImage(context, bitName, bitmap)
-            return true
+            return saveSignImage(context, bitName, bitmap)
         }
 
-        Log.v("saveBitmap brand", "" + brand)
+        Logger.v("saveBitmap brand", "" + brand)
         val dirPath = Environment.getExternalStorageDirectory().path.toString() + DCIM
         file = File(dirPath)
 
         if (!file.exists()) {
             val mkdirs = file.mkdirs()
             if (!mkdirs) {
-                Log.e("makeFire", "file.mkdirs error")
+                Logger.e("makeFire", "file.mkdirs error")
                 return false
             }
         }
@@ -68,37 +67,37 @@ object BitmapUtils {
                     values.put(MediaStore.Images.Media.DATA, file.getAbsolutePath())
                     values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
                     val uri: Uri? = context.getContentResolver()
-                            .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                        .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
                 } else {
                     MediaStore.Images.Media.insertImage(
-                            context.getContentResolver(), file.getAbsolutePath(), bitName, null
+                        context.getContentResolver(), file.getAbsolutePath(), bitName, null
                     )
                 }
             }
         } catch (e: FileNotFoundException) {
-            Log.e("FileNotFoundException", "FileNotFoundException:" + e.message.toString())
+            Logger.e("FileNotFoundException", "FileNotFoundException:" + e.message.toString())
             e.printStackTrace()
             return false
         } catch (e: IOException) {
-            Log.e("IOException", "IOException:" + e.message.toString())
+            Logger.e("IOException", "IOException:" + e.message.toString())
             e.printStackTrace()
             return false
         } catch (e: Exception) {
-            Log.e("IOException", "IOException:" + e.message.toString())
+            Logger.e("IOException", "IOException:" + e.message.toString())
             e.printStackTrace()
             return false
 
         }
         context.sendBroadcast(
-                Intent(
-                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$fileName")
-                )
+            Intent(
+                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$fileName")
+            )
         )
 
         return true
     }
 
-    private fun saveSignImage(context: Context, fileName: String?, bitmap: Bitmap) {
+    private fun saveSignImage(context: Context, fileName: String?, bitmap: Bitmap): Boolean {
         try {
             //设置保存参数到ContentValues中
             val contentValues = ContentValues()
@@ -115,7 +114,7 @@ object BitmapUtils {
             //执行insert操作，向系统文件夹中添加文件
             //EXTERNAL_CONTENT_URI代表外部存储器，该值不变
             val uri: Uri? = context.getContentResolver()
-                    .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
             if (uri != null) {
                 //若生成了uri，则表示该文件添加成功
                 //使用流将内容写入该uri中即可
@@ -126,8 +125,10 @@ object BitmapUtils {
                     outputStream.close()
                 }
             }
+            return true
         } catch (e: Exception) {
-            Log.e("Exception", "Exception:" + e.message.toString())
+            Logger.e("Exception", "Exception:" + e.message.toString())
+            return false
         }
     }
 }

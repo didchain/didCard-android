@@ -8,7 +8,7 @@ import com.didchain.didcard.R
 import com.didchain.didcard.provider.context
 import com.didchain.didcard.ui.create.CreateCardActivity
 import com.didchain.didcard.ui.saveaccount.SaveAccountActivity
-import com.didchain.didcard.utils.CardUtils
+import com.didchain.didcard.utils.IDCardUtils
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
 import org.koin.core.component.KoinComponent
@@ -45,8 +45,8 @@ class GuideViewModel : BaseViewModel(), KoinComponent {
     }
 
     private fun saveIdCard(idCardJson: String) {
-        val accountPath = CardUtils.getCardPath(context())
-        CardUtils.saveCard(accountPath, idCardJson)
+        val accountPath = IDCardUtils.getIDCardPath(context())
+        IDCardUtils.saveIDCard(accountPath, idCardJson)
     }
 
 

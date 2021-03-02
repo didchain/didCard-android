@@ -12,7 +12,8 @@ import com.didchain.didcard.R
 import com.didchain.didcard.provider.context
 import com.didchain.didcard.ui.authorization.AuthorizationActivity
 import com.didchain.didcard.ui.idmanager.IDCardManagerActivity
-import com.didchain.didcard.utils.EncryptedPreference
+import com.didchain.didcard.ui.privacyauthority.PrivacyAuthorityActivity
+import com.didchain.didcard.utils.EncryptedPreferencesUtils
 import com.didchain.didcard.utils.SharedPref
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
@@ -41,6 +42,10 @@ class MyViewModel : BaseViewModel(), KoinComponent {
     init {
         openFingerPrintObservable = ObservableBoolean(openFingerPrint)
         openNoScretObservable = ObservableBoolean(openNoScret)
+        getId()
+    }
+
+    fun getId() {
         MainScope().launch {
             id.set(model.getIDCard()?.did)
         }
@@ -104,6 +109,12 @@ class MyViewModel : BaseViewModel(), KoinComponent {
         }
     })
 
+    val clickPrivacyAuthority = BindingCommand<Any>(object : BindingAction {
+        override fun call() {
+            startActivity(PrivacyAuthorityActivity::class.java)
+        }
+    })
+
     fun openIdCard(password: String, isOpenNoScret: Boolean) {
         showDialog()
         model.openIdCard(password).subscribe(object : SingleObserver<Boolean> {
@@ -111,9 +122,9 @@ class MyViewModel : BaseViewModel(), KoinComponent {
                 dismissDialog()
                 dismissPasswordDialogEvent.call()
                 if (isOpenNoScret) {
-                    EncryptedPreference(context()).putString(
-                            Constants.KEY_ENCRYPTED_PASSWORD,
-                            password
+                    EncryptedPreferencesUtils(context()).putString(
+                        Constants.KEY_ENCRYPTED_PASSWORD,
+                        password
                     )
                     openNoScret = true
                 } else {

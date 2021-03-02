@@ -1,7 +1,6 @@
 package com.didchain.didcard.ui.main
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -38,7 +37,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val myFragment by inject<MyFragment>()
     private val homeFragment by inject<HomeFragment>()
     override fun initView() {
-        tablayout.setupWithViewPager(viewpager)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
 
     }
 
@@ -47,7 +49,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         fragments.add(myFragment)
         viewpager.adapter = MainPagerAdapter(supportFragmentManager, fragments)
         tablayout.setupWithViewPager(viewpager, false)
-
         titles.forEachIndexed { index, titleId ->
             tablayout.getTabAt(index)?.setCustomView(getItemView(index, titleId, icons[index]))
         }
@@ -76,10 +77,15 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         return view
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
+
     @AfterPermissionGranted(Constants.CODE_OPEN_CAMERA)
     fun requestCameraPermission() {
         if (PermissionUtils.hasCameraPermission(this)) {
@@ -102,12 +108,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return
-            if (result.contents == null) {
-                return
-            }
-                toast( result.contents)
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return
+        if (result.contents == null) {
+            return
+        }
+        toast(result.contents)
     }
+
     override fun onDestroy() {
         super.onDestroy()
         Androidgolib.close()

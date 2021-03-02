@@ -7,10 +7,11 @@ import com.didchain.android.lib.event.SingleLiveEvent
 import com.didchain.didcard.R
 import com.didchain.didcard.bean.CardBean
 import com.didchain.didcard.provider.context
-import com.didchain.didcard.ui.idcard.CreateIDCardActivity
+import com.didchain.didcard.ui.create.CreateCardActivity
+import com.didchain.didcard.ui.guide.GuideActivity
 import com.didchain.didcard.ui.idcard.ShowIDCardActivity
 import com.didchain.didcard.utils.BitmapUtils
-import com.didchain.didcard.utils.CardUtils
+import com.didchain.didcard.utils.IDCardUtils
 import com.didchain.didcard.utils.JsonUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -29,13 +30,13 @@ class IDCardManagerViewModel : BaseViewModel() {
 
     val clickNewIdCard = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            startActivity(CreateIDCardActivity::class.java)
+            startActivity(CreateCardActivity::class.java)
         }
     })
 
     val clickImport = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-
+            startActivity(GuideActivity::class.java)
         }
     })
 
@@ -49,8 +50,8 @@ class IDCardManagerViewModel : BaseViewModel() {
     private fun saveIDCard() {
         MainScope().launch {
             withContext(Dispatchers.IO) {
-                val cardPath = CardUtils.getCardPath(context())
-                val cardBean = CardUtils.loadCardBeanByPath(cardPath)
+                val cardPath = IDCardUtils.getIDCardPath(context())
+                val cardBean = IDCardUtils.loadIDCardBeanByPath(cardPath)
                 val qrJson: String
                 if (cardBean != null) {
                     qrJson = JsonUtils.object2Json(cardBean, CardBean::class.java)

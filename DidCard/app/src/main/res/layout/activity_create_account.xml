@@ -54,12 +54,34 @@
             android:hint="@string/create_account_input_password_again"
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
+        <CheckBox
+            android:id="@+id/privacyAuthorityCB"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
+            app:layout_constraintStart_toStartOf="@+id/confirmPassword"
+            android:layout_marginTop="8dp"
+            onCheckedChangedCommand="@{viewModel.checkPrivacyAuthrrity}"
+            android:button="@drawable/privacy_authority_selector"
+            android:textSize="12sp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/privacyAuthorityTv"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="@+id/confirmPassword"
+            app:layout_constraintTop_toTopOf="@+id/privacyAuthorityCB"
+            app:layout_constraintBottom_toBottomOf="@+id/privacyAuthorityCB"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
+            app:layout_constraintStart_toEndOf="@+id/privacyAuthorityCB"
+            android:textSize="12sp"
+            android:layout_height="wrap_content" />
+
         <TextView
             style="@style/YellowButtonStyle"
             android:layout_marginTop="16dp"
             onClickCommand="@{viewModel.clickCreate}"
             android:text="@string/create_account"
-            app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/privacyAuthorityTv" />
 
         <TextView
             android:layout_width="0dp"

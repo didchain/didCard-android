@@ -33,8 +33,10 @@ import org.koin.core.component.inject
 class HomeViewModel : BaseViewModel(), KoinComponent {
     private val model: HomeModel by inject()
     var cardBean: CardBean? = null
-    private val itemTitles = arrayListOf(R.string.home_notice, R.string.home_registered, R.string.home_hotel)
-    private val itemIcons = arrayListOf(R.drawable.notice_icon, R.drawable.hospital_icon, R.drawable.hotel_icon)
+    private val itemTitles =
+        arrayListOf(R.string.home_notice, R.string.home_registered, R.string.home_hotel)
+    private val itemIcons =
+        arrayListOf(R.drawable.notice_icon, R.drawable.hospital_icon, R.drawable.hotel_icon)
     val showPasswordEvent = SingleLiveEvent<Boolean>()
     val dismissPasswordEvent = SingleLiveEvent<Boolean>()
     val openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
@@ -46,13 +48,14 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
     val itemBinding = ItemBinding.of<HomeItemViewModel>(BR.item, R.layout.item_service)
 
     init {
+
         showLock.set(!openNoScret)
         itemTitles.forEachIndexed { index, i ->
             items.add(
-                    HomeItemViewModel(
-                            this,
-                            ServiceBean(DidCardApp.instance.getString(itemTitles[index]), itemIcons[index])
-                    )
+                HomeItemViewModel(
+                    this,
+                    ServiceBean(DidCardApp.instance.getString(itemTitles[index]), itemIcons[index])
+                )
             )
         }
 

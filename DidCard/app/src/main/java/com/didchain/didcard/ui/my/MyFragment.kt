@@ -14,7 +14,7 @@ import com.didchain.didcard.R
 import com.didchain.didcard.databinding.FragmentMyBinding
 import com.didchain.didcard.utils.CryptographyManager
 import com.didchain.didcard.utils.DialogUtils
-import com.didchain.didcard.utils.EncryptedPreference
+import com.didchain.didcard.utils.EncryptedPreferencesUtils
 import com.didchain.didcard.utils.StringUtils
 import com.didchain.didcard.view.PasswordPop
 import com.lxj.xpopup.core.BasePopupView
@@ -85,7 +85,8 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             biometricPrompt = createBiometricPrompt(password)
             promptInfo = createPromptInfo()
             try {
-                val cipher = cryptographyManager.getInitializedCipherForEncryption(Constants.KEY_DID_BIOMETRIC)
+                val cipher =
+                    cryptographyManager.getInitializedCipherForEncryption(Constants.KEY_DID_BIOMETRIC)
                 biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
             } catch (e: Exception) {
 
@@ -98,9 +99,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         return BiometricPrompt.PromptInfo.Builder()
             .setTitle(getString(R.string.fingerprint_recognition_title))
             .setSubtitle(getString(R.string.fingerprint_recognition_subtitle))
-            //            .setDescription(getString(R.string.prompt_info_description))
             .setConfirmationRequired(false).setNegativeButtonText(getString(R.string.cancel))
-            //            .setDeviceCredentialAllowed(true)
             .build()
     }
 
@@ -147,7 +146,8 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         val callback = object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                Logger.d(TAG, "$errorCode :: $errString")
+                Logger.d("$errorCode :: $errString")
+                toast(errString.toString())
                 if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON || errorCode == BiometricPrompt.ERROR_USER_CANCELED || errorCode == BiometricPrompt.ERROR_LOCKOUT) {
                     mViewModel.openFingerPrintObservable.set(false)
                 }
@@ -155,12 +155,12 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
-                Logger.d(TAG, "Authentication failed for an unknown reason")
+                Logger.d("Authentication failed for an unknown reason")
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                Logger.d(TAG, "Authentication was successful")
+                Logger.d("Authentication was successful")
                 mViewModel.openFingerPrint = true
                 processData(password, result.cryptoObject)
             }
@@ -172,7 +172,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
     private fun processData(password: String, cryptoObject: BiometricPrompt.CryptoObject?) {
         val encryptedData = cryptographyManager.encryptData(password, cryptoObject?.cipher!!)
-        val encryptedPreference = EncryptedPreference(mActivity)
+        val encryptedPreference = EncryptedPreferencesUtils(mActivity)
         encryptedPreference.putString(
             Constants.KEY_BIOMETRIC_PASSWORD,
             StringUtils.bytesToHexString(encryptedData.ciphertext)

@@ -60,6 +60,7 @@
 
         <activity
             android:name=".ui.main.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.guide.GuideActivity"
@@ -95,6 +96,9 @@
 
         <activity
             android:name=".ui.authorization.AuthorizationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.privacyauthority.PrivacyAuthorityActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

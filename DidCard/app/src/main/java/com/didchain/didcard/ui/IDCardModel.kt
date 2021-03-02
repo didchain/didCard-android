@@ -4,8 +4,8 @@ import androidgolib.Androidgolib
 import com.didchain.android.lib.base.BaseModel
 import com.didchain.didcard.bean.CardBean
 import com.didchain.didcard.provider.context
-import com.didchain.didcard.utils.CardUtils
 import com.didchain.didcard.utils.CommonSchedulers
+import com.didchain.didcard.utils.IDCardUtils
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleOnSubscribe
 
@@ -16,7 +16,7 @@ import io.reactivex.rxjava3.core.SingleOnSubscribe
  */
 open class IDCardModel : BaseModel() {
     suspend fun getIDCard(): CardBean? {
-        return CardUtils.loadCardBeanByPath(CardUtils.getCardPath(context()))
+        return IDCardUtils.loadIDCardBeanByPath(IDCardUtils.getIDCardPath(context()))
     }
 
     fun openIdCard(password: String): Single<Boolean> {

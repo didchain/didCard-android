@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
  *Description:
  */
 class MainPagerAdapter(fm: FragmentManager, var fragments: List<Fragment>) :
-        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         return fragments[position]

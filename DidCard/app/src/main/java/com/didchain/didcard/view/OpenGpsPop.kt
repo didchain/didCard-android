@@ -19,7 +19,7 @@ class OpenGpsPop(context: Context, val listener: UnlockListener) : CenterPopupVi
     }
 
     override fun getImplLayoutId(): Int {
-        return R.layout.layout_password
+        return R.layout.dialog_password
     }
 
     override fun onCreate() {

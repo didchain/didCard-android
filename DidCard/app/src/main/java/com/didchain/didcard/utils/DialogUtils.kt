@@ -1,9 +1,17 @@
 package com.didchain.didcard.utils
 
 import android.content.Context
-import android.os.Handler
+import android.content.Intent
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.didchain.didcard.R
+import com.didchain.didcard.ui.privacyauthority.PrivacyAuthorityActivity
 import com.didchain.didcard.view.ExportSuccessPop
 import com.didchain.didcard.view.ImportSuccessPop
 import com.didchain.didcard.view.PasswordPop
@@ -47,9 +55,7 @@ object DialogUtils {
             return false
         }
 
-        override fun onKeyBoardStateChanged(
-                popupView: BasePopupView, height: Int
-        ) {
+        override fun onKeyBoardStateChanged(popupView: BasePopupView, height: Int) {
             super.onKeyBoardStateChanged(popupView, height)
             Logger.d("tag", "onKeyBoardStateChanged height: $height")
         }
@@ -57,46 +63,119 @@ object DialogUtils {
 
     fun showImportDialot(activity: AppCompatActivity, selectListener: OnSelectListener) {
         XPopup.Builder(activity).asBottomList(
-                activity.getString(R.string.guide_dialog_title), arrayOf(
+            activity.getString(R.string.guide_dialog_title), arrayOf(
                 activity.getString(R.string.guide_import_album),
                 activity.getString(R.string.guide_import_camera),
                 activity.getString(R.string.cancel)
-        ), selectListener
+            ), selectListener
         ).show()
     }
 
-    fun showPasswordDialog(activity: AppCompatActivity, listener: PasswordPop.InputPasswordListener, xpopListener: SimpleCallback = IDCardXPopupListener()): BasePopupView {
+    fun showPasswordDialog(
+        activity: AppCompatActivity,
+        listener: PasswordPop.InputPasswordListener,
+        xpopListener: SimpleCallback = IDCardXPopupListener()
+    ): BasePopupView {
         return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(true)
-                .setPopupCallback(xpopListener).isDestroyOnDismiss(true)
-                .asCustom(PasswordPop(activity, listener)).show()
+            .setPopupCallback(xpopListener).isDestroyOnDismiss(true)
+            .asCustom(PasswordPop(activity, listener)).show()
 
     }
 
 
-    fun showStartFingerPrintsDialog(activity: AppCompatActivity, confirmListerer: OnConfirmListener, cancelListener: OnCancelListener): BasePopupView {
+    fun showStartFingerPrintsDialog(
+        activity: AppCompatActivity,
+        confirmListerer: OnConfirmListener,
+        cancelListener: OnCancelListener
+    ): BasePopupView {
         return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(false)
-                .isDestroyOnDismiss(true).asConfirm(
-                        "",
-                        activity.getString(R.string.my_no_fingerprint),
-                        activity.getString(R.string.cancel),
-                        activity.getString(R.string.my_input),
-                        confirmListerer,
-                        cancelListener,
-                        false
-                ).show()
+            .isDestroyOnDismiss(true).asConfirm(
+                "",
+                activity.getString(R.string.my_no_fingerprint),
+                activity.getString(R.string.cancel),
+                activity.getString(R.string.my_input),
+                confirmListerer,
+                cancelListener,
+                false
+            ).show()
 
     }
 
-    fun showExportSuccessDialog(context: Context){
-       val exportSuccessPop= XPopup.Builder(context)
-                .isDestroyOnDismiss(true).asCustom(ExportSuccessPop(context)).show()
-        Handler(context.mainLooper).postDelayed({exportSuccessPop.dismiss()},1000)
+    fun showExportSuccessDialog(context: Context) {
+        val exportSuccessPop = XPopup.Builder(context)
+            .isDestroyOnDismiss(true).asCustom(ExportSuccessPop(context)).show()
+        exportSuccessPop.delayDismiss(1000)
     }
 
-    fun showImportSuccessDialog(context: Context){
-        val importSuccessPop= XPopup.Builder(context)
-                .isDestroyOnDismiss(true).asCustom(ImportSuccessPop(context)).show()
-        Handler().postDelayed({importSuccessPop.dismiss()},1000)
+    fun showImportSuccessDialog(context: Context) {
+        val importSuccessPop = XPopup.Builder(context)
+            .isDestroyOnDismiss(true).asCustom(ImportSuccessPop(context)).show()
+        importSuccessPop.delayDismiss(1000)
+    }
+
+    fun showPrivacyAuthorityDialog(
+        context: Context,
+        confirmListerer: OnConfirmListener,
+        cancelListener: OnCancelListener
+    ) {
+
+        val protocolStart = 122
+        val protocolEnd = 128
+        val policyStart = 129
+        val policyEnd = 135
+
+        val spannableString =
+            SpannableString(context.getString(R.string.dialog_service_and_privacy_policy_content))
+        spannableString.setSpan(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                (widget as TextView).highlightColor =
+                    context.getResources().getColor(android.R.color.transparent)
+                context.startActivity(Intent(context, PrivacyAuthorityActivity::class.java))
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = ds.linkColor
+                ds.isUnderlineText = false
+                ds.clearShadowLayer()
+            }
+        }, protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                (widget as TextView).highlightColor =
+                    context.getResources().getColor(android.R.color.transparent)
+                context.startActivity(Intent(context, PrivacyAuthorityActivity::class.java))
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = ds.linkColor
+                ds.isUnderlineText = false
+                ds.clearShadowLayer()
+            }
+        }, policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        spannableString.setSpan(
+            ForegroundColorSpan(
+                context.getResources().getColor(R.color.colorAccent)
+            ), protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannableString.setSpan(
+            ForegroundColorSpan(
+                context.getResources().getColor(R.color.colorAccent)
+            ), policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+
+        val importSuccessPop = XPopup.Builder(context)
+            .isDestroyOnDismiss(true)
+            .dismissOnBackPressed(false)
+            .dismissOnTouchOutside(false)
+            .asConfirm(
+                context.getString(R.string.privacy_policy_title),
+                spannableString,
+                context.getString(R.string.not_use),
+                context.getString(R.string.agree), confirmListerer, cancelListener, false
+            )
+        importSuccessPop.show()
     }
 
 

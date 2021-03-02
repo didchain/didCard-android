@@ -13,11 +13,13 @@ import com.didchain.didcard.Constants
 import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivityGuideBinding
 import com.didchain.didcard.ui.scan.ScanActivity
-import com.didchain.didcard.utils.CardUtils
 import com.didchain.didcard.utils.DialogUtils
+import com.didchain.didcard.utils.IDCardUtils
 import com.didchain.didcard.utils.PermissionUtils
 import com.didchain.didcard.view.PasswordPop
 import com.google.zxing.integration.android.IntentIntegrator
+import com.lxj.xpopup.interfaces.OnCancelListener
+import com.lxj.xpopup.interfaces.OnConfirmListener
 import com.lxj.xpopup.interfaces.OnSelectListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -34,6 +36,8 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
     override val mViewModel: GuideViewModel by viewModel()
 
     override fun initView() {
+        DialogUtils.showPrivacyAuthorityDialog(this,
+            OnConfirmListener { }, OnCancelListener { finish() })
     }
 
     override fun initData() {
@@ -57,13 +61,13 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
     @AfterPermissionGranted(Constants.CODE_OPEN_ALBUM)
     fun requestLocalMemoryPermission() {
         if (PermissionUtils.hasStoragePermission(this)) {
-            CardUtils.openAlbum(this)
+            IDCardUtils.openAlbum(this)
         } else {
             EasyPermissions.requestPermissions(
-                    this,
-                    getString(R.string.import_apply_album_permission),
-                    Constants.CODE_OPEN_ALBUM,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                this,
+                getString(R.string.import_apply_album_permission),
+                Constants.CODE_OPEN_ALBUM,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
         }
     }
@@ -80,19 +84,19 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
             ii.initiateScan()
         } else {
             EasyPermissions.requestPermissions(
-                    this,
-                    getString(R.string.import_apply_camera_permission),
-                    Constants.CODE_OPEN_CAMERA,
-                    Manifest.permission.CAMERA
+                this,
+                getString(R.string.import_apply_camera_permission),
+                Constants.CODE_OPEN_CAMERA,
+                Manifest.permission.CAMERA
             )
         }
     }
 
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
@@ -112,7 +116,7 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
             loadIdCardFromUri(data.data)
         } else {
             val result =
-                    IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return
+                IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return
             if (result.contents == null) {
                 return
             }
@@ -131,7 +135,7 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
             return
         }
         try {
-            val walletStr = CardUtils.parseQRCodeFile(uri, contentResolver)
+            val walletStr = IDCardUtils.parseQRCodeFile(uri, contentResolver)
             showPasswordDialog(walletStr)
         } catch (e: Exception) {
             toast(getString(R.string.import_qr_error) + e.localizedMessage)

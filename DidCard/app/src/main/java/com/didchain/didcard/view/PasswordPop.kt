@@ -19,13 +19,13 @@ import com.lxj.xpopup.core.CenterPopupView
  *Description:
  */
 class PasswordPop(context: Context, val listener: InputPasswordListener) :
-        CenterPopupView(context) {
+    CenterPopupView(context) {
     interface InputPasswordListener {
         fun input(password: String)
     }
 
     override fun getImplLayoutId(): Int {
-        return R.layout.layout_password
+        return R.layout.dialog_password
     }
 
     override fun onCreate() {
