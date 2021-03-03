@@ -68,7 +68,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
                 val signatureJson = JsonUtils.object2Json(signature, SignatureBean::class.java)
                 if (Androidgolib.isOpen()) {
-                    val sign = String(Androidgolib.sign(signatureJson))
+                    val sign = Androidgolib.sign(signatureJson)
                     val qrBean = QRBean(
                         currentTimeMillis,
                         mapLocation.latitude,
