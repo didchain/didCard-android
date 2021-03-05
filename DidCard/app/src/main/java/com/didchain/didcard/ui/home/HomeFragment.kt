@@ -63,39 +63,26 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 mViewModel.city.set(mapLocation.city)
 
                 val currentTimeMillis = System.currentTimeMillis()
-                val signature =
-                    getSignature(currentTimeMillis, mapLocation.latitude, mapLocation.longitude)
+                val signature = getSignature(currentTimeMillis, mapLocation.latitude, mapLocation.longitude)
 
                 val signatureJson = JsonUtils.object2Json(signature, SignatureBean::class.java)
                 if (Androidgolib.isOpen()) {
                     val sign = Androidgolib.sign(signatureJson)
-                    val qrBean = QRBean(
-                        currentTimeMillis,
-                        mapLocation.latitude,
-                        mapLocation.longitude,
-                        sign,
-                        mViewModel.id.get().toString()
-                    )
+                    val qrBean = QRBean(sign, mViewModel.id.get().toString(), currentTimeMillis, mapLocation.latitude, mapLocation.longitude)
                     val qrjson = JsonUtils.object2Json(qrBean, QRBean::class.java)
                     rq.setImageBitmap(BitmapUtils.stringToQRBitmap(qrjson))
                     mMapLocation = mapLocation
                 }
             } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                Logger.e(
-                    "AmapError",
-                    "location Error, ErrCode:" + mapLocation.errorCode + ", errInfo:" + mapLocation.errorInfo
-                )
+                Logger.e("AmapError", "location Error, ErrCode:" + mapLocation.errorCode + ", errInfo:" + mapLocation.errorInfo)
             }
         }
     }
 
-    private fun getSignature(
-        currentTimeMillis: Long,
-        latitude: Double,
-        longitude: Double
-    ): SignatureBean {
-        return SignatureBean(currentTimeMillis, latitude, longitude, mViewModel.id.get().toString())
+    private fun getSignature(currentTimeMillis: Long, latitude: Double, longitude: Double): SignatureBean {
+        return SignatureBean( mViewModel.id.get().toString(),currentTimeMillis, latitude, longitude
+        )
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_home

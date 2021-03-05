@@ -66,6 +66,7 @@
             android:layout_marginEnd="15dp"
             android:background="@drawable/button_bg_yellow"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:text="@string/my_authorization"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +80,8 @@
             android:src="@drawable/next_icon"
             app:layout_constraintBottom_toBottomOf="@+id/authorizationTitle"
             app:layout_constraintEnd_toEndOf="@+id/authorizationTitle"
-            app:layout_constraintTop_toTopOf="@+id/authorizationTitle" />
+            app:layout_constraintTop_toTopOf="@+id/authorizationTitle"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/authorization"

@@ -10,9 +10,9 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class QRBean(
-    @Json(name = "time_tamp") val timeStamp: Long,
+    val sig: String,
+    val did: String,
+    @Json(name = "time_stamp") val timeStamp: Long,
     val latitude: Double,
-    val longitude: Double,
-    val signature: String,
-    val did: String
+    val longitude: Double
 )
