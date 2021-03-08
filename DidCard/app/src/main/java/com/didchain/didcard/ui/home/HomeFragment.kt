@@ -1,11 +1,9 @@
 package com.didchain.didcard.ui.home
 
 import android.Manifest
-import android.Manifest.permission.CALL_PHONE
 import android.content.Intent
 import android.provider.Settings
 import android.view.View
-import android.widget.Toast
 import androidgolib.Androidgolib
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -102,14 +100,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() , EasyPe
     }
 
     override fun initData() {
-        if (mViewModel.openNoScret) {
+        if (mViewModel.openNoSecret) {
             val password = EncryptedPreferencesUtils(mActivity).getString(Constants.KEY_ENCRYPTED_PASSWORD, "")
             mViewModel.openIdCard(password)
         } else if (mViewModel.openFingerPrint) {
             cryptographyManager = CryptographyManager()
             val encryptedPreference = EncryptedPreferencesUtils(mActivity)
             val encryptedPassword = encryptedPreference.getString(Constants.KEY_BIOMETRIC_PASSWORD, "")
-            val encryptedVector = encryptedPreference.getString(Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR, "")
+            val encryptedVector = encryptedPreference.getString(Constants.KEY_BIOMETRIC_INITIALIZATION_VECTOR, "")
             biometricPrompt = createBiometricPrompt(encryptedPassword)
             promptInfo = createPromptInfo()
             try {
@@ -123,9 +121,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() , EasyPe
 
         }
 
-        initLocation()
+//        initLocation()
         //设置定位回调监听
-        locationClient.setLocationListener(mLocationListener)
+//        locationClient.setLocationListener(mLocationListener)
 //        if (!checkLocationPermission()) {
 //            requestExternalPermission()
 //        } else {
@@ -182,9 +180,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() , EasyPe
 
     override fun onResume() {
         super.onResume()
-        if (!isLocationEnabled()) {
-            toOpenGPS()
-        }
+//        if (!isLocationEnabled()) {
+//            toOpenGPS()
+//        }
 
     }
 

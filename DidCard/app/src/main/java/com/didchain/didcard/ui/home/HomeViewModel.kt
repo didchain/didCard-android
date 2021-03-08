@@ -39,7 +39,7 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
     val showPasswordEvent = SingleLiveEvent<Boolean>()
     val dismissPasswordEvent = SingleLiveEvent<Boolean>()
     val showQREvent = SingleLiveEvent<Boolean>()
-    val openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
+    val openNoSecret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SECRET, false)
     var openFingerPrint: Boolean by SharedPref(context(), Constants.KEY_OPEN_FINGERPRINT, false)
     val id = ObservableField<String>()
     val city = ObservableField<String>("")

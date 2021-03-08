@@ -14,10 +14,10 @@ object Constants {
     const val CODE_LOCATION_PERMISSION = 2
 
     const val KEY_OPEN_FINGERPRINT = "key_open_fingerprint"
-    const val KEY_OPEN_NO_SCRET = "key_open_no_scret"
+    const val KEY_OPEN_NO_SECRET = "key_open_no_secret"
     const val KEY_ENCRYPTED_PASSWORD = "key_password"
     const val KEY_BIOMETRIC_PASSWORD = "key_biometric_password"
-    const val KEY_BIOMETRIC_INITIALIZATIONVECTOR = "key_biometric_initializationvector"
+    const val KEY_BIOMETRIC_INITIALIZATION_VECTOR = "key_biometric_initialization_vector"
     const val KEY_DID_BIOMETRIC = "key_did_biometric"
 
     const val TAG_NAME = "DID"

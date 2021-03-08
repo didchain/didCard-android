@@ -150,13 +150,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/identityManagement" />
 
                 <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/noScretSwitch"
+                    android:id="@+id/noSecretSwitch"
                     style="@style/MySwitchStyle"
                     app:layout_constraintBottom_toBottomOf="@+id/noSecret"
                     app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
                     app:layout_constraintTop_toTopOf="@+id/noSecret"
-                    app:switchState="@{viewModel.openNoScretObservable}"
-                    app:onCheckedChangeCommand="@{viewModel.onCheckedNoScret}" />
+                    app:switchState="@{viewModel.openNoSecretObservable}"
+                    app:onCheckedChangeCommand="@{viewModel.onCheckedNoSecret}" />
 
                 <TextView
                     android:id="@+id/fingerprint"

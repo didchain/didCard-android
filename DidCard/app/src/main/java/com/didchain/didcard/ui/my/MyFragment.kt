@@ -27,7 +27,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import pub.devrel.easypermissions.AfterPermissionGranted
 
 
 /**
@@ -130,7 +129,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         }, object : SimpleCallback() {
             override fun onBackPressed(popupView: BasePopupView?): Boolean {
                 if (isOpenNoSecret) {
-                    mViewModel.openNoScretObservable.set(!mViewModel.openNoScretObservable.get())
+                    mViewModel.openNoSecretObservable.set(!mViewModel.openNoSecretObservable.get())
                 } else {
                     mViewModel.openFingerPrintObservable.set(false)
                 }
@@ -174,7 +173,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         val encryptedData = cryptographyManager.encryptData(password, cryptoObject?.cipher!!)
         val encryptedPreference = EncryptedPreferencesUtils(mActivity)
         encryptedPreference.putString(Constants.KEY_BIOMETRIC_PASSWORD, StringUtils.bytesToHexString(encryptedData.ciphertext))
-        encryptedPreference.putString(Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR, StringUtils.bytesToHexString(encryptedData.initializationVector))
+        encryptedPreference.putString(Constants.KEY_BIOMETRIC_INITIALIZATION_VECTOR, StringUtils.bytesToHexString(encryptedData.initializationVector))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

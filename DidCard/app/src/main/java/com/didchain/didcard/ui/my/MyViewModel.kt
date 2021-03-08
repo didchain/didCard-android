@@ -31,9 +31,9 @@ class MyViewModel : BaseViewModel(), KoinComponent {
     val model: MyModel by inject()
     val did = ObservableField<String>()
     var openFingerPrint: Boolean by SharedPref(context(), Constants.KEY_OPEN_FINGERPRINT, false)
-    var openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
+    var openNoSecret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SECRET, false)
     var openFingerPrintObservable: ObservableBoolean
-    var openNoScretObservable: ObservableBoolean
+    var openNoSecretObservable: ObservableBoolean
     val showPasswordDialogEvent = SingleLiveEvent<Boolean>()
     val dismissPasswordDialogEvent = SingleLiveEvent<Boolean>()
     val fingerPrintEvent = SingleLiveEvent<Boolean>()
@@ -41,7 +41,7 @@ class MyViewModel : BaseViewModel(), KoinComponent {
 
     init {
         openFingerPrintObservable = ObservableBoolean(openFingerPrint)
-        openNoScretObservable = ObservableBoolean(openNoScret)
+        openNoSecretObservable = ObservableBoolean(openNoSecret)
         getId()
     }
 
@@ -67,14 +67,14 @@ class MyViewModel : BaseViewModel(), KoinComponent {
 
     })
 
-    val onCheckedNoScret = BindingCommand(bindConsumer = object : BindingConsumer<Boolean> {
+    val onCheckedNoSecret = BindingCommand(bindConsumer = object : BindingConsumer<Boolean> {
         override fun call(isChecked: Boolean) {
             if (isChecked) {
                 showPasswordDialogEvent.postValue(isChecked)
             } else {
-                openNoScret = false
+                openNoSecret = false
             }
-            openNoScretObservable.set(isChecked)
+            openNoSecretObservable.set(isChecked)
         }
 
     })
@@ -115,15 +115,15 @@ class MyViewModel : BaseViewModel(), KoinComponent {
         }
     })
 
-    fun openIdCard(password: String, isOpenNoScret: Boolean) {
+    fun openIdCard(password: String, isOpenNoSecret: Boolean) {
         showDialog()
         model.openIdCard(password).subscribe(object : SingleObserver<Boolean> {
             override fun onSuccess(t: Boolean) {
                 dismissDialog()
                 dismissPasswordDialogEvent.call()
-                if (isOpenNoScret) {
+                if (isOpenNoSecret) {
                     EncryptedPreferencesUtils(context()).putString(Constants.KEY_ENCRYPTED_PASSWORD, password)
-                    openNoScret = true
+                    openNoSecret = true
                 } else {
                     showfingerPrintDialogEvent.postValue(password)
                 }

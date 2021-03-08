@@ -67,6 +67,7 @@ object IDCardUtils {
 
     suspend fun loadIDCardBeanByPath(path: String): CardBean? {
         return withContext(Dispatchers.IO) {
+            println("~~~~~~~~~~~"+Thread.currentThread().name)
             val accountJson = loadIDCardByPath(path)
             return@withContext JsonUtils.Json2Object(accountJson, CardBean::class.java)
         }
