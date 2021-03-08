@@ -13,8 +13,7 @@ import com.journeyapps.barcodescanner.ViewfinderView
  *Time:
  *Description:
  */
-class IdCardViewfinderView(context: Context, val attrs: AttributeSet) :
-    ViewfinderView(context, attrs) {
+class IdCardViewfinderView(context: Context, val attrs: AttributeSet) : ViewfinderView(context, attrs) {
 
     private val rectPaint = Paint().apply {
         color = context.resources.getColor(R.color.yellow, null)
@@ -39,24 +38,8 @@ class IdCardViewfinderView(context: Context, val attrs: AttributeSet) :
         }
         val frame = cameraPreview.framingRect
         //画外方框
-        canvas.drawRoundRect(
-            frame.left.toFloat(),
-            frame.top.toFloat(),
-            frame.right.toFloat(),
-            frame.bottom.toFloat(),
-            1.dp,
-            1.dp,
-            rectPaint
-        )
+        canvas.drawRoundRect(frame.left.toFloat(), frame.top.toFloat(), frame.right.toFloat(), frame.bottom.toFloat(), 1.dp, 1.dp, rectPaint)
         //画内方框
-        canvas.drawRoundRect(
-            frame.left.toFloat() + DIFFERENCE,
-            frame.top.toFloat() + DIFFERENCE,
-            frame.right.toFloat() - DIFFERENCE,
-            frame.bottom.toFloat() - DIFFERENCE,
-            1.dp,
-            1.dp,
-            innerRectPaint
-        )
+        canvas.drawRoundRect(frame.left.toFloat() + DIFFERENCE, frame.top.toFloat() + DIFFERENCE, frame.right.toFloat() - DIFFERENCE, frame.bottom.toFloat() - DIFFERENCE, 1.dp, 1.dp, innerRectPaint)
     }
 }

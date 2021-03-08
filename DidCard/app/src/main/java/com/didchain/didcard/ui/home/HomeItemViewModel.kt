@@ -13,8 +13,7 @@ import org.koin.core.component.KoinApiExtension
  *Description:
  */
 @KoinApiExtension
-class HomeItemViewModel(viewModel: HomeViewModel, val serviceBean: ServiceBean) :
-    ItemViewModel<HomeViewModel>(viewModel) {
+class HomeItemViewModel(viewModel: HomeViewModel, val serviceBean: ServiceBean) : ItemViewModel<HomeViewModel>(viewModel) {
     val clickItem = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             viewModel.showToast(R.string.developing)

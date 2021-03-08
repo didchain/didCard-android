@@ -14,15 +14,20 @@ import com.didchain.didcard.R
  *Time:
  *Description:
  */
-class QRImageView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
+class QRImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
     val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = context.resources.getColor(R.color.yellow, null)
         strokeWidth = 2.dp
         context.resources.getColor(android.R.color.transparent, null)
         style = Paint.Style.STROKE
     }
+
+    init {
+        val obtainStyledAttributes = context.obtainStyledAttributes(attrs, R.styleable.qrimageview)
+        val color = obtainStyledAttributes.getColor(R.styleable.qrimageview_line_color, context.resources.getColor(R.color.yellow, null))
+        paint.color = color
+        obtainStyledAttributes.recycle()
+    }
+
 
     fun setLineColor(color: Int) {
         paint.setColor(color)

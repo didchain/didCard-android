@@ -65,7 +65,7 @@
                     android:id="@+id/idQR"
                     android:layout_marginTop="24dp"
                     android:padding="2dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitXY"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>

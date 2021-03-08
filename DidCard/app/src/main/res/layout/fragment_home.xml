@@ -36,6 +36,7 @@
             android:text="@{viewModel.city}"
             android:textColor="@color/color_0c123d"
             android:gravity="center"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/title"
             app:layout_constraintBottom_toBottomOf="@+id/title"
@@ -83,6 +84,53 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/idCardTitle" />
 
+                <com.didchain.didcard.view.SquareImageView
+                    android:id="@+id/qrBg"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/qr_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/idCard" />
+
+                <com.didchain.didcard.view.QRImageView
+                    android:id="@+id/rq"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="47dp"
+                    android:layout_marginEnd="16dp"
+                    app:line_color="@android:color/transparent"
+                    android:padding="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/qrBg"
+                    app:layout_constraintEnd_toEndOf="@+id/qrBg"
+                    app:layout_constraintStart_toStartOf="@+id/qrBg"
+                    app:layout_constraintTop_toTopOf="@+id/qrBg" />
+                    <ProgressBar
+                        android:id="@+id/progress"
+                        android:layout_width="50dp"
+                        android:indeterminateTint="@color/yellow"
+                        app:layout_constraintStart_toStartOf="@+id/rq"
+                        app:layout_constraintEnd_toEndOf="@+id/rq"
+                        app:layout_constraintTop_toTopOf="@+id/rq"
+                        app:layout_constraintBottom_toBottomOf="@+id/rq"
+                        android:layout_height="50dp"/>
+
+                <com.didchain.didcard.view.SquareImageView
+                    android:id="@+id/lock"
+                    isVisible="@{viewModel.showLock}"
+                    onClickCommand="@{viewModel.clickUnLock}"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="47dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/color_e6ffffff"
+                    android:scaleType="center"
+                    android:src="@drawable/lock_icon"
+                    app:layout_constraintBottom_toBottomOf="@+id/qrBg"
+                    app:layout_constraintEnd_toEndOf="@+id/qrBg"
+                    app:layout_constraintStart_toStartOf="@+id/qrBg"
+                    app:layout_constraintTop_toTopOf="@+id/qrBg" />
+
                 <TextView
                     isVisible="@{viewModel.showLock}"
                     android:layout_width="wrap_content"
@@ -95,6 +143,16 @@
                     app:layout_constraintStart_toStartOf="@+id/lock"
                     app:layout_constraintTop_toTopOf="@+id/lock" />
 
+                <TextView
+                    isVisible="@{viewModel.showLock}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_lock_des"
+                    android:textColor="@color/color_9b9c9f"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/lock"
+                    app:layout_constraintEnd_toEndOf="@+id/lock"
+                    app:layout_constraintStart_toStartOf="@+id/lock" />
 
                 <androidx.cardview.widget.CardView
                     style="@style/CardViewStyle"
@@ -139,43 +197,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <com.didchain.didcard.view.SquareImageView
-                    android:id="@+id/qrBg"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/qr_bg"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/idCard" />
 
-                <com.didchain.didcard.view.QRImageView
-                    android:id="@+id/rq"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_margin="47dp"
-                    android:layout_marginEnd="16dp"
-                    android:padding="2dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/qrBg"
-                    app:layout_constraintEnd_toEndOf="@+id/qrBg"
-                    app:layout_constraintStart_toStartOf="@+id/qrBg"
-                    app:layout_constraintTop_toTopOf="@+id/qrBg" />
-
-
-                <com.didchain.didcard.view.SquareImageView
-                    android:id="@+id/lock"
-                    isVisible="@{viewModel.showLock}"
-                    onClickCommand="@{viewModel.clickUnLock}"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_margin="47dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@color/color_e6ffffff"
-                    android:scaleType="center"
-                    android:src="@drawable/lock_icon"
-                    app:layout_constraintBottom_toBottomOf="@+id/qrBg"
-                    app:layout_constraintEnd_toEndOf="@+id/qrBg"
-                    app:layout_constraintStart_toStartOf="@+id/qrBg"
-                    app:layout_constraintTop_toTopOf="@+id/qrBg" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 

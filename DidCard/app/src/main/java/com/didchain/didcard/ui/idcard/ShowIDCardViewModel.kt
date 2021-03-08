@@ -1,5 +1,8 @@
 package com.didchain.didcard.ui.idcard
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import com.didchain.android.lib.base.BaseViewModel
@@ -26,27 +29,25 @@ class ShowIDCardViewModel : BaseViewModel() {
     var qrJson = ""
     val idCard = ObservableField<String>()
     val idCardJsonEvent = SingleLiveEvent<String>()
+    val requestLocalPermissionEvent = SingleLiveEvent<Boolean>()
     val clickShare = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            showToast("点击了分享")
+            copyToMemory(context(),idCard.get().toString())
         }
     })
 
     val clickSave = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            saveIDCard()
+            requestLocalPermissionEvent.call()
         }
     })
 
-    private fun saveIDCard() {
+
+     fun saveIDCard() {
         if (!TextUtils.isEmpty(qrJson)) {
             MainScope().launch {
                 withContext(Dispatchers.IO) {
-                    val isSave = BitmapUtils.saveBitmapToAlbum(
-                        context(),
-                        BitmapUtils.stringToQRBitmap(qrJson),
-                        context().getString(R.string.app_name)
-                    )
+                    val isSave = BitmapUtils.saveBitmapToAlbum(context(), BitmapUtils.stringToQRBitmap(qrJson), context().getString(R.string.qr_name))
                     if (isSave) {
                         showToast(R.string.save_account_success)
                     } else {
@@ -57,6 +58,12 @@ class ShowIDCardViewModel : BaseViewModel() {
 
 
         }
+    }
+    fun copyToMemory(context: Context, data: String) {
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("pirate memory string", data)
+        clipboard.setPrimaryClip(clip)
+        showToast(R.string.id_card_copy_success)
     }
 
     init {

@@ -34,49 +34,37 @@ class CreateCardActivity : BaseActivity<CreateCardViewModel, ActivityCreateAccou
     override fun initView() {
         val color = resources.getColor(R.color.blue, null)
 
-        val spannableString = SpannableString(getString(R.string.use_agreement_privacy_authority))
-        spannableString.setSpan(object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                (widget as TextView).highlightColor =
-                    resources.getColor(android.R.color.transparent, null)
-                startActivity(PrivacyAuthorityActivity::class.java)
-            }
-
-            override fun updateDrawState(ds: TextPaint) {
-                ds.color = ds.linkColor
-                ds.isUnderlineText = false
-                ds.clearShadowLayer()
-            }
-        }, protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                (widget as TextView).highlightColor =
-                    resources.getColor(android.R.color.transparent, null)
-                startActivity(PrivacyAuthorityActivity::class.java)
-            }
-
-            override fun updateDrawState(ds: TextPaint) {
-                ds.color = ds.linkColor
-                ds.isUnderlineText = false
-                ds.clearShadowLayer()
-            }
-        }, policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        spannableString.setSpan(
-            ForegroundColorSpan(color),
-            protocolStart,
-            protocolEnd,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannableString.setSpan(
-            ForegroundColorSpan(color),
-            policyStart,
-            policyEnd,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        privacyAuthorityTv.text = spannableString
-        privacyAuthorityTv.movementMethod = LinkMovementMethod.getInstance()
+//        val spannableString = SpannableString(getString(R.string.use_agreement_privacy_authority))
+//        spannableString.setSpan(object : ClickableSpan() {
+//            override fun onClick(widget: View) {
+//                (widget as TextView).highlightColor = resources.getColor(android.R.color.transparent, null)
+//                startActivity(PrivacyAuthorityActivity::class.java)
+//            }
+//
+//            override fun updateDrawState(ds: TextPaint) {
+//                ds.color = ds.linkColor
+//                ds.isUnderlineText = false
+//                ds.clearShadowLayer()
+//            }
+//        }, protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        spannableString.setSpan(object : ClickableSpan() {
+//            override fun onClick(widget: View) {
+//                (widget as TextView).highlightColor = resources.getColor(android.R.color.transparent, null)
+//                startActivity(PrivacyAuthorityActivity::class.java)
+//            }
+//
+//            override fun updateDrawState(ds: TextPaint) {
+//                ds.color = ds.linkColor
+//                ds.isUnderlineText = false
+//                ds.clearShadowLayer()
+//            }
+//        }, policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//
+//        spannableString.setSpan(ForegroundColorSpan(color), protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        spannableString.setSpan(ForegroundColorSpan(color), policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//
+//        privacyAuthorityTv.text = spannableString
+//        privacyAuthorityTv.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun initData() {

@@ -25,3 +25,11 @@
  -keep class com.amap.api.fence.**{*;}
  -keep class com.loc.**{*;}
  -keep class com.autonavi.aps.amapapi.model.**{*;}
+
+#EventBus
+-keepattributes *Annotation*
+-keepclassmembers class * {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+

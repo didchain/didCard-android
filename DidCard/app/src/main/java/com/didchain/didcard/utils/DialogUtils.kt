@@ -62,74 +62,41 @@ object DialogUtils {
     }
 
     fun showImportDialot(activity: AppCompatActivity, selectListener: OnSelectListener) {
-        XPopup.Builder(activity).asBottomList(
-            activity.getString(R.string.guide_dialog_title), arrayOf(
-                activity.getString(R.string.guide_import_album),
-                activity.getString(R.string.guide_import_camera),
-                activity.getString(R.string.cancel)
-            ), selectListener
-        ).show()
+        XPopup.Builder(activity).asBottomList(activity.getString(R.string.guide_dialog_title), arrayOf(activity.getString(R.string.guide_import_album), activity.getString(R.string.guide_import_camera), activity.getString(R.string.cancel)), selectListener).show()
     }
 
-    fun showPasswordDialog(
-        activity: AppCompatActivity,
-        listener: PasswordPop.InputPasswordListener,
-        xpopListener: SimpleCallback = IDCardXPopupListener()
-    ): BasePopupView {
-        return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(true)
-            .setPopupCallback(xpopListener).isDestroyOnDismiss(true)
-            .asCustom(PasswordPop(activity, listener)).show()
+    fun showPasswordDialog(activity: AppCompatActivity, listener: PasswordPop.InputPasswordListener, xpopListener: SimpleCallback = IDCardXPopupListener()): BasePopupView {
+        return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(true).setPopupCallback(xpopListener).isDestroyOnDismiss(true).asCustom(PasswordPop(activity, listener)).show()
 
     }
 
 
-    fun showStartFingerPrintsDialog(
-        activity: AppCompatActivity,
-        confirmListerer: OnConfirmListener,
-        cancelListener: OnCancelListener
-    ): BasePopupView {
-        return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(false)
-            .isDestroyOnDismiss(true).asConfirm(
-                "",
-                activity.getString(R.string.my_no_fingerprint),
-                activity.getString(R.string.cancel),
-                activity.getString(R.string.my_input),
-                confirmListerer,
-                cancelListener,
-                false
-            ).show()
+    fun showStartFingerPrintsDialog(activity: AppCompatActivity, confirmListerer: OnConfirmListener, cancelListener: OnCancelListener): BasePopupView {
+        return XPopup.Builder(activity).dismissOnTouchOutside(false).dismissOnBackPressed(false).isDestroyOnDismiss(true).asConfirm("", activity.getString(R.string.my_no_fingerprint), activity.getString(R.string.cancel), activity.getString(R.string.my_input), confirmListerer, cancelListener, false).show()
 
     }
 
     fun showExportSuccessDialog(context: Context) {
-        val exportSuccessPop = XPopup.Builder(context)
-            .isDestroyOnDismiss(true).asCustom(ExportSuccessPop(context)).show()
+        val exportSuccessPop = XPopup.Builder(context).isDestroyOnDismiss(true).asCustom(ExportSuccessPop(context)).show()
         exportSuccessPop.delayDismiss(1000)
     }
 
     fun showImportSuccessDialog(context: Context) {
-        val importSuccessPop = XPopup.Builder(context)
-            .isDestroyOnDismiss(true).asCustom(ImportSuccessPop(context)).show()
+        val importSuccessPop = XPopup.Builder(context).isDestroyOnDismiss(true).asCustom(ImportSuccessPop(context)).show()
         importSuccessPop.delayDismiss(1000)
     }
 
-    fun showPrivacyAuthorityDialog(
-        context: Context,
-        confirmListerer: OnConfirmListener,
-        cancelListener: OnCancelListener
-    ) {
+    fun showPrivacyAuthorityDialog(context: Context, confirmListerer: OnConfirmListener, cancelListener: OnCancelListener) {
 
         val protocolStart = 122
         val protocolEnd = 128
         val policyStart = 129
         val policyEnd = 135
 
-        val spannableString =
-            SpannableString(context.getString(R.string.dialog_service_and_privacy_policy_content))
+        val spannableString = SpannableString(context.getString(R.string.dialog_service_and_privacy_policy_content))
         spannableString.setSpan(object : ClickableSpan() {
             override fun onClick(widget: View) {
-                (widget as TextView).highlightColor =
-                    context.getResources().getColor(android.R.color.transparent)
+                (widget as TextView).highlightColor = context.getResources().getColor(android.R.color.transparent)
                 context.startActivity(Intent(context, PrivacyAuthorityActivity::class.java))
             }
 
@@ -141,8 +108,7 @@ object DialogUtils {
         }, protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannableString.setSpan(object : ClickableSpan() {
             override fun onClick(widget: View) {
-                (widget as TextView).highlightColor =
-                    context.getResources().getColor(android.R.color.transparent)
+                (widget as TextView).highlightColor = context.getResources().getColor(android.R.color.transparent)
                 context.startActivity(Intent(context, PrivacyAuthorityActivity::class.java))
             }
 
@@ -153,28 +119,11 @@ object DialogUtils {
             }
         }, policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        spannableString.setSpan(
-            ForegroundColorSpan(
-                context.getResources().getColor(R.color.colorAccent)
-            ), protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannableString.setSpan(
-            ForegroundColorSpan(
-                context.getResources().getColor(R.color.colorAccent)
-            ), policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        spannableString.setSpan(ForegroundColorSpan(context.getResources().getColor(R.color.colorAccent)), protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(ForegroundColorSpan(context.getResources().getColor(R.color.colorAccent)), policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
 
-        val importSuccessPop = XPopup.Builder(context)
-            .isDestroyOnDismiss(true)
-            .dismissOnBackPressed(false)
-            .dismissOnTouchOutside(false)
-            .asConfirm(
-                context.getString(R.string.privacy_policy_title),
-                spannableString,
-                context.getString(R.string.not_use),
-                context.getString(R.string.agree), confirmListerer, cancelListener, false
-            )
+        val importSuccessPop = XPopup.Builder(context).isDestroyOnDismiss(true).dismissOnBackPressed(false).dismissOnTouchOutside(false).asConfirm(context.getString(R.string.privacy_policy_title), spannableString, context.getString(R.string.not_use), context.getString(R.string.agree), confirmListerer, cancelListener, false)
         importSuccessPop.show()
     }
 

@@ -25,9 +25,7 @@ object BitmapUtils {
 
     fun stringToQRBitmap(data: String): Bitmap {
         val barcodeEncoder = BarcodeEncoder()
-        return barcodeEncoder.encodeBitmap(
-            data, BarcodeFormat.QR_CODE, 400.dp.toInt(), 400.dp.toInt()
-        )
+        return barcodeEncoder.encodeBitmap(data, BarcodeFormat.QR_CODE, 400.dp.toInt(), 400.dp.toInt())
     }
 
     fun saveBitmapToAlbum(context: Context, bitmap: Bitmap, bitName: String): Boolean {
@@ -54,6 +52,9 @@ object BitmapUtils {
 
         fileName = dirPath + bitName
         file = File(fileName)
+        if(!file.exists()){
+            file.createNewFile()
+        }
         val out: FileOutputStream
         try {
             out = FileOutputStream(file)
@@ -66,12 +67,9 @@ object BitmapUtils {
                     val values = ContentValues()
                     values.put(MediaStore.Images.Media.DATA, file.getAbsolutePath())
                     values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-                    val uri: Uri? = context.getContentResolver()
-                        .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                    val uri: Uri? = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
                 } else {
-                    MediaStore.Images.Media.insertImage(
-                        context.getContentResolver(), file.getAbsolutePath(), bitName, null
-                    )
+                    MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), bitName, null)
                 }
             }
         } catch (e: FileNotFoundException) {
@@ -88,11 +86,7 @@ object BitmapUtils {
             return false
 
         }
-        context.sendBroadcast(
-            Intent(
-                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$fileName")
-            )
-        )
+        context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$fileName")))
 
         return true
     }
@@ -113,8 +107,7 @@ object BitmapUtils {
             contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/JPEG")
             //执行insert操作，向系统文件夹中添加文件
             //EXTERNAL_CONTENT_URI代表外部存储器，该值不变
-            val uri: Uri? = context.getContentResolver()
-                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            val uri: Uri? = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
             if (uri != null) {
                 //若生成了uri，则表示该文件添加成功
                 //使用流将内容写入该uri中即可

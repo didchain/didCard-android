@@ -36,8 +36,7 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
     override val mViewModel: GuideViewModel by viewModel()
 
     override fun initView() {
-        DialogUtils.showPrivacyAuthorityDialog(this,
-            OnConfirmListener { }, OnCancelListener { finish() })
+//        DialogUtils.showPrivacyAuthorityDialog(this, OnConfirmListener { }, OnCancelListener { finish() })
     }
 
     override fun initData() {
@@ -63,12 +62,7 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
         if (PermissionUtils.hasStoragePermission(this)) {
             IDCardUtils.openAlbum(this)
         } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_apply_album_permission),
-                Constants.CODE_OPEN_ALBUM,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
+            EasyPermissions.requestPermissions(this, getString(R.string.import_apply_album_permission), Constants.CODE_OPEN_ALBUM, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
     }
 
@@ -83,21 +77,12 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
             ii.setBarcodeImageEnabled(true)
             ii.initiateScan()
         } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_apply_camera_permission),
-                Constants.CODE_OPEN_CAMERA,
-                Manifest.permission.CAMERA
-            )
+            EasyPermissions.requestPermissions(this, getString(R.string.import_apply_camera_permission), Constants.CODE_OPEN_CAMERA, Manifest.permission.CAMERA)
         }
     }
 
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
@@ -115,8 +100,8 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
             }
             loadIdCardFromUri(data.data)
         } else {
-            val result =
-                IntentIntegrator.parseActivityResult(requestCode, resultCode, data) ?: return
+            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+                    ?: return
             if (result.contents == null) {
                 return
             }

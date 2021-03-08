@@ -9,6 +9,7 @@ object Constants {
     val TIME_OUT: Long = 40
     const val CODE_OPEN_ALBUM = 100
     const val CODE_OPEN_CAMERA = 101
+    const val CODE_OPEN_GPS = 102
     const val CODE_WRITE_EXTERNAL_PERMISSION = 1
     const val CODE_LOCATION_PERMISSION = 2
 
@@ -19,5 +20,5 @@ object Constants {
     const val KEY_BIOMETRIC_INITIALIZATIONVECTOR = "key_biometric_initializationvector"
     const val KEY_DID_BIOMETRIC = "key_did_biometric"
 
-    const val TAG_NAME = "ID_GO_TAG"
+    const val TAG_NAME = "DID"
 }

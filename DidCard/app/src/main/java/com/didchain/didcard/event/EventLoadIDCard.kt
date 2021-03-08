@@ -5,4 +5,4 @@ package com.didchain.didcard.event
  *Time:
  *Description:
  */
-class EventCreateIDCard
+class EventLoadIDCard

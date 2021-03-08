@@ -38,6 +38,10 @@ object IDCardUtils {
     }
 
     fun saveIDCard(path: String, data: String) {
+        val file = File(path)
+        if(file.exists()){
+            file.delete()
+        }
         MainScope().launch {
             withContext(Dispatchers.IO) {
                 val encryptedFile = getEncryptedFile(path)
@@ -70,12 +74,8 @@ object IDCardUtils {
     }
 
     private fun getEncryptedFile(path: String): EncryptedFile {
-        return EncryptedFile.Builder(
-            File(path),
-            context(),
-            masterKeyAlias,
-            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
-        ).build()
+        val file = File(path)
+        return EncryptedFile.Builder(file, context(), masterKeyAlias, EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB).build()
     }
 
     suspend fun loadIDCardByPath(path: String): String {

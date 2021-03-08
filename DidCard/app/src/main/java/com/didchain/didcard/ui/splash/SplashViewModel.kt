@@ -23,21 +23,20 @@ class SplashViewModel : BaseViewModel(), KoinComponent {
     val hasAccount: Boolean = IDCardUtils.hasIDCard(IDCardUtils.getIDCardPath(context()))
 
     fun loadCard() {
-        guideModel.loadCard(IDCardUtils.getIDCardPath(context()))
-            .subscribe(object : SingleObserver<Boolean> {
-                override fun onSuccess(loadResult: Boolean) {
-                    startActivityAndFinish(MainActivity::class.java)
-                }
+        guideModel.loadCard(IDCardUtils.getIDCardPath(context())).subscribe(object : SingleObserver<Boolean> {
+            override fun onSuccess(loadResult: Boolean) {
+                startActivityAndFinish(MainActivity::class.java)
+            }
 
-                override fun onSubscribe(d: Disposable) {
-                    addSubscribe(d)
-                }
+            override fun onSubscribe(d: Disposable) {
+                addSubscribe(d)
+            }
 
-                override fun onError(e: Throwable) {
-                    showErrorToast(R.string.splash_load_error, e)
-                    finish()
-                }
+            override fun onError(e: Throwable) {
+                showErrorToast(R.string.splash_load_error, e)
+                finish()
+            }
 
-            })
+        })
     }
 }

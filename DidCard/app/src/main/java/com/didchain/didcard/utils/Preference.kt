@@ -9,23 +9,15 @@ import kotlin.reflect.KProperty
  *Time:
  *Description:
  */
-class SharedPref<T>(
-    private val context: Context,
-    private val name: String,
-    private val defValue: T,
-    private val pref: String = "id_card_preference",
-    private val commit: Boolean = false
-) : ReadWriteProperty<Any?, T> {
+class SharedPref<T>(private val context: Context, private val name: String, private val defValue: T, private val pref: String = "id_card_preference", private val commit: Boolean = false) : ReadWriteProperty<Any?, T> {
 
     private val prefs by lazy {
         context.getSharedPreferences(pref, Context.MODE_PRIVATE)
     }
 
-    override fun getValue(thisRef: Any?, property: KProperty<*>): T =
-        findPreference(findProperName(property))
+    override fun getValue(thisRef: Any?, property: KProperty<*>): T = findPreference(findProperName(property))
 
-    override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) =
-        putPreference(findProperName(property), value)
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) = putPreference(findProperName(property), value)
 
     private fun findProperName(property: KProperty<*>) = if (name.isEmpty()) property.name else name
 

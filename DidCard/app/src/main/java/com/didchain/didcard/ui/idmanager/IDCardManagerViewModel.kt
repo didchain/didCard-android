@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
  *Description:
  */
 class IDCardManagerViewModel : BaseViewModel() {
+    val requestLocalPermissionEvent = SingleLiveEvent<Boolean>()
     val exportSuccessEvent: SingleLiveEvent<Boolean> by lazy {
         SingleLiveEvent<Boolean>()
     }
@@ -42,12 +43,12 @@ class IDCardManagerViewModel : BaseViewModel() {
 
     val clickExport = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            showDialog()
-            saveIDCard()
+            requestLocalPermissionEvent.call()
+
         }
     })
 
-    private fun saveIDCard() {
+    fun saveIDCard() {
         MainScope().launch {
             withContext(Dispatchers.IO) {
                 val cardPath = IDCardUtils.getIDCardPath(context())
@@ -62,7 +63,7 @@ class IDCardManagerViewModel : BaseViewModel() {
                 val isSave = BitmapUtils.saveBitmapToAlbum(
                     context(),
                     BitmapUtils.stringToQRBitmap(qrJson),
-                    context().getString(R.string.app_name)
+                    context().getString(R.string.qr_name)
                 )
                 if (isSave) {
                     exportSuccessEvent.postValue(true)

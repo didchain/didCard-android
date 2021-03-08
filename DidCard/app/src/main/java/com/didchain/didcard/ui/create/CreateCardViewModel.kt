@@ -6,14 +6,17 @@ import com.didchain.android.lib.base.BaseViewModel
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
 import com.didchain.android.lib.command.BindingConsumer
+import com.didchain.android.lib.event.SingleLiveEvent
 import com.didchain.android.lib.utils.AppManager
 import com.didchain.didcard.R
+import com.didchain.didcard.event.EventLoadIDCard
 import com.didchain.didcard.provider.context
 import com.didchain.didcard.ui.saveaccount.SaveAccountActivity
 import com.didchain.didcard.utils.IDCardUtils
 import com.orhanobut.logger.Logger
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
+import org.greenrobot.eventbus.EventBus
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -28,7 +31,8 @@ class CreateCardViewModel : BaseViewModel(), KoinComponent {
     private val model: CreateCardModel by inject()
     val password = ObservableField<String>("")
     val confirmPassword = ObservableField<String>("")
-    var isCheckedPrivacyAuthrrity = false
+
+    var isCheckedPrivacyAuthrrity = true
 
     val clickCreate = BindingCommand<Any>(object : BindingAction {
         override fun call() {
@@ -73,7 +77,6 @@ class CreateCardViewModel : BaseViewModel(), KoinComponent {
         Logger.d(account)
         saveIdCard(account)
         dismissDialog()
-        AppManager.removeAllActivity()
         startActivityAndFinish(SaveAccountActivity::class.java)
     }
 

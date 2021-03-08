@@ -13,13 +13,7 @@ class EncryptedPreferencesUtils(context: Context) {
     private val fileName = "id_card_encrypted"
     private val prefs by lazy {
         val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-        return@lazy EncryptedSharedPreferences.create(
-            fileName,
-            masterKeyAlias,
-            context,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
+        return@lazy EncryptedSharedPreferences.create(fileName, masterKeyAlias, context, EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM)
     }
 
     fun putString(key: String, value: String) {

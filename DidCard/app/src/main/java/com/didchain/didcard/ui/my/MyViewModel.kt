@@ -29,7 +29,7 @@ import org.koin.core.component.inject
  */
 class MyViewModel : BaseViewModel(), KoinComponent {
     val model: MyModel by inject()
-    val id = ObservableField<String>()
+    val did = ObservableField<String>()
     var openFingerPrint: Boolean by SharedPref(context(), Constants.KEY_OPEN_FINGERPRINT, false)
     var openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
     var openFingerPrintObservable: ObservableBoolean
@@ -47,7 +47,7 @@ class MyViewModel : BaseViewModel(), KoinComponent {
 
     fun getId() {
         MainScope().launch {
-            id.set(model.getIDCard()?.did)
+            did.set(model.getIDCard()?.did)
         }
     }
 
@@ -122,10 +122,7 @@ class MyViewModel : BaseViewModel(), KoinComponent {
                 dismissDialog()
                 dismissPasswordDialogEvent.call()
                 if (isOpenNoScret) {
-                    EncryptedPreferencesUtils(context()).putString(
-                        Constants.KEY_ENCRYPTED_PASSWORD,
-                        password
-                    )
+                    EncryptedPreferencesUtils(context()).putString(Constants.KEY_ENCRYPTED_PASSWORD, password)
                     openNoScret = true
                 } else {
                     showfingerPrintDialogEvent.postValue(password)

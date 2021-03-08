@@ -57,6 +57,7 @@
         <CheckBox
             android:id="@+id/privacyAuthorityCB"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
             app:layout_constraintStart_toStartOf="@+id/confirmPassword"
             android:layout_marginTop="8dp"

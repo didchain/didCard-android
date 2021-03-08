@@ -1,8 +1,11 @@
 package com.didchain.didcard.ui.home
 
 import android.Manifest
+import android.Manifest.permission.CALL_PHONE
 import android.content.Intent
 import android.provider.Settings
+import android.view.View
+import android.widget.Toast
 import androidgolib.Androidgolib
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -20,6 +23,7 @@ import com.didchain.didcard.R
 import com.didchain.didcard.bean.QRBean
 import com.didchain.didcard.bean.SignatureBean
 import com.didchain.didcard.databinding.FragmentHomeBinding
+import com.didchain.didcard.event.EventLoadIDCard
 import com.didchain.didcard.utils.*
 import com.didchain.didcard.view.PasswordPop
 import com.lxj.xpopup.XPopup
@@ -27,9 +31,13 @@ import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.interfaces.OnConfirmListener
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinApiExtension
 import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
 
@@ -39,7 +47,7 @@ import pub.devrel.easypermissions.EasyPermissions
  *Description:
  */
 @KoinApiExtension
-class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() , EasyPermissions.PermissionCallbacks{
 
     private lateinit var popupView: BasePopupView
     private lateinit var passwordDialog: BasePopupView
@@ -71,18 +79,18 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                     val qrBean = QRBean(sign, mViewModel.id.get().toString(), currentTimeMillis, mapLocation.latitude, mapLocation.longitude)
                     val qrjson = JsonUtils.object2Json(qrBean, QRBean::class.java)
                     rq.setImageBitmap(BitmapUtils.stringToQRBitmap(qrjson))
+                    progress.visibility= View.GONE
                     mMapLocation = mapLocation
                 }
             } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                Logger.e("AmapError", "location Error, ErrCode:" + mapLocation.errorCode + ", errInfo:" + mapLocation.errorInfo)
+                Logger.e( "location Error, ErrCode:" + mapLocation.errorCode + ", errInfo:" + mapLocation.errorInfo)
             }
         }
     }
 
     private fun getSignature(currentTimeMillis: Long, latitude: Double, longitude: Double): SignatureBean {
-        return SignatureBean( mViewModel.id.get().toString(),currentTimeMillis, latitude, longitude
-        )
+        return SignatureBean(mViewModel.id.get().toString(), currentTimeMillis, latitude, longitude)
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_home
@@ -90,28 +98,22 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override fun initView() {
         mViewModel.title.set(getString(R.string.app_name))
-        rq.setLineColor(resources.getColor(R.color.color_0c123d, null))
+        EventBus.getDefault().register(this)
     }
 
     override fun initData() {
         if (mViewModel.openNoScret) {
-            val password =
-                EncryptedPreferencesUtils(mActivity).getString(Constants.KEY_ENCRYPTED_PASSWORD, "")
+            val password = EncryptedPreferencesUtils(mActivity).getString(Constants.KEY_ENCRYPTED_PASSWORD, "")
             mViewModel.openIdCard(password)
         } else if (mViewModel.openFingerPrint) {
             cryptographyManager = CryptographyManager()
             val encryptedPreference = EncryptedPreferencesUtils(mActivity)
-            val encryptedPassword =
-                encryptedPreference.getString(Constants.KEY_BIOMETRIC_PASSWORD, "")
-            val encryptedVector =
-                encryptedPreference.getString(Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR, "")
+            val encryptedPassword = encryptedPreference.getString(Constants.KEY_BIOMETRIC_PASSWORD, "")
+            val encryptedVector = encryptedPreference.getString(Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR, "")
             biometricPrompt = createBiometricPrompt(encryptedPassword)
             promptInfo = createPromptInfo()
             try {
-                val cipher = cryptographyManager.getInitializedCipherForDecryption(
-                    Constants.KEY_DID_BIOMETRIC,
-                    StringUtils.hexStringToByte(encryptedVector)
-                )
+                val cipher = cryptographyManager.getInitializedCipherForDecryption(Constants.KEY_DID_BIOMETRIC, StringUtils.hexStringToByte(encryptedVector))
                 biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
             } catch (e: Exception) {
                 Logger.d("initData: ${e.message}")
@@ -124,23 +126,38 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         initLocation()
         //设置定位回调监听
         locationClient.setLocationListener(mLocationListener)
-        if (!checkLocationPermission()) {
-            requestExternalPermission()
-        } else {
-            getLocation()
+//        if (!checkLocationPermission()) {
+//            requestExternalPermission()
+//        } else {
+//            getLocation()
+//        }
+
+
+    }
+
+    private fun showQR(){
+        val currentTimeMillis = System.currentTimeMillis()
+        val signature = getSignature(currentTimeMillis, 12.22222, 22.33333)
+
+        val signatureJson = JsonUtils.object2Json(signature, SignatureBean::class.java)
+        if (Androidgolib.isOpen()) {
+            val sign = Androidgolib.sign(signatureJson)
+            val qrBean = QRBean(sign, mViewModel.id.get().toString(), currentTimeMillis, 12.22222, 22.33333)
+            val qrjson = JsonUtils.object2Json(qrBean, QRBean::class.java)
+            rq.setImageBitmap(BitmapUtils.stringToQRBitmap(qrjson))
+            progress.visibility= View.GONE
         }
     }
 
     private fun initLocation() {
 
         locationOption.locationPurpose = AMapLocationClientOption.AMapLocationPurpose.SignIn
-        locationOption.locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
+        locationOption.locationMode = AMapLocationClientOption.AMapLocationMode.Device_Sensors
         locationOption.isNeedAddress = true
         locationOption.httpTimeOut = 20000
         locationOption.isOnceLocation = false
         locationOption.interval = 1000
         locationClient.setLocationOption(locationOption)
-
 
     }
 
@@ -151,9 +168,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             showPasswordDialog()
         })
 
+        mViewModel.showQREvent.observe(this, Observer {
+            showQR()
+        })
+
         mViewModel.dismissPasswordEvent.observe(this, Observer {
             if (this::passwordDialog.isInitialized && passwordDialog.isShow) {
                 passwordDialog.dismiss()
+                showQR()
             }
         })
     }
@@ -196,42 +218,46 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     private fun createPromptInfo(): BiometricPrompt.PromptInfo {
-        return BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.fingerprint_recognition_title))
-            .setSubtitle(getString(R.string.fingerprint_recognition_subtitle))
-            //            .setDescription(getString(R.string.prompt_info_description))
-            .setConfirmationRequired(false)
-            .setNegativeButtonText(getString(R.string.fingerprint_recognition_use_password))
-            //            .setDeviceCredentialAllowed(true)
-            .build()
+        return BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.fingerprint_recognition_title)).setSubtitle(getString(R.string.fingerprint_recognition_subtitle))
+                //            .setDescription(getString(R.string.prompt_info_description))
+                .setConfirmationRequired(false).setNegativeButtonText(getString(R.string.fingerprint_recognition_use_password))
+                //            .setDeviceCredentialAllowed(true)
+                .build()
     }
 
 
-    private fun processData(
-        encryptedPassword: String,
-        cryptoObject: BiometricPrompt.CryptoObject?
-    ) {
-        val password = cryptographyManager.decryptData(
-            StringUtils.hexStringToByte(encryptedPassword),
-            cryptoObject?.cipher!!
-        )
+    private fun processData(encryptedPassword: String, cryptoObject: BiometricPrompt.CryptoObject?) {
+        val password = cryptographyManager.decryptData(StringUtils.hexStringToByte(encryptedPassword), cryptoObject?.cipher!!)
         mViewModel.openIdCard(password)
     }
 
     private fun showPasswordDialog() {
-        passwordDialog =
-            DialogUtils.showPasswordDialog(mActivity, object : PasswordPop.InputPasswordListener {
+        passwordDialog = DialogUtils.showPasswordDialog(mActivity, object : PasswordPop.InputPasswordListener {
 
-                override fun input(password: String) {
-                    mViewModel.openIdCard(password)
-                }
+            override fun input(password: String) {
+                mViewModel.openIdCard(password)
+            }
 
-            })
+        })
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun reloadIDcard(event: EventLoadIDCard){
+        mViewModel.initData()
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).setTitle(getString(R.string.tip)).setRationale(R.string.refuse_location_permission).setPositiveButton(R.string.home_go_open).setNegativeButton(R.string.cancel).setRequestCode(Constants.CODE_LOCATION_PERMISSION).build().show()
+        } else {
+            toast(getString(R.string.refuse_location_permission))
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // 将结果转发给 EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
@@ -242,12 +268,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     private fun requestExternalPermission() {
-        EasyPermissions.requestPermissions(
-            this,
-            getString(R.string.request_wlocation_permission),
-            Constants.CODE_LOCATION_PERMISSION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
+        EasyPermissions.requestPermissions(this, getString(R.string.request_wlocation_permission), Constants.CODE_LOCATION_PERMISSION, Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
     @AfterPermissionGranted(Constants.CODE_LOCATION_PERMISSION)
@@ -270,25 +291,26 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         if (this::popupView.isInitialized && popupView.isShow) {
             return
         }
-        popupView = XPopup.Builder(context).dismissOnBackPressed(true).dismissOnTouchOutside(true)
-            .hasNavigationBar(false).isDestroyOnDismiss(true).asConfirm(
-                getString(R.string.tip),
-                getString(R.string.home_no_location),
-                getString(R.string.cancel),
-                getString(R.string.home_go_open),
-                OnConfirmListener {
-                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                    mActivity.startActivity(intent)
-                },
-                null,
-                false
-            )
+        popupView = XPopup.Builder(context).dismissOnBackPressed(true).dismissOnTouchOutside(true).hasNavigationBar(false).isDestroyOnDismiss(true).asConfirm(getString(R.string.tip), getString(R.string.home_no_location), getString(R.string.cancel), getString(R.string.home_go_open), OnConfirmListener {
+            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            startActivity(intent)
+        }, null, false)
         popupView.show()
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            requestExternalPermission()
+        }
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        EventBus.getDefault().unregister(this)
+        locationClient.stopLocation()
         locationClient.onDestroy()
     }
 }

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="qrimageview">
+        <attr name="line_color" format="color" />
+    </declare-styleable>
+
     <style name="ButtonStyle">
         <item name="android:layout_height">@dimen/button_height</item>
         <item name="android:layout_width">0dp</item>
@@ -35,7 +39,7 @@
     <style name="IdNavyBlueButtonStyle" parent="ButtonStyle">
         <item name="android:textColor">@color/yellow</item>
         <item name="android:layout_marginStart">12dp</item>
-        <item name="android:titleMarginEnd">26dp</item>
+        <item name="android:layout_marginEnd">26dp</item>
         <item name="android:background">@drawable/button_bg_0c123d</item>
     </style>
 

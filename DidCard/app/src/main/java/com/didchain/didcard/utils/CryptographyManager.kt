@@ -97,10 +97,7 @@ private class CryptographyManagerImpl : CryptographyManager {
         return cipher
     }
 
-    override fun getInitializedCipherForDecryption(
-        keyName: String,
-        initializationVector: ByteArray
-    ): Cipher {
+    override fun getInitializedCipherForDecryption(keyName: String, initializationVector: ByteArray): Cipher {
         val cipher = getCipher()
         val secretKey = getOrCreateSecretKey(keyName)
         cipher.init(Cipher.DECRYPT_MODE, secretKey, GCMParameterSpec(128, initializationVector))
@@ -129,10 +126,7 @@ private class CryptographyManagerImpl : CryptographyManager {
         keyStore.load(null) // Keystore must be loaded before it can be accessed
         keyStore.getKey(keyName, null)?.let { return it as SecretKey }
         // if you reach here, then a new SecretKey must be generated for that keyName
-        val paramsBuilder = KeyGenParameterSpec.Builder(
-            keyName,
-            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-        )
+        val paramsBuilder = KeyGenParameterSpec.Builder(keyName, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
         paramsBuilder.apply {
             setBlockModes(ENCRYPTION_BLOCK_MODE)
             setEncryptionPaddings(ENCRYPTION_PADDING)
@@ -141,10 +135,7 @@ private class CryptographyManagerImpl : CryptographyManager {
         }
 
         val keyGenParams = paramsBuilder.build()
-        val keyGenerator = KeyGenerator.getInstance(
-            KeyProperties.KEY_ALGORITHM_AES,
-            ANDROID_KEYSTORE
-        )
+        val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEYSTORE)
         keyGenerator.init(keyGenParams)
         return keyGenerator.generateKey()
     }

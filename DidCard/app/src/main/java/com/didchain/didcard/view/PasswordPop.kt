@@ -18,8 +18,7 @@ import com.lxj.xpopup.core.CenterPopupView
  *Time:
  *Description:
  */
-class PasswordPop(context: Context, val listener: InputPasswordListener) :
-    CenterPopupView(context) {
+class PasswordPop(context: Context, val listener: InputPasswordListener) : CenterPopupView(context) {
     interface InputPasswordListener {
         fun input(password: String)
     }

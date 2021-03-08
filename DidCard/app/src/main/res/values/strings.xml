@@ -1,6 +1,7 @@
 <resources>
     <!--    common-->
     <string name="app_name">易ID</string>
+    <string name="qr_name">易ID.png</string>
     <string name="create_account">创建账号</string>
     <string name="sure">确定</string>
     <string name="cancel">取消</string>
@@ -24,6 +25,7 @@
     <string name="main_my">我的</string>
     <string name="main_id_card">身份证号:</string>
     <string name="main_id_card_qr">身份证二维码</string>
+    <string name="main_click_exit_application">再次点击退出应用</string>
     <!--    guide-->
     <string name="guide_import_account">导入账号</string>
     <string name="guide_dialog_title">选择导入方式</string>
@@ -47,8 +49,9 @@
 
     <!--    id_card-->
     <string name="id_card_title">身份证号</string>
-    <string name="id_card_share">分享</string>
+    <string name="id_card_share">复制</string>
     <string name="id_card_save">保存</string>
+    <string name="id_card_copy_success">复制成功</string>
     <string name="id_card_load_error">加载身份信息失败</string>
 
     <!--    id_card_manager-->
@@ -91,6 +94,7 @@
     <string name="home_registered">挂号预约</string>
     <string name="home_hotel">酒店预约</string>
     <string name="home_lock_title">点击解锁二维码</string>
+    <string name="home_lock_des">身份证二维码被锁定请输入密码解锁</string>
     <string name="home_location">正在定位…</string>
 
     <string name="create_account_tip">提示：\n易ID身份系统，创建时无需网络无需验证，\n无密码找回功能</string>
@@ -112,4 +116,7 @@
 您可阅读《服务协议》和《隐私政策》了解详细信息。如您同意，请点击“同意”开始接受我们的服务。</string>
     <string name="not_use">暂不使用</string>
     <string name="agree">同意</string>
+    <string name="refuse_location_permission">你拒绝了定位权限，将无法使用部分功能</string>
+
+
 </resources>

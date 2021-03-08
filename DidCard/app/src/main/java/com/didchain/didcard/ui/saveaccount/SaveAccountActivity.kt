@@ -2,6 +2,7 @@ package com.didchain.didcard.ui.saveaccount
 
 import android.Manifest
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.lifecycle.Observer
 import com.didchain.android.lib.base.BaseActivity
 import com.didchain.android.lib.utils.toast
@@ -57,11 +58,7 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
     }
 
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // 将结果转发给 EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
@@ -72,23 +69,26 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
     }
 
     private fun requestExternalPermission() {
-        EasyPermissions.requestPermissions(
-            this,
-            getString(R.string.request_write_external_permission),
-            Constants.CODE_WRITE_EXTERNAL_PERMISSION,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
+        EasyPermissions.requestPermissions(this, getString(R.string.request_write_external_permission), Constants.CODE_WRITE_EXTERNAL_PERMISSION, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     @AfterPermissionGranted(Constants.CODE_WRITE_EXTERNAL_PERMISSION)
     fun saveCard() {
         MainScope().launch {
-            val card =
-                IDCardUtils.loadIDCardByPath(IDCardUtils.getIDCardPath(this@SaveAccountActivity))
+            val card = IDCardUtils.loadIDCardByPath(IDCardUtils.getIDCardPath(this@SaveAccountActivity))
             mViewModel.saveCard2Album(card)
         }
 
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            return false
+        }
+            return super.onKeyDown(keyCode, event)
+    }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
 }

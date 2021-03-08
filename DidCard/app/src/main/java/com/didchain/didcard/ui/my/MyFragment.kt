@@ -12,6 +12,7 @@ import com.didchain.didcard.BR
 import com.didchain.didcard.Constants
 import com.didchain.didcard.R
 import com.didchain.didcard.databinding.FragmentMyBinding
+import com.didchain.didcard.event.EventLoadIDCard
 import com.didchain.didcard.utils.CryptographyManager
 import com.didchain.didcard.utils.DialogUtils
 import com.didchain.didcard.utils.EncryptedPreferencesUtils
@@ -22,7 +23,11 @@ import com.lxj.xpopup.interfaces.OnCancelListener
 import com.lxj.xpopup.interfaces.OnConfirmListener
 import com.lxj.xpopup.interfaces.SimpleCallback
 import com.orhanobut.logger.Logger
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import pub.devrel.easypermissions.AfterPermissionGranted
 
 
 /**
@@ -41,6 +46,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     override val mViewModel: MyViewModel by viewModel()
     override fun initView() {
         mViewModel.title.set(getString(R.string.my))
+        EventBus.getDefault().register(this)
     }
 
     override fun initData() {
@@ -62,8 +68,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
         mViewModel.fingerPrintEvent.observe(this, object : Observer<Boolean> {
             override fun onChanged(open: Boolean?) {
-                val status =
-                    biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
+                val status = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
                 if (status == BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE || status == BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE) {
                     toast(getString(R.string.my_no_support_fingerprint))
                     mViewModel.openFingerPrintObservable.set(false)
@@ -85,8 +90,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
             biometricPrompt = createBiometricPrompt(password)
             promptInfo = createPromptInfo()
             try {
-                val cipher =
-                    cryptographyManager.getInitializedCipherForEncryption(Constants.KEY_DID_BIOMETRIC)
+                val cipher = cryptographyManager.getInitializedCipherForEncryption(Constants.KEY_DID_BIOMETRIC)
                 biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
             } catch (e: Exception) {
 
@@ -96,11 +100,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     }
 
     private fun createPromptInfo(): BiometricPrompt.PromptInfo {
-        return BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.fingerprint_recognition_title))
-            .setSubtitle(getString(R.string.fingerprint_recognition_subtitle))
-            .setConfirmationRequired(false).setNegativeButtonText(getString(R.string.cancel))
-            .build()
+        return BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.fingerprint_recognition_title)).setSubtitle(getString(R.string.fingerprint_recognition_subtitle)).setConfirmationRequired(false).setNegativeButtonText(getString(R.string.cancel)).build()
     }
 
     private fun showStartFingerPrintsDialog() {
@@ -122,22 +122,21 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     }
 
     private fun showPasswordDialog(isOpenNoSecret: Boolean) {
-        passwordDialog =
-            DialogUtils.showPasswordDialog(mActivity, object : PasswordPop.InputPasswordListener {
-                override fun input(password: String) {
-                    mViewModel.openIdCard(password, isOpenNoSecret)
-                }
+        passwordDialog = DialogUtils.showPasswordDialog(mActivity, object : PasswordPop.InputPasswordListener {
+            override fun input(password: String) {
+                mViewModel.openIdCard(password, isOpenNoSecret)
+            }
 
-            }, object : SimpleCallback() {
-                override fun onBackPressed(popupView: BasePopupView?): Boolean {
-                    if (isOpenNoSecret) {
-                        mViewModel.openNoScretObservable.set(!mViewModel.openNoScretObservable.get())
-                    } else {
-                        mViewModel.openFingerPrintObservable.set(false)
-                    }
-                    return false
+        }, object : SimpleCallback() {
+            override fun onBackPressed(popupView: BasePopupView?): Boolean {
+                if (isOpenNoSecret) {
+                    mViewModel.openNoScretObservable.set(!mViewModel.openNoScretObservable.get())
+                } else {
+                    mViewModel.openFingerPrintObservable.set(false)
                 }
-            })
+                return false
+            }
+        })
     }
 
     private fun createBiometricPrompt(password: String): BiometricPrompt {
@@ -170,20 +169,21 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     }
 
 
+
     private fun processData(password: String, cryptoObject: BiometricPrompt.CryptoObject?) {
         val encryptedData = cryptographyManager.encryptData(password, cryptoObject?.cipher!!)
         val encryptedPreference = EncryptedPreferencesUtils(mActivity)
-        encryptedPreference.putString(
-            Constants.KEY_BIOMETRIC_PASSWORD,
-            StringUtils.bytesToHexString(encryptedData.ciphertext)
-        )
-        encryptedPreference.putString(
-            Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR,
-            StringUtils.bytesToHexString(encryptedData.initializationVector)
-        )
-
-
+        encryptedPreference.putString(Constants.KEY_BIOMETRIC_PASSWORD, StringUtils.bytesToHexString(encryptedData.ciphertext))
+        encryptedPreference.putString(Constants.KEY_BIOMETRIC_INITIALIZATIONVECTOR, StringUtils.bytesToHexString(encryptedData.initializationVector))
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun reloadIDcard(event: EventLoadIDCard){
+        mViewModel.getId()
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
 }

@@ -55,8 +55,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     override fun initObserve() {
-        mViewModel.openCameraEvent.observe(this,
-            Observer { requestCameraPermission() })
+        mViewModel.openCameraEvent.observe(this, Observer { requestCameraPermission() })
     }
 
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_TRANSPARENT
@@ -77,11 +76,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         return view
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
@@ -97,12 +92,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             ii.setRequestCode(IntentIntegrator.REQUEST_CODE)
             ii.initiateScan()
         } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_apply_camera_permission),
-                Constants.CODE_OPEN_CAMERA,
-                Manifest.permission.CAMERA
-            )
+            EasyPermissions.requestPermissions(this, getString(R.string.import_apply_camera_permission), Constants.CODE_OPEN_CAMERA, Manifest.permission.CAMERA)
         }
     }
 
@@ -113,6 +103,24 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             return
         }
         toast(result.contents)
+    }
+
+    var last: Long = -1
+
+    override fun onBackPressed() {
+        val now = System.currentTimeMillis()
+        if (last == -1L) {
+            toast(getString(R.string.main_click_exit_application))
+            last = now
+        } else {
+            val doubleClickDifference = 2000
+            if (now - last < doubleClickDifference) {
+                finish()
+            } else {
+                last = now
+                toast(getString(R.string.main_click_exit_application))
+            }
+        }
     }
 
     override fun onDestroy() {

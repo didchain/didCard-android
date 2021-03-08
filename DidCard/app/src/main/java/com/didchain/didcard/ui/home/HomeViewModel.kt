@@ -1,5 +1,6 @@
 package com.didchain.didcard.ui.home
 
+import androidgolib.Androidgolib
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
@@ -33,38 +34,37 @@ import org.koin.core.component.inject
 class HomeViewModel : BaseViewModel(), KoinComponent {
     private val model: HomeModel by inject()
     var cardBean: CardBean? = null
-    private val itemTitles =
-        arrayListOf(R.string.home_notice, R.string.home_registered, R.string.home_hotel)
-    private val itemIcons =
-        arrayListOf(R.drawable.notice_icon, R.drawable.hospital_icon, R.drawable.hotel_icon)
+    private val itemTitles = arrayListOf(R.string.home_notice, R.string.home_registered, R.string.home_hotel)
+    private val itemIcons = arrayListOf(R.drawable.notice_icon, R.drawable.hospital_icon, R.drawable.hotel_icon)
     val showPasswordEvent = SingleLiveEvent<Boolean>()
     val dismissPasswordEvent = SingleLiveEvent<Boolean>()
+    val showQREvent = SingleLiveEvent<Boolean>()
     val openNoScret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SCRET, false)
     var openFingerPrint: Boolean by SharedPref(context(), Constants.KEY_OPEN_FINGERPRINT, false)
     val id = ObservableField<String>()
-    val city = ObservableField<String>(context().getString(R.string.home_location))
+    val city = ObservableField<String>("")
     val showLock = ObservableField<Boolean>(true)
     val items: ObservableList<HomeItemViewModel> = ObservableArrayList()
     val itemBinding = ItemBinding.of<HomeItemViewModel>(BR.item, R.layout.item_service)
 
     init {
+        initData()
+    }
 
-        showLock.set(!openNoScret)
+    fun initData(){
+        showLock.set(!Androidgolib.isOpen())
+        items.clear()
         itemTitles.forEachIndexed { index, i ->
-            items.add(
-                HomeItemViewModel(
-                    this,
-                    ServiceBean(DidCardApp.instance.getString(itemTitles[index]), itemIcons[index])
-                )
-            )
+            items.add(HomeItemViewModel(this, ServiceBean(DidCardApp.instance.getString(itemTitles[index]), itemIcons[index])))
         }
 
         MainScope().launch {
             cardBean = model.getIDCard()
             id.set(cardBean?.did)
+            if(Androidgolib.isOpen()){
+                showQREvent.call()
+            }
         }
-
-
     }
 
     val clickUnLock = BindingCommand<Any>(object : BindingAction {

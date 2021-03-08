@@ -13,8 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *Time:
  *Description:
  */
-class PrivacyAuthorityActivity :
-    BaseActivity<PrivacyAuthorityViewModel, ActivityPrivacyAuthorityBinding>() {
+class PrivacyAuthorityActivity : BaseActivity<PrivacyAuthorityViewModel, ActivityPrivacyAuthorityBinding>() {
     override val mViewModel: PrivacyAuthorityViewModel by viewModel()
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_privacy_authority
