@@ -14,12 +14,14 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
+import org.koin.core.component.KoinApiExtension
 
 /**
  *Author:Mr'x
  *Time:
  *Description:
  */
+@KoinApiExtension
 class SaveAccountViewModel : BaseViewModel() {
     val saveAlbumEvent = SingleLiveEvent<Any>()
     val saveAlbumResultEvent = SingleLiveEvent<Boolean>()

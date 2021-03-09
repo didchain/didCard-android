@@ -21,6 +21,7 @@ class SharedPref<T>(private val context: Context, private val name: String, priv
 
     private fun findProperName(property: KProperty<*>) = if (name.isEmpty()) property.name else name
 
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun findPreference(key: String): T = when (defValue) {
         is Int -> prefs.getInt(key, defValue)
         is Long -> prefs.getLong(key, defValue)

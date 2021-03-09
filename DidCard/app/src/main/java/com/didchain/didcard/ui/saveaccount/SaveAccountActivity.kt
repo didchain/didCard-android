@@ -15,6 +15,7 @@ import com.didchain.didcard.utils.IDCardUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -24,6 +25,8 @@ import pub.devrel.easypermissions.EasyPermissions
  *Time:
  *Description:
  */
+
+@KoinApiExtension
 class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccountBinding>() {
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_save_account
@@ -37,7 +40,7 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
     override fun initData() {}
 
     override fun initObserve() {
-        mViewModel.saveAlbumEvent.observe(this, Observer<Any> {
+        mViewModel.saveAlbumEvent.observe(this, Observer {
             if (!checkExternalPermission()) {
                 requestExternalPermission()
             } else {
@@ -46,7 +49,7 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
             }
         })
 
-        mViewModel.saveAlbumResultEvent.observe(this, Observer<Boolean> { isSaved ->
+        mViewModel.saveAlbumResultEvent.observe(this, Observer { isSaved ->
             if (isSaved) {
                 toast(getString(R.string.save_account_success))
                 startActivity(MainActivity::class.java)
@@ -75,7 +78,7 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
     @AfterPermissionGranted(Constants.CODE_WRITE_EXTERNAL_PERMISSION)
     fun saveCard() {
         MainScope().launch {
-            val card = IDCardUtils.loadIDCardByPath(IDCardUtils.getIDCardPath(this@SaveAccountActivity))
+            val card = IDCardUtils.loadIDCardJson(IDCardUtils.getIDCardPath(this@SaveAccountActivity))
             mViewModel.saveCard2Album(card)
         }
 
@@ -88,7 +91,4 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
             return super.onKeyDown(keyCode, event)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 }

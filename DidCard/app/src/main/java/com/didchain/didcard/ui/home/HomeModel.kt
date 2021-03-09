@@ -7,4 +7,4 @@ import com.didchain.didcard.ui.IDCardModel
  *Time:
  *Description:
  */
-class HomeModel : IDCardModel() {}
+class HomeModel : IDCardModel()

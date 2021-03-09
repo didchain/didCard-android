@@ -24,11 +24,9 @@ class PrivacyAuthorityActivity : BaseActivity<PrivacyAuthorityViewModel, Activit
         content.loadUrl("file:///android_asset/privacyauthority.html")
     }
 
-    override fun initData() {
-    }
+    override fun initData() {}
 
-    override fun initObserve() {
-    }
+    override fun initObserve() {}
 
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_WHITE
 

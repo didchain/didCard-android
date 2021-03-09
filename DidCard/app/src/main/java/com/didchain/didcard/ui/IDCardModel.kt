@@ -16,7 +16,7 @@ import io.reactivex.rxjava3.core.SingleOnSubscribe
  */
 open class IDCardModel : BaseModel() {
     suspend fun getIDCard(): CardBean? {
-        return IDCardUtils.loadIDCardBeanByPath(IDCardUtils.getIDCardPath(context()))
+        return IDCardUtils.loadIDCardByPath(IDCardUtils.getIDCardPath(context()))
     }
 
     fun openIdCard(password: String): Single<Boolean> {

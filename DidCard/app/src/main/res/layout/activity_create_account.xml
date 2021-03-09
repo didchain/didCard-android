@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
             app:layout_constraintStart_toStartOf="@+id/confirmPassword"
             android:layout_marginTop="8dp"
-            onCheckedChangedCommand="@{viewModel.checkPrivacyAuthrrity}"
+            onCheckedChangedCommand="@{viewModel.checkPrivacyAuthrity}"
             android:button="@drawable/privacy_authority_selector"
             android:textSize="12sp"
             android:layout_height="wrap_content" />

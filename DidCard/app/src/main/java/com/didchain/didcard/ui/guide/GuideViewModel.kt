@@ -16,6 +16,7 @@ import com.didchain.didcard.utils.SharedPref
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
 import org.greenrobot.eventbus.EventBus
+import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -24,6 +25,7 @@ import org.koin.core.component.inject
  *Time:
  *Description:
  */
+@KoinApiExtension
 class GuideViewModel : BaseViewModel(), KoinComponent {
     private val model: GuideModel by inject()
     val showImportDialog = SingleLiveEvent<Boolean>()

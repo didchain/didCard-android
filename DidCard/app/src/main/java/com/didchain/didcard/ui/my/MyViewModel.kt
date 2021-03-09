@@ -19,6 +19,7 @@ import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -27,8 +28,9 @@ import org.koin.core.component.inject
  *Time:
  *Description:
  */
+@KoinApiExtension
 class MyViewModel : BaseViewModel(), KoinComponent {
-    val model: MyModel by inject()
+    private val model: MyModel by inject()
     val did = ObservableField<String>()
     var openFingerPrint: Boolean by SharedPref(context(), Constants.KEY_OPEN_FINGERPRINT, false)
     var openNoSecret: Boolean by SharedPref(context(), Constants.KEY_OPEN_NO_SECRET, false)
@@ -37,7 +39,7 @@ class MyViewModel : BaseViewModel(), KoinComponent {
     val showPasswordDialogEvent = SingleLiveEvent<Boolean>()
     val dismissPasswordDialogEvent = SingleLiveEvent<Boolean>()
     val fingerPrintEvent = SingleLiveEvent<Boolean>()
-    val showfingerPrintDialogEvent = SingleLiveEvent<String>()
+    val showFingerPrintDialogEvent = SingleLiveEvent<String>()
 
     init {
         openFingerPrintObservable = ObservableBoolean(openFingerPrint)
@@ -125,7 +127,7 @@ class MyViewModel : BaseViewModel(), KoinComponent {
                     EncryptedPreferencesUtils(context()).putString(Constants.KEY_ENCRYPTED_PASSWORD, password)
                     openNoSecret = true
                 } else {
-                    showfingerPrintDialogEvent.postValue(password)
+                    showFingerPrintDialogEvent.postValue(password)
                 }
 
             }

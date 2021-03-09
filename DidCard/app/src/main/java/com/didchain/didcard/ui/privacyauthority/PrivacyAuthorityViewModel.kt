@@ -7,4 +7,4 @@ import com.didchain.android.lib.base.BaseViewModel
  *Time:
  *Description:
  */
-class PrivacyAuthorityViewModel : BaseViewModel() {}
+class PrivacyAuthorityViewModel : BaseViewModel()

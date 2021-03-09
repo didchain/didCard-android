@@ -84,7 +84,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
         })
 
 
-        mViewModel.showfingerPrintDialogEvent.observe(this, Observer { password ->
+        mViewModel.showFingerPrintDialogEvent.observe(this, Observer { password ->
             cryptographyManager = CryptographyManager()
             biometricPrompt = createBiometricPrompt(password)
             promptInfo = createPromptInfo()

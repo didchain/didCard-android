@@ -52,7 +52,7 @@ class IDCardManagerViewModel : BaseViewModel() {
         MainScope().launch {
             withContext(Dispatchers.IO) {
                 val cardPath = IDCardUtils.getIDCardPath(context())
-                val cardBean = IDCardUtils.loadIDCardBeanByPath(cardPath)
+                val cardBean = IDCardUtils.loadIDCardByPath(cardPath)
                 val qrJson: String
                 if (cardBean != null) {
                     qrJson = JsonUtils.object2Json(cardBean, CardBean::class.java)
@@ -60,11 +60,7 @@ class IDCardManagerViewModel : BaseViewModel() {
                     showToast(R.string.id_card_load_error)
                     return@withContext
                 }
-                val isSave = BitmapUtils.saveBitmapToAlbum(
-                    context(),
-                    BitmapUtils.stringToQRBitmap(qrJson),
-                    context().getString(R.string.qr_name)
-                )
+                val isSave = BitmapUtils.saveBitmapToAlbum(context(), BitmapUtils.stringToQRBitmap(qrJson), context().getString(R.string.qr_name))
                 if (isSave) {
                     exportSuccessEvent.postValue(true)
                 } else {

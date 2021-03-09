@@ -18,8 +18,8 @@ class GuideModel {
     fun loadCard(path: String): Single<Boolean> {
         return Single.create(SingleOnSubscribe<Boolean> { emitter ->
             MainScope().launch {
-                val idCardjson = IDCardUtils.loadIDCardByPath(path)
-                val loadResult = Androidgolib.loadCard(idCardjson)
+                val idCardJson = IDCardUtils.loadIDCardJson(path)
+                val loadResult = Androidgolib.loadCard(idCardJson)
                 emitter.onSuccess(loadResult)
             }
         }).compose(CommonSchedulers.io2mainAndTimeout<Boolean>())

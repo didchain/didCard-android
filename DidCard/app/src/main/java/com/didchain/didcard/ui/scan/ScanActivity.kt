@@ -19,8 +19,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
 
-    val capture: CaptureManager by lazy { CaptureManager(this, zxing_barcode_scanner) }
+    private val capture: CaptureManager by lazy { CaptureManager(this, zxing_barcode_scanner) }
     var bundle: Bundle? = null
+
     override fun getLayoutId(savedInstanceState: Bundle?): Int {
         bundle = savedInstanceState
         return R.layout.activity_scan
@@ -49,7 +50,6 @@ class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_WHITE
 
     override fun initVariableId(): Int = BR.viewModel
-    //    val vap:CaptureActivity
 
     override fun onResume() {
         super.onResume()

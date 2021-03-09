@@ -10,7 +10,7 @@ import com.squareup.moshi.Moshi
 object JsonUtils {
     private val moshi = Moshi.Builder().build()
 
-    fun <T> Json2Object(json: String, clazz: Class<T>): T? {
+    fun <T> json2Object(json: String, clazz: Class<T>): T? {
         return moshi.adapter(clazz).fromJson(json)
     }
 

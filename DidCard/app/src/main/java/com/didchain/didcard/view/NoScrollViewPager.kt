@@ -15,16 +15,9 @@ import androidx.viewpager.widget.ViewPager
 class NoScrollViewPager(context: Context, attrs: AttributeSet?) : ViewPager(context, attrs) {
     private var noScroll = false
 
-
     //调用此方法 参数为false 即可禁止滑动
     fun setNoScroll(noScroll: Boolean) {
         this.noScroll = noScroll
-    }
-
-    override fun scrollTo(x: Int, y: Int) {
-        //        if(noScroll){  //加上判断无法用 setCurrentItem 方法切换
-        super.scrollTo(x, y)
-        //        }
     }
 
     override fun onTouchEvent(arg0: MotionEvent?): Boolean {
@@ -35,11 +28,4 @@ class NoScrollViewPager(context: Context, attrs: AttributeSet?) : ViewPager(cont
         return if (!noScroll) false else super.onInterceptTouchEvent(arg0)
     }
 
-    override fun setCurrentItem(item: Int, smoothScroll: Boolean) {
-        super.setCurrentItem(item, smoothScroll)
-    }
-
-    override fun setCurrentItem(item: Int) {
-        super.setCurrentItem(item)
-    }
 }

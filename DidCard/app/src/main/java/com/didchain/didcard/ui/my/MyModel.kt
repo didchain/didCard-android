@@ -7,7 +7,4 @@ import com.didchain.didcard.ui.IDCardModel
  *Time:
  *Description:
  */
-class MyModel : IDCardModel() {
-
-
-}
+class MyModel : IDCardModel()

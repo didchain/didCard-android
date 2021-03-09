@@ -18,8 +18,6 @@ import com.didchain.didcard.utils.IDCardUtils
 import com.didchain.didcard.utils.PermissionUtils
 import com.didchain.didcard.view.PasswordPop
 import com.google.zxing.integration.android.IntentIntegrator
-import com.lxj.xpopup.interfaces.OnCancelListener
-import com.lxj.xpopup.interfaces.OnConfirmListener
 import com.lxj.xpopup.interfaces.OnSelectListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -39,12 +37,11 @@ class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
 //        DialogUtils.showPrivacyAuthorityDialog(this, OnConfirmListener { }, OnCancelListener { finish() })
     }
 
-    override fun initData() {
-    }
+    override fun initData() {}
 
     override fun initObserve() {
         mViewModel.showImportDialog.observe(this, Observer {
-            DialogUtils.showImportDialot(this, OnSelectListener { position, text ->
+            DialogUtils.showImportDialog(this, OnSelectListener { position, text ->
                 if (DialogUtils.POSITION_ALBUM == position) {
                     requestLocalMemoryPermission()
                 } else if (DialogUtils.POSITION_CAMERA == position) {

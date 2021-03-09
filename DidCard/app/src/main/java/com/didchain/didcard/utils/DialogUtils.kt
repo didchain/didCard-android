@@ -31,7 +31,6 @@ import com.orhanobut.logger.Logger
 object DialogUtils {
     const val POSITION_ALBUM = 0
     const val POSITION_CAMERA = 1
-    const val POSITION_CANCEL = 2
 
     internal class IDCardXPopupListener : SimpleCallback() {
         override fun onCreated(pv: BasePopupView) {
@@ -61,7 +60,7 @@ object DialogUtils {
         }
     }
 
-    fun showImportDialot(activity: AppCompatActivity, selectListener: OnSelectListener) {
+    fun showImportDialog(activity: AppCompatActivity, selectListener: OnSelectListener) {
         XPopup.Builder(activity).asBottomList(activity.getString(R.string.guide_dialog_title), arrayOf(activity.getString(R.string.guide_import_album), activity.getString(R.string.guide_import_camera), activity.getString(R.string.cancel)), selectListener).show()
     }
 
@@ -86,7 +85,7 @@ object DialogUtils {
         importSuccessPop.delayDismiss(1000)
     }
 
-    fun showPrivacyAuthorityDialog(context: Context, confirmListerer: OnConfirmListener, cancelListener: OnCancelListener) {
+    fun showPrivacyAuthorityDialog(context: Context, confirmListener: OnConfirmListener, cancelListener: OnCancelListener) {
 
         val protocolStart = 122
         val protocolEnd = 128
@@ -96,7 +95,7 @@ object DialogUtils {
         val spannableString = SpannableString(context.getString(R.string.dialog_service_and_privacy_policy_content))
         spannableString.setSpan(object : ClickableSpan() {
             override fun onClick(widget: View) {
-                (widget as TextView).highlightColor = context.getResources().getColor(android.R.color.transparent)
+                (widget as TextView).highlightColor = context.resources.getColor(android.R.color.transparent,null)
                 context.startActivity(Intent(context, PrivacyAuthorityActivity::class.java))
             }
 
@@ -108,7 +107,7 @@ object DialogUtils {
         }, protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannableString.setSpan(object : ClickableSpan() {
             override fun onClick(widget: View) {
-                (widget as TextView).highlightColor = context.getResources().getColor(android.R.color.transparent)
+                (widget as TextView).highlightColor = context.resources.getColor(android.R.color.transparent,null)
                 context.startActivity(Intent(context, PrivacyAuthorityActivity::class.java))
             }
 
@@ -119,11 +118,11 @@ object DialogUtils {
             }
         }, policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        spannableString.setSpan(ForegroundColorSpan(context.getResources().getColor(R.color.colorAccent)), protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(ForegroundColorSpan(context.getResources().getColor(R.color.colorAccent)), policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(ForegroundColorSpan(context.resources.getColor(R.color.colorAccent,null)), protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(ForegroundColorSpan(context.resources.getColor(R.color.colorAccent,null)), policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
 
-        val importSuccessPop = XPopup.Builder(context).isDestroyOnDismiss(true).dismissOnBackPressed(false).dismissOnTouchOutside(false).asConfirm(context.getString(R.string.privacy_policy_title), spannableString, context.getString(R.string.not_use), context.getString(R.string.agree), confirmListerer, cancelListener, false)
+        val importSuccessPop = XPopup.Builder(context).isDestroyOnDismiss(true).dismissOnBackPressed(false).dismissOnTouchOutside(false).asConfirm(context.getString(R.string.privacy_policy_title), spannableString, context.getString(R.string.not_use), context.getString(R.string.agree), confirmListener, cancelListener, false)
         importSuccessPop.show()
     }
 

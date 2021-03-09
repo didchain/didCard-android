@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidgolib.Androidgolib
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.didchain.android.lib.base.BaseActivity
@@ -23,9 +24,11 @@ import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
+@KoinApiExtension
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private val fragments = arrayListOf<Fragment>()
@@ -37,11 +40,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val myFragment by inject<MyFragment>()
     private val homeFragment by inject<HomeFragment>()
     override fun initView() {
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-
     }
 
     override fun initData() {
@@ -62,7 +60,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun initVariableId(): Int = BR.viewModel
 
-    fun getItemView(index: Int, titleId: Int, iconId: Int): View {
+    private fun getItemView(index: Int, titleId: Int, iconId: Int): View {
         val view: View = if (index == 0) {
             View.inflate(this, R.layout.item_tab_home, null)
         } else {
@@ -72,7 +70,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         val icon = view.findViewById<ImageView>(R.id.icon)
         val title = view.findViewById<TextView>(R.id.title)
         title.text = getString(titleId)
-        icon.background = getDrawable(iconId)
+        icon.background =  ResourcesCompat.getDrawable(resources,iconId,null)
         return view
     }
 

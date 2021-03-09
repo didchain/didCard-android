@@ -37,8 +37,8 @@ class PasswordPop(context: Context, val listener: InputPasswordListener) : Cente
             }
             listener.input(password.text.toString())
             if (isEMUI() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                password.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL)
-                password.setTransformationMethod(PasswordTransformationMethod.getInstance())
+                password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                password.transformationMethod = PasswordTransformationMethod.getInstance()
             }
         }
     }

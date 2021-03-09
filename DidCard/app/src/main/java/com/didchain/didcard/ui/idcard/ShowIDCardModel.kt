@@ -7,6 +7,4 @@ import com.didchain.android.lib.base.BaseModel
  *Time:
  *Description:
  */
-class ShowIDCardModel : BaseModel() {
-
-}
+class ShowIDCardModel : BaseModel()

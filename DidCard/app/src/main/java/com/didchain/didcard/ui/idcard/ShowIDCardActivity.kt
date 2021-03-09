@@ -9,7 +9,6 @@ import com.didchain.didcard.Constants
 import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivityShowIdCardBinding
 import com.didchain.didcard.utils.BitmapUtils
-import com.didchain.didcard.utils.IDCardUtils
 import com.didchain.didcard.utils.PermissionUtils
 import kotlinx.android.synthetic.main.activity_show_id_card.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,17 +35,14 @@ class ShowIDCardActivity : BaseActivity<ShowIDCardViewModel, ActivityShowIdCardB
 
     override fun initObserve() {
 
-        mViewModel.idCardJsonEvent.observe(this, object : Observer<String> {
-            override fun onChanged(qrjson: String?) {
-                qrjson?.let {
-                    idQR.setImageBitmap(BitmapUtils.stringToQRBitmap(it))
-                }
-
+        mViewModel.idCardJsonEvent.observe(this, Observer { qrjson ->
+            qrjson?.let {
+                idQR.setImageBitmap(BitmapUtils.stringToQRBitmap(it))
             }
         })
 
         mViewModel.requestLocalPermissionEvent.observe(this,
-            Observer<Boolean> {
+            Observer {
                 requestLocalMemoryPermission()
             })
     }

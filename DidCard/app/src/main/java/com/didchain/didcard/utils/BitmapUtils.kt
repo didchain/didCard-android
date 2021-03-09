@@ -65,11 +65,11 @@ object BitmapUtils {
                 // 插入图库
                 if (Build.VERSION.SDK_INT >= 29) {
                     val values = ContentValues()
-                    values.put(MediaStore.Images.Media.DATA, file.getAbsolutePath())
+                    values.put(MediaStore.Images.Media.DATA, file.absolutePath)
                     values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-                    val uri: Uri? = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                    context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
                 } else {
-                    MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), bitName, null)
+                    MediaStore.Images.Media.insertImage(context.contentResolver, file.absolutePath, bitName, null)
                 }
             }
         } catch (e: FileNotFoundException) {
@@ -101,17 +101,17 @@ object BitmapUtils {
             //android Q中不再使用DATA字段，而用RELATIVE_PATH代替
             //RELATIVE_PATH是相对路径不是绝对路径
             //DCIM是系统文件夹，关于系统文件夹可以到系统自带的文件管理器中查看，不可以写没存在的名字
-            contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/Camera/")
+            contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, DCIM)
 
             //设置文件类型
             contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/JPEG")
             //执行insert操作，向系统文件夹中添加文件
             //EXTERNAL_CONTENT_URI代表外部存储器，该值不变
-            val uri: Uri? = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            val uri: Uri? = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
             if (uri != null) {
                 //若生成了uri，则表示该文件添加成功
                 //使用流将内容写入该uri中即可
-                val outputStream: OutputStream? = context.getContentResolver().openOutputStream(uri)
+                val outputStream: OutputStream? = context.contentResolver.openOutputStream(uri)
                 if (outputStream != null) {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
                     outputStream.flush()

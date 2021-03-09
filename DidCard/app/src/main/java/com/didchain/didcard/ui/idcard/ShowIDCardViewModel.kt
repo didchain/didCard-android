@@ -70,7 +70,7 @@ class ShowIDCardViewModel : BaseViewModel() {
         MainScope().launch {
             idCard.set(IDCardUtils.getId(context()))
             val cardPath = IDCardUtils.getIDCardPath(context())
-            val cardBean = IDCardUtils.loadIDCardBeanByPath(cardPath)
+            val cardBean = IDCardUtils.loadIDCardByPath(cardPath)
             if (cardBean != null) {
                 qrJson = JsonUtils.object2Json(cardBean, CardBean::class.java)
                 idCardJsonEvent.postValue(qrJson)

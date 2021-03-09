@@ -25,6 +25,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.dsl.fragment
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.component.KoinApiExtension
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -34,6 +35,7 @@ import org.koin.dsl.module
  *Time:
  *Description:
  */
+@KoinApiExtension
 class DidCardApp : BaseApplication() {
 
     companion object {

@@ -42,7 +42,7 @@ class IDCardManagerActivity : BaseActivity<IDCardManagerViewModel, ActivityIdCar
         })
 
         mViewModel.requestLocalPermissionEvent.observe(this,
-            Observer<Boolean> {
+            Observer {
                 requestLocalMemoryPermission()
             })
     }

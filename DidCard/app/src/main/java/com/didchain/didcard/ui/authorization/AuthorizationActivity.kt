@@ -22,11 +22,9 @@ class AuthorizationActivity : BaseActivity<AuthorizationViewModel, ActivityAutho
         mViewModel.showBackImage.set(true)
     }
 
-    override fun initData() {
-    }
+    override fun initData() {}
 
-    override fun initObserve() {
-    }
+    override fun initObserve() {}
 
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_GRAY
 

@@ -15,6 +15,8 @@ import com.journeyapps.barcodescanner.ViewfinderView
  */
 class IdCardViewfinderView(context: Context, val attrs: AttributeSet) : ViewfinderView(context, attrs) {
 
+    private val DIFFERENCE = 6.dp
+
     private val rectPaint = Paint().apply {
         color = context.resources.getColor(R.color.yellow, null)
         strokeWidth = 2.dp
@@ -22,14 +24,13 @@ class IdCardViewfinderView(context: Context, val attrs: AttributeSet) : Viewfind
 
     }
 
-
     private val innerRectPaint = Paint().apply {
         color = context.resources.getColor(R.color.color_66f6c330, null)
         strokeWidth = 1.dp
         style = Paint.Style.STROKE
 
     }
-    private val DIFFERENCE = 6.dp
+
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)

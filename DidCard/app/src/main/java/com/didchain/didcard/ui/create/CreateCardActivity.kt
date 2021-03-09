@@ -67,11 +67,9 @@ class CreateCardActivity : BaseActivity<CreateCardViewModel, ActivityCreateAccou
 //        privacyAuthorityTv.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    override fun initData() {
-    }
+    override fun initData() {}
 
-    override fun initObserve() {
-    }
+    override fun initObserve() {}
 
     override fun initVariableId(): Int = BR.viewModel
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_WHITE

@@ -31,61 +31,74 @@ import java.util.*
  *Description:
  */
 object IDCardUtils {
-    val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
-    val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+    private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
+    private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+
     fun getIDCardPath(context: Context): String {
         return context.filesDir.absolutePath + "/wallet.json"
     }
 
     fun saveIDCard(path: String, data: String) {
         val file = File(path)
-        if(file.exists()){
+        if (file.exists()) {
             file.delete()
         }
         MainScope().launch {
             withContext(Dispatchers.IO) {
                 val encryptedFile = getEncryptedFile(path)
-                try {
-                    encryptedFile.openFileOutput().apply {
-                        write(data.toByteArray(Charset.forName("UTF-8")))
-                        flush()
-                        close()
-                    }
-                } catch (e: IOException) {
-                    Logger.d(e.message)
-                }
-
+                saveIDCard(encryptedFile, data)
             }
         }
 
     }
 
-    suspend fun getId(context: Context): String? {
-        val accountPath = getIDCardPath(context)
-        return loadIDCardBeanByPath(accountPath)?.did
+    private fun saveIDCard(encryptedFile: EncryptedFile, data: String) {
+        try {
+            encryptedFile.openFileOutput().apply {
+                write(data.toByteArray(Charset.forName("UTF-8")))
+                flush()
+                close()
+            }
+        } catch (e: IOException) {
+            Logger.d(e.message)
+        }
     }
 
-    suspend fun loadIDCardBeanByPath(path: String): CardBean? {
+    suspend fun getId(context: Context): String? {
+        val accountPath = getIDCardPath(context)
+        return loadIDCardByPath(accountPath)?.did
+    }
+
+    suspend fun loadIDCardByPath(path: String): CardBean? {
         return withContext(Dispatchers.IO) {
-            println("~~~~~~~~~~~"+Thread.currentThread().name)
-            val accountJson = loadIDCardByPath(path)
-            return@withContext JsonUtils.Json2Object(accountJson, CardBean::class.java)
+            val accountJson = loadIDCardJson(path)
+            return@withContext JsonUtils.json2Object(accountJson, CardBean::class.java)
+        }
+
+    }
+
+
+    suspend fun loadIDCardJson(path: String): String {
+        return withContext(Dispatchers.IO) {
+            return@withContext loadIDCardByFile(getEncryptedFile(path))
         }
 
     }
 
     private fun getEncryptedFile(path: String): EncryptedFile {
         val file = File(path)
-        return EncryptedFile.Builder(file, context(), masterKeyAlias, EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB).build()
+        return EncryptedFile.Builder(
+            file,
+            context(),
+            masterKeyAlias,
+            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
+        ).build()
     }
 
-    suspend fun loadIDCardByPath(path: String): String {
-        return withContext(Dispatchers.IO) {
-            val encryptedFile = getEncryptedFile(path)
-            return@withContext encryptedFile.openFileInput().bufferedReader().readText()
-        }
-
+    private fun loadIDCardByFile(encryptedFile: EncryptedFile): String {
+        return encryptedFile.openFileInput().bufferedReader().readText()
     }
+
 
     fun hasIDCard(path: String): Boolean {
         return File(path).exists()
