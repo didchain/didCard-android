@@ -1,6 +1,7 @@
 package com.didchain.didcard
 
 import com.didchain.android.lib.base.BaseApplication
+import com.didchain.didcard.ui.IDCardModel
 import com.didchain.didcard.ui.authorization.AuthorizationViewModel
 import com.didchain.didcard.ui.create.CreateCardModel
 import com.didchain.didcard.ui.create.CreateCardViewModel
@@ -12,6 +13,7 @@ import com.didchain.didcard.ui.home.HomeViewModel
 import com.didchain.didcard.ui.idcard.ShowIDCardViewModel
 import com.didchain.didcard.ui.idmanager.IDCardManagerViewModel
 import com.didchain.didcard.ui.idmanager.UpdatePasswordViewModel
+import com.didchain.didcard.ui.main.MainModel
 import com.didchain.didcard.ui.main.MainViewModel
 import com.didchain.didcard.ui.my.MyFragment
 import com.didchain.didcard.ui.my.MyModel
@@ -68,6 +70,8 @@ class DidCardApp : BaseApplication() {
             single { HomeModel() }
             single { GuideModel() }
             single { MyModel() }
+            single { MainModel() }
+            single { IDCardModel() }
 
             viewModel { CreateCardViewModel() }
             viewModel { GuideViewModel() }

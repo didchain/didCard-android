@@ -21,7 +21,7 @@ open class IDCardModel : BaseModel() {
 
     fun openIdCard(password: String): Single<Boolean> {
         return Single.create(SingleOnSubscribe<Boolean> { emitter ->
-            Androidgolib.open(password)
+            val isOpen=Androidgolib.open(password)
             emitter.onSuccess(true)
         }).compose(CommonSchedulers.io2mainAndTimeout<Boolean>())
     }

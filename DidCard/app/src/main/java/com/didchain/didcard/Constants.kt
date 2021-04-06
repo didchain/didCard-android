@@ -6,12 +6,13 @@ package com.didchain.didcard
  *Description:
  */
 object Constants {
-    val TIME_OUT: Long = 40
+    val BLOCK_TIME_OUT: Long = 40
     const val CODE_OPEN_ALBUM = 100
     const val CODE_OPEN_CAMERA = 101
     const val CODE_OPEN_GPS = 102
     const val CODE_WRITE_EXTERNAL_PERMISSION = 1
     const val CODE_LOCATION_PERMISSION = 2
+    const val TIMEOUT = 4000
 
     const val KEY_OPEN_FINGERPRINT = "key_open_fingerprint"
     const val KEY_OPEN_NO_SECRET = "key_open_no_secret"

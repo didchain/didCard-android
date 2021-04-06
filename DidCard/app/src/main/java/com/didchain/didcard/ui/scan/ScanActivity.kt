@@ -32,8 +32,8 @@ class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
     override fun initView() {
         mViewModel.title.set(getString(R.string.import_id))
         mViewModel.showBackImage.set(true)
-        mViewModel.showRightText.set(true)
-        mViewModel.rightText.set(getString(R.string.import_album))
+//        mViewModel.showRightText.set(true)
+//        mViewModel.rightText.set(getString(R.string.import_album))
         titleLayout.setBackgroundColor(resources.getColor(R.color.white, null))
         capture.initializeFromIntent(intent, bundle)
         capture.decode()

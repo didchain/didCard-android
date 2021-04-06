@@ -19,6 +19,11 @@
     <string name="fingerprint_recognition_title">指纹识别</string>
     <string name="fingerprint_recognition_subtitle">请手指放入指纹识别处</string>
     <string name="fingerprint_recognition_use_password">使用密码</string>
+    <string name="qr_error">请扫描正确二维码</string>
+    <string name="verify_success">校验成功</string>
+    <string name="verify_error">校验失败</string>
+    <string name="verify_user_not_found">用户未找到</string>
+    <string name="verify_exception">验证异常</string>
 
     <!--    home-->
     <string name="main_home">首页</string>

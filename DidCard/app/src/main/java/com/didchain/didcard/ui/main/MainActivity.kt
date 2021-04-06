@@ -3,6 +3,7 @@ package com.didchain.didcard.ui.main
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,12 +17,20 @@ import com.didchain.didcard.BR
 import com.didchain.didcard.Constants
 import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivityMainBinding
+import com.didchain.didcard.event.EventLoadIDCard
 import com.didchain.didcard.ui.home.HomeFragment
 import com.didchain.didcard.ui.my.MyFragment
 import com.didchain.didcard.ui.scan.ScanActivity
+import com.didchain.didcard.utils.DialogUtils
 import com.didchain.didcard.utils.PermissionUtils
+import com.didchain.didcard.view.PasswordPop
 import com.google.zxing.integration.android.IntentIntegrator
+import com.lxj.xpopup.core.BasePopupView
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinApiExtension
@@ -30,7 +39,13 @@ import pub.devrel.easypermissions.EasyPermissions
 
 @KoinApiExtension
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
+    private val VERIFY_SUCCESS = 0
+    private val VERIFY_SIGNATURE_ERROR = 1
+    private val VERIFY_NOT_FOUND = 2
 
+    private lateinit var  passwordDialog: BasePopupView
+    private lateinit var randomToken: String
+    private lateinit var authUrl: String
     private val fragments = arrayListOf<Fragment>()
     private val titles = arrayOf(R.string.main_home, R.string.main_my)
     private val icons = arrayOf(R.drawable.tab_home_selector, R.drawable.tab_my_selector)
@@ -40,6 +55,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val myFragment by inject<MyFragment>()
     private val homeFragment by inject<HomeFragment>()
     override fun initView() {
+        EventBus.getDefault().register(this)
+
     }
 
     override fun initData() {
@@ -54,6 +71,21 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun initObserve() {
         mViewModel.openCameraEvent.observe(this, Observer { requestCameraPermission() })
+        mViewModel.openIDCard.observe(this, Observer {
+            mViewModel.verify(randomToken, authUrl)
+        })
+        mViewModel.verifyEvent.observe(this, Observer {
+            if(this::passwordDialog.isInitialized && passwordDialog.isShow){
+                passwordDialog.dismiss()
+            }
+            if (it == VERIFY_SUCCESS) {
+                toast(getString(R.string.verify_success))
+            } else if(it == VERIFY_SIGNATURE_ERROR){
+                toast(getString(R.string.verify_error))
+            }else if(it ==VERIFY_NOT_FOUND){
+                toast(getString(R.string.verify_user_not_found))
+            }
+        })
     }
 
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_TRANSPARENT
@@ -70,11 +102,15 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         val icon = view.findViewById<ImageView>(R.id.icon)
         val title = view.findViewById<TextView>(R.id.title)
         title.text = getString(titleId)
-        icon.background =  ResourcesCompat.getDrawable(resources,iconId,null)
+        icon.background = ResourcesCompat.getDrawable(resources, iconId, null)
         return view
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
@@ -90,7 +126,12 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             ii.setRequestCode(IntentIntegrator.REQUEST_CODE)
             ii.initiateScan()
         } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.import_apply_camera_permission), Constants.CODE_OPEN_CAMERA, Manifest.permission.CAMERA)
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.import_apply_camera_permission),
+                Constants.CODE_OPEN_CAMERA,
+                Manifest.permission.CAMERA
+            )
         }
     }
 
@@ -100,7 +141,33 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         if (result.contents == null) {
             return
         }
-        toast(result.contents)
+        try{
+            val qrmessage = JSONObject(result.contents)
+            randomToken = qrmessage.optString("random_token")
+            authUrl = qrmessage.optString("auth_url")
+            if (TextUtils.isEmpty(randomToken) || TextUtils.isEmpty(authUrl)) {
+                toast(getString(R.string.qr_error))
+                return
+            }
+            if (Androidgolib.isOpen()) {
+                mViewModel.verify(randomToken, authUrl)
+            } else {
+                showPasswordDialog()
+            }
+        }catch (e:Exception){
+            toast(getString(R.string.qr_error))
+        }
+
+
+    }
+
+    private fun showPasswordDialog() {
+        passwordDialog = DialogUtils.showPasswordDialog(this, object : PasswordPop.InputPasswordListener {
+            override fun input(password: String) {
+                mViewModel.openIdCard(password)
+            }
+
+        })
     }
 
     var last: Long = -1
@@ -121,9 +188,15 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun reloadIDcard(event: EventLoadIDCard){
+        mViewModel.getId()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         Androidgolib.close()
+        EventBus.getDefault().unregister(this)
     }
 
 
