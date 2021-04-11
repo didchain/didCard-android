@@ -1,8 +1,12 @@
 package com.didchain.didcard
 
 import com.didchain.android.lib.base.BaseApplication
+import com.didchain.didcard.ui.authorizationManager.AuthorizationSystemViewModel
 import com.didchain.didcard.ui.IDCardModel
 import com.didchain.didcard.ui.authorization.AuthorizationViewModel
+import com.didchain.didcard.ui.authorizationManager.EditSystemInfoViewModel
+import com.didchain.didcard.ui.authorizationManager.SelectSystemsModel
+import com.didchain.didcard.ui.authorizationManager.SelectSystemsViewModel
 import com.didchain.didcard.ui.create.CreateCardModel
 import com.didchain.didcard.ui.create.CreateCardViewModel
 import com.didchain.didcard.ui.guide.GuideModel
@@ -23,6 +27,7 @@ import com.didchain.didcard.ui.saveaccount.SaveAccountViewModel
 import com.didchain.didcard.ui.scan.ScanViewModel
 import com.didchain.didcard.ui.splash.SplashViewModel
 import com.orhanobut.logger.*
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.dsl.fragment
@@ -30,6 +35,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
+import rxhttp.wrapper.param.RxHttp
 
 
 /**
@@ -49,7 +55,10 @@ class DidCardApp : BaseApplication() {
         instance = this
         initKoin()
         initLogger()
+        RxHttp.init(null,BuildConfig.DEBUG)
     }
+
+
 
     private fun initLogger() {
         val formatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder()
@@ -72,6 +81,7 @@ class DidCardApp : BaseApplication() {
             single { MyModel() }
             single { MainModel() }
             single { IDCardModel() }
+            single { SelectSystemsModel() }
 
             viewModel { CreateCardViewModel() }
             viewModel { GuideViewModel() }
@@ -86,6 +96,9 @@ class DidCardApp : BaseApplication() {
             viewModel { AuthorizationViewModel() }
             viewModel { SplashViewModel() }
             viewModel { PrivacyAuthorityViewModel() }
+            viewModel { AuthorizationSystemViewModel() }
+            viewModel { EditSystemInfoViewModel() }
+            viewModel { SelectSystemsViewModel() }
 
 
             fragment { MyFragment() }

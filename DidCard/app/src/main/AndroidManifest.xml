@@ -101,6 +101,15 @@
         <activity
             android:name=".ui.privacyauthority.PrivacyAuthorityActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.authorizationManager.AuthorizationSystemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.authorizationManager.EditSystemInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.authorizationManager.SelectSystemsActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="android.max_aspect"

@@ -33,3 +33,10 @@
 }
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
 
+# okhttp 4.7.0及以上版本混淆规则
+-keepclassmembers class okhttp3.internal.Util {
+    public static java.lang.String userAgent;
+}
+
+-keep class com.didchain.didcard.parse.Response{*;}
+-keep class com.didchain.didcard.parse.ResponseParser{*;}

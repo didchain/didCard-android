@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.didchain.didcard.ui.authorizationManager.EditSystemInfoViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            layout="@layout/title_layout"
+            app:viewModel="@{viewModel}"
+            android:id="@+id/titleLayout" />
+        <TextView
+            android:id="@+id/system"
+            style="@style/EditTextStyle"
+            android:layout_marginTop="16dp"
+            android:text="@={viewModel.url}"
+            android:gravity="center_vertical"
+            android:inputType="none"
+            onClickCommand="@{viewModel.clickChoiceSystem}"
+            app:layout_constraintTop_toBottomOf="@+id/titleLayout"
+            tools:ignore="MissingConstraints,TextFields"
+            android:importantForAutofill="no" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/choice_system"
+            onClickCommand="@{viewModel.clickChoiceSystem}"
+            app:layout_constraintTop_toTopOf="@+id/system"
+            app:layout_constraintEnd_toEndOf="@+id/system"
+            app:layout_constraintBottom_toBottomOf="@+id/system"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
+        <EditText
+            android:id="@+id/userName"
+            style="@style/EditTextStyle"
+            android:layout_marginTop="16dp"
+            android:text="@={viewModel.userName}"
+            android:hint="@string/authorization_system_input_account"
+            app:layout_constraintTop_toBottomOf="@+id/system"
+            tools:ignore="MissingConstraints,TextFields"
+            android:importantForAutofill="no" />
+        <EditText
+            android:id="@+id/password"
+            style="@style/PasswordEditTextStyle"
+            android:layout_marginTop="16dp"
+            android:text="@={viewModel.password}"
+            android:hint="@string/create_account_input_password"
+            app:layout_constraintTop_toBottomOf="@+id/userName"
+            tools:ignore="MissingConstraints,TextFields"
+            android:importantForAutofill="no" />
+
+        <TextView
+            style="@style/YellowButtonStyle"
+            android:layout_marginTop="16dp"
+            onClickCommand="@{viewModel.clickSure}"
+            android:text="@string/sure"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

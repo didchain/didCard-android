@@ -13,6 +13,7 @@ import com.didchain.didcard.R
 import com.didchain.didcard.bean.CardBean
 import com.didchain.didcard.provider.context
 import com.didchain.didcard.utils.BitmapUtils
+import com.didchain.didcard.utils.CommonUtils
 import com.didchain.didcard.utils.IDCardUtils
 import com.didchain.didcard.utils.JsonUtils
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +33,8 @@ class ShowIDCardViewModel : BaseViewModel() {
     val requestLocalPermissionEvent = SingleLiveEvent<Boolean>()
     val clickShare = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            copyToMemory(context(),idCard.get().toString())
+            CommonUtils.copyToMemory(context(), idCard.get().toString())
+            showToast(R.string.id_card_copy_success)
         }
     })
 
@@ -58,12 +60,6 @@ class ShowIDCardViewModel : BaseViewModel() {
 
 
         }
-    }
-    fun copyToMemory(context: Context, data: String) {
-        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("pirate memory string", data)
-        clipboard.setPrimaryClip(clip)
-        showToast(R.string.id_card_copy_success)
     }
 
     init {

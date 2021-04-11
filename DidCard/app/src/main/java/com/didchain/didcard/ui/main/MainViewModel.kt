@@ -7,6 +7,8 @@ import com.didchain.android.lib.command.BindingCommand
 import com.didchain.android.lib.event.SingleLiveEvent
 import com.didchain.didcard.R
 import com.didchain.didcard.provider.context
+import com.didchain.didcard.room.AccountDao
+import com.didchain.didcard.room.AppDatabase
 import com.didchain.didcard.ui.IDCardModel
 import com.didchain.didcard.utils.IDCardUtils
 import io.reactivex.rxjava3.core.SingleObserver
@@ -26,13 +28,14 @@ import org.koin.core.component.inject
 @KoinApiExtension
 class MainViewModel : BaseViewModel(), KoinComponent {
 
+
     private val model: MainModel by inject()
     private val idCardModel: IDCardModel by inject()
     val id = ObservableField<String>()
     val openCameraEvent = SingleLiveEvent<Boolean>()
     val verifyEvent = SingleLiveEvent<Int>()
     val openIDCard = SingleLiveEvent<Boolean>()
-
+    val accountDao : AccountDao by lazy { AppDatabase.getInstance(context()).accountDao() }
     init {
         getId()
 
@@ -50,10 +53,22 @@ class MainViewModel : BaseViewModel(), KoinComponent {
     })
 
     fun verify(randomToken: String, authUrl: String) {
+        val accounts = accountDao.queryByUrl(authUrl)
+        if(accounts==null || accounts.isEmpty()){
+            showToast(R.string.no_account)
+            return
+        }
+
+        val currentAccount = accounts.firstOrNull { it.isUsed }
+        if(currentAccount==null){
+            showToast(R.string.no_account)
+            return
+        }
         showDialog()
+
         MainScope().launch {
             try {
-                val result=  model.verify(id.get()!!,randomToken,authUrl)
+                val result=  model.verify(id.get()!!,randomToken,authUrl,currentAccount)
                 dismissDialog()
                 val resultObj = JSONObject(result)
                 val resultCode = resultObj.optInt("result_code")

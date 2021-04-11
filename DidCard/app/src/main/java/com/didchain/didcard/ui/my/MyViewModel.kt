@@ -11,6 +11,7 @@ import com.didchain.didcard.Constants
 import com.didchain.didcard.R
 import com.didchain.didcard.provider.context
 import com.didchain.didcard.ui.authorization.AuthorizationActivity
+import com.didchain.didcard.ui.authorizationManager.AuthorizationSystemActivity
 import com.didchain.didcard.ui.idmanager.IDCardManagerActivity
 import com.didchain.didcard.ui.privacyauthority.PrivacyAuthorityActivity
 import com.didchain.didcard.utils.EncryptedPreferencesUtils
@@ -56,6 +57,12 @@ class MyViewModel : BaseViewModel(), KoinComponent {
     val clickIDCardManager = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             startActivity(IDCardManagerActivity::class.java)
+        }
+    })
+
+    val clickAuthorizationManagement = BindingCommand<Any>(object : BindingAction {
+        override fun call() {
+            startActivity(AuthorizationSystemActivity::class.java)
         }
     })
 

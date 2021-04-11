@@ -13,8 +13,8 @@ android {
         applicationId "com.didchain.didcard"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 100006
-        versionName "1.0.6"
+        versionCode 100009
+        versionName "1.0.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -84,6 +84,18 @@ dependencies {
 
     api 'com.squareup.moshi:moshi-kotlin:1.11.0'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.11.0'
+
+    implementation 'com.ljx.rxhttp:rxhttp:2.5.7'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1' //rxhttp v2.2.2版本起，需要手动依赖okhttp
+    kapt 'com.ljx.rxhttp:rxhttp-compiler:2.5.7'
+
+    implementation 'com.ljx.rxlife:rxlife-coroutine:2.0.1'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'com.ljx.rxlife3:rxlife-rxjava:3.0.0'
+
+    implementation "androidx.room:room-runtime:2.0.0-beta01"
+    kapt "androidx.room:room-compiler:2.0.0-beta01"
 
 
 }

@@ -1,18 +1,23 @@
 package com.didchain.didcard
 
+import rxhttp.wrapper.annotation.DefaultDomain
+
 /**
  *Author:Mr'x
  *Time:
  *Description:
  */
 object Constants {
-    val BLOCK_TIME_OUT: Long = 40
+    @DefaultDomain
+    const val URL = "http://39.99.198.143:60998"
+    const val BLOCK_TIME_OUT: Long = 40
     const val CODE_OPEN_ALBUM = 100
     const val CODE_OPEN_CAMERA = 101
     const val CODE_OPEN_GPS = 102
     const val CODE_WRITE_EXTERNAL_PERMISSION = 1
     const val CODE_LOCATION_PERMISSION = 2
     const val TIMEOUT = 4000
+    const val CODE_ACTIVITY_REQUEST = 200
 
     const val KEY_OPEN_FINGERPRINT = "key_open_fingerprint"
     const val KEY_OPEN_NO_SECRET = "key_open_no_secret"

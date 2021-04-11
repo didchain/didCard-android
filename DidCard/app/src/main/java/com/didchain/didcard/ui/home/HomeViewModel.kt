@@ -15,6 +15,7 @@ import com.didchain.didcard.R
 import com.didchain.didcard.bean.CardBean
 import com.didchain.didcard.bean.ServiceBean
 import com.didchain.didcard.provider.context
+import com.didchain.didcard.utils.CommonUtils
 import com.didchain.didcard.utils.SharedPref
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
@@ -70,6 +71,16 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
     val clickUnLock = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             showPasswordEvent.call()
+        }
+    })
+
+    val clickCopyDid = BindingCommand<Any>(object : BindingAction {
+        override fun call() {
+            if(id.get()!=null){
+                CommonUtils.copyToMemory(context(),id.get()!!)
+                showToast(R.string.id_card_copy_success)
+            }
+
         }
     })
 

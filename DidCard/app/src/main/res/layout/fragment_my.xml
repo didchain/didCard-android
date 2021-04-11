@@ -132,6 +132,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/statusTitle"
                     app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
                     app:layout_constraintTop_toTopOf="@+id/statusTitle" />
+                <TextView
+                    android:id="@+id/authorizationManagement"
+                    style="@style/MyTextViewShowArrowStyle"
+                    onClickCommand="@{viewModel.clickAuthorizationManagement}"
+                    android:text="@string/my_authorization_management"
+                    app:layout_constraintStart_toStartOf="@+id/midConstraintLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/statusTitle" />
 
                 <TextView
                     android:id="@+id/identityManagement"
@@ -139,7 +146,7 @@
                     onClickCommand="@{viewModel.clickIDCardManager}"
                     android:text="@string/my_identity_management"
                     app:layout_constraintStart_toStartOf="@+id/midConstraintLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/statusTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/authorizationManagement" />
 
                 <TextView
                     android:id="@+id/noSecret"

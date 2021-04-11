@@ -41,8 +41,9 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private lateinit var cryptographyManager: CryptographyManager
-    override fun getLayoutId(): Int = R.layout.fragment_my
     override val mViewModel: MyViewModel by viewModel()
+
+    override fun getLayoutId(): Int = R.layout.fragment_my
     override fun initView() {
         mViewModel.title.set(getString(R.string.my))
         EventBus.getDefault().register(this)
