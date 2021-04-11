@@ -15,13 +15,17 @@
             layout="@layout/title_layout"
             app:viewModel="@{viewModel}"
             android:id="@+id/titleLayout" />
-        <TextView
+        <EditText
             android:id="@+id/system"
             style="@style/EditTextStyle"
             android:layout_marginTop="16dp"
             android:text="@={viewModel.url}"
             android:gravity="center_vertical"
             android:inputType="none"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="@string/authorization_system_please_choice_system"
             onClickCommand="@{viewModel.clickChoiceSystem}"
             app:layout_constraintTop_toBottomOf="@+id/titleLayout"
             tools:ignore="MissingConstraints,TextFields"
