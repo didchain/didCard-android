@@ -1,5 +1,6 @@
 package com.didchain.android.lib.viewadapter.image
 
+import android.graphics.BitmapFactory
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 
@@ -15,6 +16,11 @@ fun setImageUri(imageView: ImageView, url: String, placeholderRes: Int,errRes: I
 @BindingAdapter("imageId")
 fun setBackground(imageView: ImageView, imageId:Int) {
     imageView.setBackgroundResource(imageId)
+}
+
+@BindingAdapter("bitmap")
+fun setBitmap(imageView: ImageView, imageId:Int) {
+    imageView.setImageBitmap(BitmapFactory.decodeResource(imageView.resources,imageId))
 }
 
 

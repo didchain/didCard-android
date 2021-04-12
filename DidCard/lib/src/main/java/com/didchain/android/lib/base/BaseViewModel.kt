@@ -1,5 +1,6 @@
 package com.didchain.android.lib.base
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.databinding.ObservableField
 import androidx.lifecycle.Lifecycle
@@ -25,7 +26,9 @@ abstract class BaseViewModel : ViewModel(), IBaseViewModel {
     var title = ObservableField<String>("")
     val showBackImage = ObservableField<Boolean>(false)
     val showRightText = ObservableField<Boolean>(false)
+    val showRightIv = ObservableField<Boolean>(false)
     val rightText = ObservableField<String>("")
+    val rightIv= ObservableField<Int>()
 
     val jobs = mutableListOf<Job>()
 
@@ -43,7 +46,18 @@ abstract class BaseViewModel : ViewModel(), IBaseViewModel {
 
     })
 
+    val clickRightIvCommand = BindingCommand<Any>(object : BindingAction {
+        override fun call() {
+            clickRightTv()
+        }
+
+    })
+
     open fun clickRightTv() {
+
+    }
+
+    open fun clickRightIv() {
 
     }
 

@@ -40,8 +40,8 @@ class EditSystemInfoActivity : BaseActivity<EditSystemInfoViewModel, ActivityEdi
             mViewModel.url.set(account.url)
             mViewModel.userName.set(account.userName)
             mViewModel.password.set(account.password)
-            mViewModel.showRightText.set(true)
-            mViewModel.rightText.set(getString(R.string.delete))
+            mViewModel.showRightIv.set(true)
+            mViewModel.rightIv.set(R.drawable.delete)
         }
     }
 

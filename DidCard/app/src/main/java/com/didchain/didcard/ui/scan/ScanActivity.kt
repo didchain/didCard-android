@@ -30,11 +30,6 @@ class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
     override val mViewModel: ScanViewModel by viewModel()
 
     override fun initView() {
-        mViewModel.title.set(getString(R.string.import_id))
-        mViewModel.showBackImage.set(true)
-        //        mViewModel.showRightText.set(true)
-        //        mViewModel.rightText.set(getString(R.string.import_album))
-        titleLayout.setBackgroundColor(resources.getColor(R.color.white, null))
         capture.initializeFromIntent(intent, bundle)
         capture.decode()
         zxing_barcode_scanner.findViewById<ViewfinderView>(R.id.zxing_viewfinder_view)
@@ -47,7 +42,7 @@ class ScanActivity : BaseActivity<ScanViewModel, ActivityScanBinding>() {
     override fun initObserve() {
     }
 
-    override fun statusBarStyle(): Int = STATUSBAR_STYLE_WHITE
+    override fun statusBarStyle(): Int = STATUSBAR_STYLE_TRANSPARENT
 
     override fun initVariableId(): Int = BR.viewModel
 
