@@ -41,10 +41,9 @@ class IDCardManagerActivity : BaseActivity<IDCardManagerViewModel, ActivityIdCar
             DialogUtils.showExportSuccessDialog(this)
         })
 
-        mViewModel.requestLocalPermissionEvent.observe(this,
-            Observer {
-                requestLocalMemoryPermission()
-            })
+        mViewModel.requestLocalPermissionEvent.observe(this, Observer {
+            requestLocalMemoryPermission()
+        })
     }
 
     override fun initVariableId(): Int = BR.viewModel
@@ -65,7 +64,7 @@ class IDCardManagerActivity : BaseActivity<IDCardManagerViewModel, ActivityIdCar
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun reloadIDcard(event: EventLoadIDCard){
+    fun reloadIDcard(event: EventLoadIDCard) {
         finish()
     }
 

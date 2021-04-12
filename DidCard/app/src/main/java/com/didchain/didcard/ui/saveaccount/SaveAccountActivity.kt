@@ -88,7 +88,7 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             return false
         }
-            return super.onKeyDown(keyCode, event)
+        return super.onKeyDown(keyCode, event)
     }
 
 }

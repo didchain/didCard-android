@@ -169,7 +169,6 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     }
 
 
-
     private fun processData(password: String, cryptoObject: BiometricPrompt.CryptoObject?) {
         val encryptedData = cryptographyManager.encryptData(password, cryptoObject?.cipher!!)
         val encryptedPreference = EncryptedPreferencesUtils(mActivity)
@@ -178,7 +177,7 @@ class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun reloadIDcard(event: EventLoadIDCard){
+    fun reloadIDcard(event: EventLoadIDCard) {
         mViewModel.getId()
     }
 

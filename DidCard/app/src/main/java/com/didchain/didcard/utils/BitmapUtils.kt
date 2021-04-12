@@ -52,7 +52,7 @@ object BitmapUtils {
 
         fileName = dirPath + bitName
         file = File(fileName)
-        if(!file.exists()){
+        if (!file.exists()) {
             file.createNewFile()
         }
         val out: FileOutputStream

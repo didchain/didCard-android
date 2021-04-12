@@ -1,9 +1,9 @@
 package com.didchain.didcard
 
 import com.didchain.android.lib.base.BaseApplication
-import com.didchain.didcard.ui.authorizationManager.AuthorizationSystemViewModel
 import com.didchain.didcard.ui.IDCardModel
 import com.didchain.didcard.ui.authorization.AuthorizationViewModel
+import com.didchain.didcard.ui.authorizationManager.AuthorizationSystemViewModel
 import com.didchain.didcard.ui.authorizationManager.EditSystemInfoViewModel
 import com.didchain.didcard.ui.authorizationManager.SelectSystemsModel
 import com.didchain.didcard.ui.authorizationManager.SelectSystemsViewModel
@@ -27,7 +27,6 @@ import com.didchain.didcard.ui.saveaccount.SaveAccountViewModel
 import com.didchain.didcard.ui.scan.ScanViewModel
 import com.didchain.didcard.ui.splash.SplashViewModel
 import com.orhanobut.logger.*
-import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.dsl.fragment
@@ -55,15 +54,12 @@ class DidCardApp : BaseApplication() {
         instance = this
         initKoin()
         initLogger()
-        RxHttp.init(null,BuildConfig.DEBUG)
+        RxHttp.init(null, BuildConfig.DEBUG)
     }
 
 
-
     private fun initLogger() {
-        val formatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)
-                .logStrategy(LogcatLogStrategy()).tag(Constants.TAG_NAME).build()
+        val formatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder().showThreadInfo(false).logStrategy(LogcatLogStrategy()).tag(Constants.TAG_NAME).build()
 
         Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
             override fun isLoggable(priority: Int, tag: String?): Boolean {

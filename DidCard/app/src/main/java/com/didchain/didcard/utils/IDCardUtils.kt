@@ -87,12 +87,7 @@ object IDCardUtils {
 
     private fun getEncryptedFile(path: String): EncryptedFile {
         val file = File(path)
-        return EncryptedFile.Builder(
-            file,
-            context(),
-            masterKeyAlias,
-            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
-        ).build()
+        return EncryptedFile.Builder(file, context(), masterKeyAlias, EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB).build()
     }
 
     private fun loadIDCardByFile(encryptedFile: EncryptedFile): String {

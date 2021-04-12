@@ -3,7 +3,6 @@ package com.didchain.didcard.utils
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import com.didchain.didcard.R
 
 /**
  *Author:Mr'x

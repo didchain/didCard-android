@@ -1,14 +1,14 @@
 package com.didchain.didcard.ui.main
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseViewModel
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
 import com.didchain.android.lib.event.SingleLiveEvent
 import com.didchain.didcard.R
 import com.didchain.didcard.provider.context
-import com.didchain.didcard.room.AccountDao
-import com.didchain.didcard.room.AppDatabase
+import com.didchain.didcard.room.DataBaseManager
 import com.didchain.didcard.ui.IDCardModel
 import com.didchain.didcard.utils.IDCardUtils
 import io.reactivex.rxjava3.core.SingleObserver
@@ -35,7 +35,7 @@ class MainViewModel : BaseViewModel(), KoinComponent {
     val openCameraEvent = SingleLiveEvent<Boolean>()
     val verifyEvent = SingleLiveEvent<Int>()
     val openIDCard = SingleLiveEvent<Boolean>()
-    val accountDao : AccountDao by lazy { AppDatabase.getInstance(context()).accountDao() }
+
     init {
         getId()
 
@@ -46,6 +46,7 @@ class MainViewModel : BaseViewModel(), KoinComponent {
             id.set(IDCardUtils.getId(context()))
         }
     }
+
     val clickQR = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             openCameraEvent.call()
@@ -53,34 +54,35 @@ class MainViewModel : BaseViewModel(), KoinComponent {
     })
 
     fun verify(randomToken: String, authUrl: String) {
-        val accounts = accountDao.queryByUrl(authUrl)
-        if(accounts==null || accounts.isEmpty()){
-            showToast(R.string.no_account)
-            return
-        }
+        rxLifeScope.launch {
 
-        val currentAccount = accounts.firstOrNull { it.isUsed }
-        if(currentAccount==null){
-            showToast(R.string.no_account)
-            return
-        }
-        showDialog()
-
-        MainScope().launch {
-            try {
-                val result=  model.verify(id.get()!!,randomToken,authUrl,currentAccount)
-                dismissDialog()
-                val resultObj = JSONObject(result)
-                val resultCode = resultObj.optInt("result_code")
-                verifyEvent.postValue(resultCode)
-            }catch (e:Exception){
-                dismissDialog()
-                showToast(R.string.verify_exception)
+            val accounts = DataBaseManager.queryByUrl(authUrl)
+            if (accounts == null || accounts.isEmpty()) {
+                showToast(R.string.no_account)
+                return@launch
             }
 
+            val currentAccount = accounts.firstOrNull { it.isUsed }
+            if (currentAccount == null) {
+                showToast(R.string.no_account)
+                return@launch
+            }
+            showDialog()
+
+            MainScope().launch {
+                try {
+                    val result = model.verify(id.get()!!, randomToken, authUrl, currentAccount)
+                    dismissDialog()
+                    val resultObj = JSONObject(result)
+                    val resultCode = resultObj.optInt("result_code")
+                    verifyEvent.postValue(resultCode)
+                } catch (e: Exception) {
+                    dismissDialog()
+                    showToast(R.string.verify_exception)
+                }
+
+            }
         }
-
-
     }
 
     fun openIdCard(password: String) {

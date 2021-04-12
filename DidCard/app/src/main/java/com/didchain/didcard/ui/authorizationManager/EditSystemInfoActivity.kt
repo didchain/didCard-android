@@ -3,13 +3,17 @@ package com.didchain.didcard.ui.authorizationManager
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.observe
+import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseActivity
-import com.didchain.didcard.R
 import com.didchain.didcard.BR
 import com.didchain.didcard.Constants
 import com.didchain.didcard.IntentKey
+import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivityEditSystemInfoBinding
 import com.didchain.didcard.room.Account
+import com.didchain.didcard.room.DataBaseManager
+import com.didchain.didcard.utils.DialogUtils
+import com.lxj.xpopup.interfaces.OnConfirmListener
 import kotlinx.android.synthetic.main.activity_edit_system_info.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinApiExtension
@@ -20,10 +24,10 @@ import org.koin.core.component.KoinApiExtension
  *Description:
  */
 @KoinApiExtension
-class EditSystemInfoActivity:BaseActivity<EditSystemInfoViewModel,ActivityEditSystemInfoBinding>() {
+class EditSystemInfoActivity : BaseActivity<EditSystemInfoViewModel, ActivityEditSystemInfoBinding>() {
 
 
-    override val mViewModel: EditSystemInfoViewModel  by viewModel()
+    override val mViewModel: EditSystemInfoViewModel by viewModel()
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_edit_system_info
 
@@ -31,13 +35,16 @@ class EditSystemInfoActivity:BaseActivity<EditSystemInfoViewModel,ActivityEditSy
         mViewModel.title.set(getString(R.string.authorization_system_info))
         mViewModel.showBackImage.set(true)
         val account = intent.getParcelableExtra<Account>(IntentKey.EDIT_ACCOUNT)
-        if(account !=null){
+        if (account != null) {
             mViewModel.oldAccount = account
             mViewModel.url.set(account.url)
             mViewModel.userName.set(account.userName)
             mViewModel.password.set(account.password)
+            mViewModel.showRightText.set(true)
+            mViewModel.rightText.set(getString(R.string.delete))
         }
     }
+
 
     override fun initData() {
     }
@@ -53,6 +60,24 @@ class EditSystemInfoActivity:BaseActivity<EditSystemInfoViewModel,ActivityEditSy
             setResult(RESULT_OK)
             finish()
         }
+
+        mViewModel.clickDeleteEvent.observe(this) {
+            showDeleteDialog()
+        }
+    }
+
+    private fun showDeleteDialog() {
+        DialogUtils.showDeleteAccountDailog(this, OnConfirmListener {
+            mViewModel.oldAccount?.let {
+                rxLifeScope.launch {
+                    DataBaseManager.delete(it)
+                    setResult(RESULT_OK)
+                    finish()
+                }
+
+            }
+        })
+
     }
 
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_WHITE
@@ -61,7 +86,7 @@ class EditSystemInfoActivity:BaseActivity<EditSystemInfoViewModel,ActivityEditSy
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode== RESULT_OK ){
+        if (resultCode == RESULT_OK) {
             mViewModel.url.set(data?.getStringExtra(IntentKey.CURRENT_URL))
         }
     }

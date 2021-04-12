@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.didchain.android.lib.base.BaseActivity
 import com.didchain.didcard.BR
 import com.didchain.didcard.IntentKey
@@ -21,7 +20,7 @@ import org.koin.core.component.KoinApiExtension
  *Description:
  */
 @KoinApiExtension
-class SelectSystemsActivity:BaseActivity<SelectSystemsViewModel, ActivitySelectSystemsBinding>() {
+class SelectSystemsActivity : BaseActivity<SelectSystemsViewModel, ActivitySelectSystemsBinding>() {
     override val mViewModel: SelectSystemsViewModel by viewModel()
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_select_systems
@@ -31,7 +30,7 @@ class SelectSystemsActivity:BaseActivity<SelectSystemsViewModel, ActivitySelectS
         mViewModel.showBackImage.set(true)
         recyclerView.itemAnimator = null
         val currentUrl = intent.getStringExtra(IntentKey.CURRENT_URL)
-        if(!TextUtils.isEmpty(currentUrl)){
+        if (!TextUtils.isEmpty(currentUrl)) {
             mViewModel.currentUrl = currentUrl.toString()
         }
         swipeRefreshLayout.isRefreshing = true
@@ -48,7 +47,7 @@ class SelectSystemsActivity:BaseActivity<SelectSystemsViewModel, ActivitySelectS
         }
 
         mViewModel.finishResultActivityEvent.observe(this) {
-           val intent = Intent()
+            val intent = Intent()
             intent.putExtra(IntentKey.CURRENT_URL, it)
             setResult(RESULT_OK, intent)
             finish()

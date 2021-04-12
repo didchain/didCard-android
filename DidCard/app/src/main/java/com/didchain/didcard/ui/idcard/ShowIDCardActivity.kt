@@ -41,10 +41,9 @@ class ShowIDCardActivity : BaseActivity<ShowIDCardViewModel, ActivityShowIdCardB
             }
         })
 
-        mViewModel.requestLocalPermissionEvent.observe(this,
-            Observer {
-                requestLocalMemoryPermission()
-            })
+        mViewModel.requestLocalPermissionEvent.observe(this, Observer {
+            requestLocalMemoryPermission()
+        })
     }
 
     override fun initVariableId(): Int = BR.viewModel
@@ -53,7 +52,7 @@ class ShowIDCardActivity : BaseActivity<ShowIDCardViewModel, ActivityShowIdCardB
     @AfterPermissionGranted(Constants.CODE_OPEN_ALBUM)
     fun requestLocalMemoryPermission() {
         if (PermissionUtils.hasStoragePermission(this)) {
-           mViewModel.saveIDCard()
+            mViewModel.saveIDCard()
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.import_apply_album_permission), Constants.CODE_OPEN_ALBUM, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }

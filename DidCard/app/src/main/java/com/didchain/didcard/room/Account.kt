@@ -13,5 +13,4 @@ import kotlinx.android.parcel.Parcelize
  */
 @Entity(tableName = "account")
 @Parcelize
-class Account(var url:String, @ColumnInfo(name = "user_name")var userName:String, var password:String,var isUsed:Boolean,@PrimaryKey(autoGenerate = true)var id : Long=0):
-    Parcelable
+class Account(var url: String, @ColumnInfo(name = "user_name") var userName: String, var password: String, var isUsed: Boolean, @PrimaryKey(autoGenerate = true) var id: Long = 0) : Parcelable

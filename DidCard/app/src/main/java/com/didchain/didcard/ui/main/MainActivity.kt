@@ -43,7 +43,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val VERIFY_SIGNATURE_ERROR = 1
     private val VERIFY_NOT_FOUND = 2
 
-    private lateinit var  passwordDialog: BasePopupView
+    private lateinit var passwordDialog: BasePopupView
     private lateinit var randomToken: String
     private lateinit var authUrl: String
     private val fragments = arrayListOf<Fragment>()
@@ -75,14 +75,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             mViewModel.verify(randomToken, authUrl)
         })
         mViewModel.verifyEvent.observe(this, Observer {
-            if(this::passwordDialog.isInitialized && passwordDialog.isShow){
+            if (this::passwordDialog.isInitialized && passwordDialog.isShow) {
                 passwordDialog.dismiss()
             }
             if (it == VERIFY_SUCCESS) {
                 toast(getString(R.string.verify_success))
-            } else if(it == VERIFY_SIGNATURE_ERROR){
+            } else if (it == VERIFY_SIGNATURE_ERROR) {
                 toast(getString(R.string.verify_error))
-            }else if(it ==VERIFY_NOT_FOUND){
+            } else if (it == VERIFY_NOT_FOUND) {
                 toast(getString(R.string.verify_user_not_found))
             }
         })
@@ -106,11 +106,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         return view
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
@@ -126,12 +122,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             ii.setRequestCode(IntentIntegrator.REQUEST_CODE)
             ii.initiateScan()
         } else {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.import_apply_camera_permission),
-                Constants.CODE_OPEN_CAMERA,
-                Manifest.permission.CAMERA
-            )
+            EasyPermissions.requestPermissions(this, getString(R.string.import_apply_camera_permission), Constants.CODE_OPEN_CAMERA, Manifest.permission.CAMERA)
         }
     }
 
@@ -141,7 +132,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         if (result.contents == null) {
             return
         }
-        try{
+        try {
             val qrmessage = JSONObject(result.contents)
             randomToken = qrmessage.optString("random_token")
             authUrl = qrmessage.optString("auth_url")
@@ -154,7 +145,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             } else {
                 showPasswordDialog()
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             toast(getString(R.string.qr_error))
         }
 
@@ -189,7 +180,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun reloadIDcard(event: EventLoadIDCard){
+    fun reloadIDcard(event: EventLoadIDCard) {
         mViewModel.getId()
     }
 

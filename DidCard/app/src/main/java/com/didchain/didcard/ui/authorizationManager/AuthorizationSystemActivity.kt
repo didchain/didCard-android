@@ -4,10 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.observe
 import com.didchain.android.lib.base.BaseActivity
-import com.didchain.didcard.R
 import com.didchain.didcard.BR
 import com.didchain.didcard.Constants
 import com.didchain.didcard.IntentKey
+import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivityAuthorizationSystemBinding
 import kotlinx.android.synthetic.main.activity_select_systems.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,7 +19,7 @@ import org.koin.core.component.KoinApiExtension
  *Description:
  */
 @KoinApiExtension
-class AuthorizationSystemActivity:BaseActivity<AuthorizationSystemViewModel,ActivityAuthorizationSystemBinding>() {
+class AuthorizationSystemActivity : BaseActivity<AuthorizationSystemViewModel, ActivityAuthorizationSystemBinding>() {
     override val mViewModel: AuthorizationSystemViewModel by viewModel()
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_authorization_system
@@ -34,13 +34,13 @@ class AuthorizationSystemActivity:BaseActivity<AuthorizationSystemViewModel,Acti
     }
 
     override fun initObserve() {
-        mViewModel.editAccountEvent.observe(this){
+        mViewModel.editAccountEvent.observe(this) {
             val intent = Intent(this@AuthorizationSystemActivity, EditSystemInfoActivity::class.java)
-            intent.putExtra(IntentKey.EDIT_ACCOUNT,it)
+            intent.putExtra(IntentKey.EDIT_ACCOUNT, it)
             startActivityForResult(intent, Constants.CODE_ACTIVITY_REQUEST)
         }
 
-        mViewModel.addSystemEvent.observe(this){
+        mViewModel.addSystemEvent.observe(this) {
             val intent = Intent(this@AuthorizationSystemActivity, EditSystemInfoActivity::class.java)
             startActivityForResult(intent, Constants.CODE_ACTIVITY_REQUEST)
         }
@@ -48,11 +48,11 @@ class AuthorizationSystemActivity:BaseActivity<AuthorizationSystemViewModel,Acti
 
     override fun statusBarStyle(): Int = STATUSBAR_STYLE_GRAY
 
-    override fun initVariableId(): Int =BR.viewModel
+    override fun initVariableId(): Int = BR.viewModel
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == RESULT_OK && requestCode == Constants.CODE_ACTIVITY_REQUEST){
+        if (resultCode == RESULT_OK && requestCode == Constants.CODE_ACTIVITY_REQUEST) {
             mViewModel.getData()
         }
     }

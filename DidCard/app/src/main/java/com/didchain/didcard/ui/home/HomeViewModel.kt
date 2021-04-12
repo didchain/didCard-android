@@ -52,7 +52,7 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
         initData()
     }
 
-    fun initData(){
+    fun initData() {
         showLock.set(!Androidgolib.isOpen())
         items.clear()
         itemTitles.forEachIndexed { index, i ->
@@ -62,7 +62,7 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
         MainScope().launch {
             cardBean = model.getIDCard()
             id.set(cardBean?.did)
-            if(Androidgolib.isOpen()){
+            if (Androidgolib.isOpen()) {
                 showQREvent.call()
             }
         }
@@ -76,8 +76,8 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
 
     val clickCopyDid = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            if(id.get()!=null){
-                CommonUtils.copyToMemory(context(),id.get()!!)
+            if (id.get() != null) {
+                CommonUtils.copyToMemory(context(), id.get()!!)
                 showToast(R.string.id_card_copy_success)
             }
 

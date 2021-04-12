@@ -29,6 +29,7 @@
             app:layout_constraintStart_toEndOf="@+id/url"
             app:layout_constraintTop_toTopOf="@+id/url"
             android:src="@drawable/psw_icon"
+            android:layout_marginStart="6dp"
             isVisible="@{item.hasUserName}"
             app:layout_constraintBottom_toBottomOf="@+id/url"
             android:layout_width="wrap_content"

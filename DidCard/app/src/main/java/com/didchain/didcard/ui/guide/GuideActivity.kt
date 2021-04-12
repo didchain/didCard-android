@@ -20,6 +20,7 @@ import com.didchain.didcard.view.PasswordPop
 import com.google.zxing.integration.android.IntentIntegrator
 import com.lxj.xpopup.interfaces.OnSelectListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -28,13 +29,14 @@ import pub.devrel.easypermissions.EasyPermissions
  *Time:
  *Description:
  */
+@KoinApiExtension
 class GuideActivity : BaseActivity<GuideViewModel, ActivityGuideBinding>() {
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_guide
     override val mViewModel: GuideViewModel by viewModel()
 
     override fun initView() {
-//        DialogUtils.showPrivacyAuthorityDialog(this, OnConfirmListener { }, OnCancelListener { finish() })
+        //        DialogUtils.showPrivacyAuthorityDialog(this, OnConfirmListener { }, OnCancelListener { finish() })
     }
 
     override fun initData() {}

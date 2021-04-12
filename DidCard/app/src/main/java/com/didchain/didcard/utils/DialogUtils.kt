@@ -95,7 +95,7 @@ object DialogUtils {
         val spannableString = SpannableString(context.getString(R.string.dialog_service_and_privacy_policy_content))
         spannableString.setSpan(object : ClickableSpan() {
             override fun onClick(widget: View) {
-                (widget as TextView).highlightColor = context.resources.getColor(android.R.color.transparent,null)
+                (widget as TextView).highlightColor = context.resources.getColor(android.R.color.transparent, null)
                 context.startActivity(Intent(context, PrivacyAuthorityActivity::class.java))
             }
 
@@ -107,7 +107,7 @@ object DialogUtils {
         }, protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannableString.setSpan(object : ClickableSpan() {
             override fun onClick(widget: View) {
-                (widget as TextView).highlightColor = context.resources.getColor(android.R.color.transparent,null)
+                (widget as TextView).highlightColor = context.resources.getColor(android.R.color.transparent, null)
                 context.startActivity(Intent(context, PrivacyAuthorityActivity::class.java))
             }
 
@@ -118,13 +118,16 @@ object DialogUtils {
             }
         }, policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        spannableString.setSpan(ForegroundColorSpan(context.resources.getColor(R.color.colorAccent,null)), protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(ForegroundColorSpan(context.resources.getColor(R.color.colorAccent,null)), policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(ForegroundColorSpan(context.resources.getColor(R.color.colorAccent, null)), protocolStart, protocolEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(ForegroundColorSpan(context.resources.getColor(R.color.colorAccent, null)), policyStart, policyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
 
         val importSuccessPop = XPopup.Builder(context).isDestroyOnDismiss(true).dismissOnBackPressed(false).dismissOnTouchOutside(false).asConfirm(context.getString(R.string.privacy_policy_title), spannableString, context.getString(R.string.not_use), context.getString(R.string.agree), confirmListener, cancelListener, false)
         importSuccessPop.show()
     }
 
+    fun showDeleteAccountDailog(context: Context, confirmListener: OnConfirmListener) {
+        XPopup.Builder(context).asConfirm(context.getString(R.string.tip), context.getString(R.string.authorization_system_delete_account), confirmListener).show()
+    }
 
 }

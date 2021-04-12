@@ -2,15 +2,14 @@ package com.didchain.didcard.ui.authorizationManager
 
 import android.text.TextUtils
 import androidx.databinding.ObservableField
+import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseViewModel
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
 import com.didchain.android.lib.event.SingleLiveEvent
 import com.didchain.didcard.R
-import com.didchain.didcard.provider.context
 import com.didchain.didcard.room.Account
-import com.didchain.didcard.room.AccountDao
-import com.didchain.didcard.room.AppDatabase
+import com.didchain.didcard.room.DataBaseManager
 
 /**
  *Author:Mr'x
@@ -23,10 +22,10 @@ class EditSystemInfoViewModel : BaseViewModel() {
     val userName = ObservableField<String>()
     val password = ObservableField<String>()
     var oldAccount: Account? = null
-    val accountDao: AccountDao by lazy { AppDatabase.getInstance(context()).accountDao() }
 
     var finishResultActivityEvent = SingleLiveEvent<String>()
     val openSelectSystemEvent = SingleLiveEvent<Any>()
+    val clickDeleteEvent = SingleLiveEvent<Any>()
     val clickSure = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             when {
@@ -35,38 +34,54 @@ class EditSystemInfoViewModel : BaseViewModel() {
                 TextUtils.isEmpty(password.get()) -> showToast(R.string.authorization_system_please_input_password)
                 else -> {
                     if (oldAccount != null) {
-
-                        if(oldAccount!!.isUsed){
-                            val accounts = accountDao.queryByUrl(url.get()!!)
-                            if(accounts!=null){
-                                accounts.forEach { it.isUsed = false }
-                                accountDao.updateAccounts(*accounts.toTypedArray())
-                            }
-                        }
-
-                      val account =  Account(url.get()!!, userName.get()!!, password.get()!!, oldAccount!!.isUsed)
-                        account.id = oldAccount!!.id
-                        accountDao.updateAccounts(account)
+                        updateAccount()
                     } else {
-                        val accounts = accountDao.queryByUrl(url.get()!!)
-                        var isUsed =false
-                        if(accounts==null || accounts.isEmpty()){
-                            isUsed=true
-                        }
-                        accountDao.insert(
-                            Account(
-                                url.get()!!,
-                                userName.get()!!,
-                                password.get()!!,
-                                isUsed
-                            )
-                        )
+                        addAccount()
                     }
-                    finishResultActivityEvent.call()
+
                 }
             }
         }
     })
+
+    private fun addAccount() {
+        rxLifeScope.launch {
+            val accounts = DataBaseManager.queryByUrl(url.get()!!)
+            var isUsed = false
+            if (accounts == null || accounts.isEmpty()) {
+                isUsed = true
+            }
+            DataBaseManager.insert(Account(url.get()!!, userName.get()!!, password.get()!!, isUsed))
+            finishResultActivityEvent.call()
+        }
+
+    }
+
+    private fun updateAccount() {
+        if (oldAccount!!.isUsed) {
+            rxLifeScope.launch {
+                val accounts = DataBaseManager.queryByUrl(url.get()!!)
+                if (accounts != null) {
+                    accounts.forEach { it.isUsed = false }
+                    DataBaseManager.updateAccounts(*accounts.toTypedArray())
+                }
+            }
+        }
+
+        val account = Account(url.get()!!, userName.get()!!, password.get()!!, oldAccount!!.isUsed)
+        account.id = oldAccount!!.id
+        rxLifeScope.launch {
+            DataBaseManager.updateAccounts(account)
+            finishResultActivityEvent.call()
+        }
+
+    }
+
+    override fun clickRightTv() {
+        super.clickRightTv()
+        clickDeleteEvent.call()
+
+    }
 
     val clickChoiceSystem = BindingCommand<Any>(object : BindingAction {
         override fun call() {

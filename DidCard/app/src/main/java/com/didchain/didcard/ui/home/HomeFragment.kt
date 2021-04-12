@@ -45,7 +45,7 @@ import pub.devrel.easypermissions.EasyPermissions
  *Description:
  */
 @KoinApiExtension
-class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() , EasyPermissions.PermissionCallbacks{
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), EasyPermissions.PermissionCallbacks {
 
     private lateinit var popupView: BasePopupView
     private lateinit var passwordDialog: BasePopupView
@@ -77,12 +77,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() , EasyPe
                     val qrBean = QRBean(sign, mViewModel.id.get().toString(), currentTimeMillis, mapLocation.latitude, mapLocation.longitude)
                     val qrjson = JsonUtils.object2Json(qrBean, QRBean::class.java)
                     rq.setImageBitmap(BitmapUtils.stringToQRBitmap(qrjson))
-                    progress.visibility= View.GONE
+                    progress.visibility = View.GONE
                     mMapLocation = mapLocation
                 }
             } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                Logger.e( "location Error, ErrCode:" + mapLocation.errorCode + ", errInfo:" + mapLocation.errorInfo)
+                Logger.e("location Error, ErrCode:" + mapLocation.errorCode + ", errInfo:" + mapLocation.errorInfo)
             }
         }
     }
@@ -121,19 +121,19 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() , EasyPe
 
         }
 
-//        initLocation()
+        //        initLocation()
         //设置定位回调监听
-//        locationClient.setLocationListener(mLocationListener)
-//        if (!checkLocationPermission()) {
-//            requestExternalPermission()
-//        } else {
-//            getLocation()
-//        }
+        //        locationClient.setLocationListener(mLocationListener)
+        //        if (!checkLocationPermission()) {
+        //            requestExternalPermission()
+        //        } else {
+        //            getLocation()
+        //        }
 
 
     }
 
-    private fun showQR(){
+    private fun showQR() {
         val currentTimeMillis = System.currentTimeMillis()
         val signature = getSignature(currentTimeMillis, 12.22222, 22.33333)
 
@@ -143,7 +143,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() , EasyPe
             val qrBean = QRBean(sign, mViewModel.id.get().toString(), currentTimeMillis, 12.22222, 22.33333)
             val qrjson = JsonUtils.object2Json(qrBean, QRBean::class.java)
             rq.setImageBitmap(BitmapUtils.stringToQRBitmap(qrjson))
-            progress.visibility= View.GONE
+            progress.visibility = View.GONE
         }
     }
 
@@ -180,9 +180,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() , EasyPe
 
     override fun onResume() {
         super.onResume()
-//        if (!isLocationEnabled()) {
-//            toOpenGPS()
-//        }
+        //        if (!isLocationEnabled()) {
+        //            toOpenGPS()
+        //        }
 
     }
 
@@ -240,7 +240,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() , EasyPe
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun reloadIDcard(event: EventLoadIDCard){
+    fun reloadIDcard(event: EventLoadIDCard) {
         mViewModel.initData()
     }
 

@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase
  *Time:
  *Description:
  */
-@Database(entities = [Account::class], version = 2 ,exportSchema = false)
+@Database(entities = [Account::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun accountDao(): AccountDao
@@ -19,10 +19,7 @@ abstract class AppDatabase : RoomDatabase() {
         private var instance: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
             if (instance == null) {
-                instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "account.db" //数据库名称
+                instance = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "account.db" //数据库名称
                 ).allowMainThreadQueries().build()
             }
             return instance as AppDatabase

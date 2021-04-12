@@ -1,9 +1,6 @@
 package com.didchain.didcard.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 @Dao
 interface AccountDao {
@@ -12,7 +9,7 @@ interface AccountDao {
     val all: List<Account?>?
 
     @Query("SELECT * FROM account where url = :url")
-    fun queryByUrl(url:String): List<Account>?
+    fun queryByUrl(url: String): List<Account>?
 
     @Insert
     fun insert(account: Account)
@@ -20,5 +17,7 @@ interface AccountDao {
     @Update
     fun updateAccounts(vararg account: Account)
 
+    @Delete
+    fun delete(vararg account: Account)
 
 }

@@ -1,8 +1,5 @@
 package com.didchain.didcard.ui.idcard
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import com.didchain.android.lib.base.BaseViewModel
@@ -45,7 +42,7 @@ class ShowIDCardViewModel : BaseViewModel() {
     })
 
 
-     fun saveIDCard() {
+    fun saveIDCard() {
         if (!TextUtils.isEmpty(qrJson)) {
             MainScope().launch {
                 withContext(Dispatchers.IO) {
