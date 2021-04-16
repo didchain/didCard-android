@@ -27,7 +27,6 @@ class SaveAccountViewModel : BaseViewModel() {
     val saveAlbumResultEvent = SingleLiveEvent<Boolean>()
     val clickSaveAlbum = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            showToast("备份到相册")
             saveAlbumEvent.call()
             EventBus.getDefault().post(EventLoadIDCard())
         }

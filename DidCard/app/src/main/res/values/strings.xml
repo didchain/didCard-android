@@ -1,7 +1,7 @@
 <resources>
     <!--    common-->
     <string name="app_name">易ID</string>
-    <string name="qr_name">易ID.png</string>
+    <string name="qr_name">EASY_ID.png</string>
     <string name="create_account">创建账号</string>
     <string name="sure">确定</string>
     <string name="delete">删除</string>

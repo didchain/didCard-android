@@ -59,7 +59,7 @@ class DidCardApp : BaseApplication() {
 
 
     private fun initLogger() {
-        val formatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder().showThreadInfo(false).logStrategy(LogcatLogStrategy()).tag(Constants.TAG_NAME).build()
+        val formatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder().showThreadInfo(false).logStrategy(LogcatLogStrategy()).methodOffset(7).tag(Constants.TAG_NAME).build()
 
         Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
             override fun isLoggable(priority: Int, tag: String?): Boolean {

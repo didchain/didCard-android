@@ -35,7 +35,7 @@ object BitmapUtils {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            return saveSignImage(context, bitName, bitmap)
+            return saveSignImage(context,bitmap,bitName)
         }
 
         Logger.v("saveBitmap brand", "" + brand)
@@ -63,7 +63,7 @@ object BitmapUtils {
                 out.flush()
                 out.close()
                 // 插入图库
-                if (Build.VERSION.SDK_INT >= 29) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     val values = ContentValues()
                     values.put(MediaStore.Images.Media.DATA, file.absolutePath)
                     values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
@@ -91,7 +91,7 @@ object BitmapUtils {
         return true
     }
 
-    private fun saveSignImage(context: Context, fileName: String?, bitmap: Bitmap): Boolean {
+    private fun saveSignImage(context: Context, bitmap: Bitmap,fileName: String?): Boolean {
         try {
             //设置保存参数到ContentValues中
             val contentValues = ContentValues()
@@ -101,7 +101,7 @@ object BitmapUtils {
             //android Q中不再使用DATA字段，而用RELATIVE_PATH代替
             //RELATIVE_PATH是相对路径不是绝对路径
             //DCIM是系统文件夹，关于系统文件夹可以到系统自带的文件管理器中查看，不可以写没存在的名字
-            contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, DCIM)
+            contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
 
             //设置文件类型
             contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/JPEG")
@@ -120,7 +120,7 @@ object BitmapUtils {
             }
             return true
         } catch (e: Exception) {
-            Logger.e("Exception", "Exception:" + e.message.toString())
+            Logger.e(e.message.toString())
             return false
         }
     }
