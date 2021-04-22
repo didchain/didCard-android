@@ -27,6 +27,7 @@ import com.didchain.didcard.ui.saveaccount.SaveAccountViewModel
 import com.didchain.didcard.ui.scan.ScanViewModel
 import com.didchain.didcard.ui.splash.SplashViewModel
 import com.orhanobut.logger.*
+import com.umeng.commonsdk.UMConfigure
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.dsl.fragment
@@ -55,6 +56,7 @@ class DidCardApp : BaseApplication() {
         initKoin()
         initLogger()
         RxHttp.init(null, BuildConfig.DEBUG)
+        UMConfigure.init(this, "608119369e4e8b6f617cdabe", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
     }
 
 
