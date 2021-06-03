@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.os.Handler
 import com.didchain.android.lib.base.BaseActivity
 import com.didchain.didcard.BR
+import com.didchain.didcard.Constants
 import com.didchain.didcard.R
 import com.didchain.didcard.databinding.ActivitySplashBinding
 import com.didchain.didcard.ui.guide.GuideActivity
+import com.didchain.didcard.utils.DialogUtils
+import com.didchain.didcard.utils.SharedPref
+import com.lxj.xpopup.interfaces.OnCancelListener
+import com.lxj.xpopup.interfaces.OnConfirmListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinApiExtension
 
@@ -17,6 +22,7 @@ import org.koin.core.component.KoinApiExtension
  */
 @KoinApiExtension
 class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
+    var sureAuthority : Boolean by SharedPref(this, Constants.KEY_SURE_AUTHORITY, false)
     override val mViewModel: SplashViewModel by viewModel()
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_splash
@@ -26,8 +32,19 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
             if (mViewModel.hasAccount) {
                 mViewModel.loadCard()
             } else {
-                startActivity(GuideActivity::class.java)
-                finish()
+                if(sureAuthority){
+                    startActivity(GuideActivity::class.java)
+                    finish()
+                    return@postDelayed
+                }
+                DialogUtils.showPrivacyAuthorityDialog(this, OnConfirmListener {
+                    sureAuthority = true
+                    startActivity(GuideActivity::class.java)
+                    finish()
+                }, OnCancelListener {
+                    finish()
+                })
+
             }
         }, 1000)
 

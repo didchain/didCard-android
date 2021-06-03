@@ -75,6 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
             app:layout_constraintStart_toEndOf="@+id/privacyAuthorityCB"
             android:textSize="12sp"
+            android:visibility="gone"
             android:layout_height="wrap_content" />
 
         <TextView

@@ -27,6 +27,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 
 
 /**
@@ -34,6 +35,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *Time:
  *Description:
  */
+@KoinApiExtension
 class MyFragment : BaseFragment<MyViewModel, FragmentMyBinding>() {
 
     private lateinit var passwordDialog: BasePopupView

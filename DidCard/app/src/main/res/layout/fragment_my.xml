@@ -68,6 +68,7 @@
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:text="@string/my_authorization"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idCard" />
@@ -77,6 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
+            android:visibility="gone"
             android:src="@drawable/next_icon"
             app:layout_constraintBottom_toBottomOf="@+id/authorizationTitle"
             app:layout_constraintEnd_toEndOf="@+id/authorizationTitle"
@@ -151,7 +153,6 @@
                 <TextView
                     android:id="@+id/noSecret"
                     style="@style/MyTextViewDrawBottomStyle"
-                    onClickCommand="@{viewModel.clickNoSecret}"
                     android:text="@string/my_no_secret"
                     app:layout_constraintStart_toStartOf="@+id/midConstraintLayout"
                     app:layout_constraintTop_toBottomOf="@+id/identityManagement" />
