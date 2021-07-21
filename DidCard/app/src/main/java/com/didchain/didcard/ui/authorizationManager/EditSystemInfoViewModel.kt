@@ -6,6 +6,7 @@ import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseViewModel
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
+import com.didchain.android.lib.command.BindingConsumer
 import com.didchain.android.lib.event.SingleLiveEvent
 import com.didchain.didcard.R
 import com.didchain.didcard.room.Account
@@ -22,8 +23,9 @@ class EditSystemInfoViewModel : BaseViewModel() {
     val userName = ObservableField<String>()
     val password = ObservableField<String>()
     var oldAccount: Account? = null
-
     var finishResultActivityEvent = SingleLiveEvent<String>()
+
+    val showPasswordEvent = SingleLiveEvent<Boolean>()
     val openSelectSystemEvent = SingleLiveEvent<Any>()
     val clickDeleteEvent = SingleLiveEvent<Any>()
     val clickSure = BindingCommand<Any>(object : BindingAction {
@@ -86,6 +88,12 @@ class EditSystemInfoViewModel : BaseViewModel() {
     val clickChoiceSystem = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             openSelectSystemEvent.call()
+        }
+    })
+
+    val clickShowPassword = BindingCommand<Boolean>(null,object : BindingConsumer<Boolean> {
+        override fun call(t: Boolean) {
+            showPasswordEvent.postValue(t)
         }
     })
 }

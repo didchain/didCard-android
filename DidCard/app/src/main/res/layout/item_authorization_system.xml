@@ -68,13 +68,16 @@
             android:text="@string/authorization_system_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <TextView
+        <EditText
             android:id="@+id/password"
             app:layout_constraintStart_toEndOf="@+id/passwordLab"
             app:layout_constraintTop_toBottomOf="@+id/userName"
             android:textColor="@color/color_0c123d"
             android:textSize="15sp"
             android:layout_marginTop="7dp"
+            android:inputType="textPassword"
+            android:focusable="false"
+            android:background="@android:color/transparent"
             android:layout_marginStart="4dp"
             android:text="@{item.account.password}"
             android:layout_width="wrap_content"

@@ -2,6 +2,8 @@ package com.didchain.didcard.ui.authorizationManager
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import androidx.lifecycle.observe
 import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseActivity
@@ -63,6 +65,14 @@ class EditSystemInfoActivity : BaseActivity<EditSystemInfoViewModel, ActivityEdi
 
         mViewModel.clickDeleteEvent.observe(this) {
             showDeleteDialog()
+        }
+
+        mViewModel.showPasswordEvent.observe(this){showPassword ->
+            if (showPassword) {
+                password.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            } else {
+                password.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
         }
     }
 
