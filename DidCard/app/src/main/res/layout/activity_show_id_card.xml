@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -18,24 +18,24 @@
         tools:ignore="MissingConstraints">
 
         <include
+            android:id="@+id/titleLayout"
             layout="@layout/title_layout"
-            app:viewModel="@{viewModel}"
-            android:id="@+id/titleLayout" />
+            app:viewModel="@{viewModel}" />
 
         <androidx.cardview.widget.CardView
             style="@style/CardViewStyle"
-            app:layout_constraintTop_toBottomOf="@+id/titleLayout"
-            android:layout_marginTop="72dp"
             android:layout_marginStart="44dp"
-            android:layout_marginEnd="44dp">
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="44dp"
+            app:layout_constraintTop_toBottomOf="@+id/titleLayout">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
                 android:layout_marginEnd="33dp"
                 android:layout_marginBottom="30dp"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/idCardTitle"
@@ -49,46 +49,46 @@
 
                 <TextView
                     android:id="@+id/idCard"
-                    android:text="@{viewModel.idCard}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.idCard}"
                     android:textColor="@color/color_0c123d"
                     android:textSize="17sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_f0f1f3"
+                    android:layout_height="1dp"
                     android:layout_marginTop="13dp"
-                    android:layout_height="1dp" />
+                    android:background="@color/color_f0f1f3" />
 
                 <com.didchain.didcard.view.QRImageView
                     android:id="@+id/idQR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:padding="2dp"
-                    android:scaleType="fitXY"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:scaleType="fitXY" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/share"
             style="@style/IdCardYellowButtonStyle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="107dp"
             onClickCommand="@{viewModel.clickShare}"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="107dp"
+            android:text="@string/id_card_share"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/save"
-            android:text="@string/id_card_share" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/save"
             style="@style/IdNavyBlueButtonStyle"
-            app:layout_constraintEnd_toEndOf="parent"
             onClickCommand="@{viewModel.clickSave}"
+            android:text="@string/id_card_save"
             app:layout_constraintBottom_toBottomOf="@+id/share"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/share"
-            app:layout_constraintTop_toTopOf="@+id/share"
-            android:text="@string/id_card_save" />
+            app:layout_constraintTop_toTopOf="@+id/share" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

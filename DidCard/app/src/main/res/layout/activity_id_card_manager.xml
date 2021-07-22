@@ -45,9 +45,9 @@
         <TextView
             android:id="@+id/updatePassword"
             style="@style/IdCardManagerTextViewStyle"
-            android:visibility="gone"
             onClickCommand="@{viewModel.clickUpdatePassword}"
             android:text="@string/id_card_manager_update_password"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/exportIdCard" />
 
         <TextView

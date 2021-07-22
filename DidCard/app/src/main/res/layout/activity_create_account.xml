@@ -42,58 +42,58 @@
             android:id="@+id/password"
             style="@style/PasswordEditTextStyle"
             android:layout_marginTop="16dp"
-            android:text="@={viewModel.password}"
             android:hint="@string/create_account_input_password"
+            android:text="@={viewModel.password}"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <EditText
             android:id="@+id/confirmPassword"
             style="@style/PasswordEditTextStyle"
             android:layout_marginTop="16dp"
-            android:text="@={viewModel.confirmPassword}"
             android:hint="@string/create_account_input_password_again"
+            android:text="@={viewModel.confirmPassword}"
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
         <CheckBox
             android:id="@+id/privacyAuthorityCB"
-            android:layout_width="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
-            app:layout_constraintStart_toStartOf="@+id/confirmPassword"
-            android:layout_marginTop="8dp"
             onCheckedChangedCommand="@{viewModel.checkPrivacyAuthrity}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:button="@drawable/privacy_authority_selector"
             android:textSize="12sp"
-            android:layout_height="wrap_content" />
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/confirmPassword"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
 
         <TextView
             android:id="@+id/privacyAuthorityTv"
             android:layout_width="0dp"
-            app:layout_constraintEnd_toEndOf="@+id/confirmPassword"
-            app:layout_constraintTop_toTopOf="@+id/privacyAuthorityCB"
-            app:layout_constraintBottom_toBottomOf="@+id/privacyAuthorityCB"
-            app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
-            app:layout_constraintStart_toEndOf="@+id/privacyAuthorityCB"
+            android:layout_height="wrap_content"
             android:textSize="12sp"
             android:visibility="gone"
-            android:layout_height="wrap_content" />
+            app:layout_constraintBottom_toBottomOf="@+id/privacyAuthorityCB"
+            app:layout_constraintEnd_toEndOf="@+id/confirmPassword"
+            app:layout_constraintStart_toEndOf="@+id/privacyAuthorityCB"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
+            app:layout_constraintTop_toTopOf="@+id/privacyAuthorityCB" />
 
         <TextView
             style="@style/YellowButtonStyle"
-            android:layout_marginTop="16dp"
             onClickCommand="@{viewModel.clickCreate}"
+            android:layout_marginTop="16dp"
             android:text="@string/create_account"
             app:layout_constraintTop_toBottomOf="@+id/privacyAuthorityTv" />
 
         <TextView
             android:layout_width="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/create_account_tip"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start"
             android:layout_marginEnd="@dimen/margin_end"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="70dp"
-            android:layout_height="wrap_content" />
+            android:text="@string/create_account_tip"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

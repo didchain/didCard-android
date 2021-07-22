@@ -25,9 +25,9 @@
         <TextView
             android:id="@+id/nameTitle"
             style="@style/MyTextViewTitleStyle"
+            android:layout_marginTop="7dp"
             android:text="@string/my_name"
             android:visibility="gone"
-            android:layout_marginTop="7dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -48,12 +48,12 @@
         <TextView
             android:id="@+id/idCard"
             style="@style/TextViewStyle"
-            android:text="@{viewModel.did}"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
+            android:text="@{viewModel.did}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idCardTitle" />
 
         <TextView
@@ -61,8 +61,8 @@
             style="@style/TextViewStyle"
             onClickCommand="@{viewModel.clickAuthorization}"
             android:layout_height="44dp"
-            android:layout_marginTop="12dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="15dp"
             android:background="@drawable/button_bg_yellow"
             android:paddingStart="15dp"
@@ -78,8 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
-            android:visibility="gone"
             android:src="@drawable/next_icon"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/authorizationTitle"
             app:layout_constraintEnd_toEndOf="@+id/authorizationTitle"
             app:layout_constraintTop_toTopOf="@+id/authorizationTitle"
@@ -134,6 +134,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/statusTitle"
                     app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
                     app:layout_constraintTop_toTopOf="@+id/statusTitle" />
+
                 <TextView
                     android:id="@+id/authorizationManagement"
                     style="@style/MyTextViewShowArrowStyle"
@@ -163,8 +164,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/noSecret"
                     app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
                     app:layout_constraintTop_toTopOf="@+id/noSecret"
-                    app:switchState="@{viewModel.openNoSecretObservable}"
-                    app:onCheckedChangeCommand="@{viewModel.onCheckedNoSecret}" />
+                    app:onCheckedChangeCommand="@{viewModel.onCheckedNoSecret}"
+                    app:switchState="@{viewModel.openNoSecretObservable}" />
 
                 <TextView
                     android:id="@+id/fingerprint"
@@ -179,8 +180,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/fingerprint"
                     app:layout_constraintEnd_toEndOf="@+id/midConstraintLayout"
                     app:layout_constraintTop_toTopOf="@+id/fingerprint"
-                    app:switchState="@{viewModel.openFingerPrintObservable}"
-                    app:onCheckedChangeCommand="@{viewModel.onCheckedFingerprint}" />
+                    app:onCheckedChangeCommand="@{viewModel.onCheckedFingerprint}"
+                    app:switchState="@{viewModel.openFingerPrintObservable}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
@@ -229,15 +230,15 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            onClickCommand="@{viewModel.clickPrivacyAuthority}"
             android:layout_width="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/privacy_policy_title"
             android:textColor="@color/blue"
             android:textSize="16sp"
-            onClickCommand="@{viewModel.clickPrivacyAuthority}"
-            android:layout_marginBottom="16dp"
-            android:layout_height="wrap_content"
-            android:text="@string/privacy_policy_title" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

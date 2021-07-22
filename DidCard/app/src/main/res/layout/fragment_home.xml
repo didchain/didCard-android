@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -33,29 +33,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_end"
+            android:gravity="center"
             android:text="@{viewModel.city}"
             android:textColor="@color/color_0c123d"
-            android:gravity="center"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/title"
+            app:drawableStartCompat="@drawable/address_nav_icon"
             app:layout_constraintBottom_toBottomOf="@+id/title"
-            app:drawableStartCompat="@drawable/address_nav_icon" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/title" />
 
         <androidx.core.widget.NestedScrollView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:scrollbars="none"
-            android:overScrollMode="never"
             android:layout_width="0dp"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_marginBottom="20dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp">
 
                 <TextView
                     android:id="@+id/idCardTitle"
@@ -67,21 +67,22 @@
                     android:textColor="@color/color_9b9c9f"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/copyDid"
-                    android:layout_width="40dp"
-                    android:src="@drawable/copy_did"
-                    android:scaleType="center"
-                    android:layout_marginEnd="14dp"
                     onClickCommand="@{viewModel.clickCopyDid}"
-                    app:layout_constraintTop_toTopOf="@+id/idCardTitle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/idCardTitle"
+                    android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginEnd="14dp"
+                    android:scaleType="center"
+                    android:src="@drawable/copy_did"
+                    app:layout_constraintBottom_toBottomOf="@+id/idCardTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/idCardTitle"
                     tools:ignore="ContentDescription" />
+
                 <TextView
                     android:id="@+id/idCard"
                     android:layout_width="0dp"
@@ -111,21 +112,22 @@
                     android:layout_height="0dp"
                     android:layout_margin="47dp"
                     android:layout_marginEnd="16dp"
-                    app:line_color="@android:color/transparent"
                     android:padding="2dp"
                     app:layout_constraintBottom_toBottomOf="@+id/qrBg"
                     app:layout_constraintEnd_toEndOf="@+id/qrBg"
                     app:layout_constraintStart_toStartOf="@+id/qrBg"
-                    app:layout_constraintTop_toTopOf="@+id/qrBg" />
-                    <ProgressBar
-                        android:id="@+id/progress"
-                        android:layout_width="50dp"
-                        android:indeterminateTint="@color/yellow"
-                        app:layout_constraintStart_toStartOf="@+id/rq"
-                        app:layout_constraintEnd_toEndOf="@+id/rq"
-                        app:layout_constraintTop_toTopOf="@+id/rq"
-                        app:layout_constraintBottom_toBottomOf="@+id/rq"
-                        android:layout_height="50dp"/>
+                    app:layout_constraintTop_toTopOf="@+id/qrBg"
+                    app:line_color="@android:color/transparent" />
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:indeterminateTint="@color/yellow"
+                    app:layout_constraintBottom_toBottomOf="@+id/rq"
+                    app:layout_constraintEnd_toEndOf="@+id/rq"
+                    app:layout_constraintStart_toStartOf="@+id/rq"
+                    app:layout_constraintTop_toTopOf="@+id/rq" />
 
                 <com.didchain.didcard.view.SquareImageView
                     android:id="@+id/lock"
@@ -159,9 +161,9 @@
                     isVisible="@{viewModel.showLock}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/home_lock_des"
                     android:textColor="@color/color_9b9c9f"
-                    android:layout_marginBottom="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/lock"
                     app:layout_constraintEnd_toEndOf="@+id/lock"
                     app:layout_constraintStart_toStartOf="@+id/lock" />

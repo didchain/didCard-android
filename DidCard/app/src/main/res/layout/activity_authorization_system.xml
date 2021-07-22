@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.didchain.didcard.ui.authorizationManager.AuthorizationSystemViewModel" />
@@ -13,54 +14,56 @@
         android:layout_height="match_parent">
 
         <include
+            android:id="@+id/titleLayout"
             layout="@layout/title_layout"
-            app:viewModel="@{viewModel}"
-            android:id="@+id/titleLayout" />
+            app:viewModel="@{viewModel}" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/add"
             android:layout_width="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleLayout"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start"
             android:layout_marginTop="18dp"
+            android:layout_marginEnd="@dimen/margin_end"
             app:cardCornerRadius="8dp"
             app:cardUseCompatPadding="true"
-            android:layout_marginEnd="@dimen/margin_end"
-            android:layout_height="wrap_content"
-            >
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleLayout">
+
             <TextView
-                android:layout_width="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/authorizationServices"
-                android:layout_marginStart="@dimen/margin_start"
-                android:text="@string/authorization_system_add"
-                android:textSize="16sp"
                 onClickCommand="@{viewModel.clickAdd}"
-                android:gravity="center_vertical"
-                android:drawablePadding="3dp"
-                android:textColor="@color/color_0c123d"
-                android:layout_marginEnd="@dimen/margin_end"
+                android:layout_width="match_parent"
                 android:layout_height="56dp"
-                app:drawableStartCompat="@drawable/authorization_manager_add" />
+                android:layout_marginStart="@dimen/margin_start"
+                android:layout_marginEnd="@dimen/margin_end"
+                android:drawablePadding="3dp"
+                android:gravity="center_vertical"
+                android:text="@string/authorization_system_add"
+                android:textColor="@color/color_0c123d"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/authorization_manager_add"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/authorizationServices" />
         </androidx.cardview.widget.CardView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="18dp"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/margin_start"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="@dimen/margin_end"
             android:overScrollMode="never"
             app:itemAnimator="@null"
             app:itemBinding="@{viewModel.itemBinding}"
             app:items="@{viewModel.items}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_height="0dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

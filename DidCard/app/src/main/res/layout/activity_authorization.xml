@@ -16,9 +16,9 @@
         tools:ignore="MissingConstraints">
 
         <include
+            android:id="@+id/titleLayout"
             layout="@layout/title_layout"
-            app:viewModel="@{viewModel}"
-            android:id="@+id/titleLayout" />
+            app:viewModel="@{viewModel}" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardAddress"
@@ -70,15 +70,15 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/serviceList"
                 android:layout_width="match_parent"
-                android:overScrollMode="never"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/button_height"
-                android:layout_height="wrap_content" />
+                android:overScrollMode="never" />
 
             <TextView
                 android:id="@+id/add"
                 style="@style/YellowButtonStyle"
-                android:layout_gravity="bottom"
                 android:layout_width="match_parent"
+                android:layout_gravity="bottom"
                 android:text="@string/authorization_add" />
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

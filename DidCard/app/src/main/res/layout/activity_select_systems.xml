@@ -3,18 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-    <variable
-        name="viewModel"
-        type="com.didchain.didcard.ui.authorizationManager.SelectSystemsViewModel" />
+
+        <variable
+            name="viewModel"
+            type="com.didchain.didcard.ui.authorizationManager.SelectSystemsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <include
+            android:id="@+id/titleLayout"
             layout="@layout/title_layout"
-            app:viewModel="@{viewModel}"
-            android:id="@+id/titleLayout" />
+            app:viewModel="@{viewModel}" />
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="0dp"

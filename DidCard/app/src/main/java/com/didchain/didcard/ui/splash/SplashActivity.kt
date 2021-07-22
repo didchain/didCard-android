@@ -2,6 +2,7 @@ package com.didchain.didcard.ui.splash
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import com.didchain.android.lib.base.BaseActivity
 import com.didchain.didcard.BR
 import com.didchain.didcard.Constants
@@ -22,13 +23,14 @@ import org.koin.core.component.KoinApiExtension
  */
 @KoinApiExtension
 class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
+    private val mHandler : Handler by lazy { Handler(Looper.getMainLooper()) }
     var sureAuthority : Boolean by SharedPref(this, Constants.KEY_SURE_AUTHORITY, false)
     override val mViewModel: SplashViewModel by viewModel()
 
     override fun getLayoutId(savedInstanceState: Bundle?): Int = R.layout.activity_splash
 
     override fun initView() {
-        Handler(mainLooper).postDelayed({
+        mHandler.postDelayed({
             if (mViewModel.hasAccount) {
                 mViewModel.loadCard()
             } else {
@@ -61,4 +63,8 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
     override fun initVariableId(): Int = BR.viewModel
 
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mHandler.removeCallbacksAndMessages(null)
+    }
 }
