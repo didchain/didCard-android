@@ -2,6 +2,7 @@ package com.didchain.didcard.ui.my
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseViewModel
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
@@ -49,7 +50,7 @@ class MyViewModel : BaseViewModel(), KoinComponent {
     }
 
     fun getId() {
-        MainScope().launch {
+        rxLifeScope.launch {
             did.set(model.getIDCard()?.did)
         }
     }

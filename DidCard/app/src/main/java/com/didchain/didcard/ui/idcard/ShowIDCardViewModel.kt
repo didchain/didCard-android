@@ -2,6 +2,7 @@ package com.didchain.didcard.ui.idcard
 
 import android.text.TextUtils
 import androidx.databinding.ObservableField
+import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseViewModel
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
@@ -44,7 +45,7 @@ class ShowIDCardViewModel : BaseViewModel() {
 
     fun saveIDCard() {
         if (!TextUtils.isEmpty(qrJson)) {
-            MainScope().launch {
+            rxLifeScope.launch {
                 withContext(Dispatchers.IO) {
                     val isSave = BitmapUtils.saveBitmapToAlbum(context(), BitmapUtils.stringToQRBitmap(qrJson), context().getString(R.string.qr_name))
                     if (isSave) {
@@ -60,7 +61,7 @@ class ShowIDCardViewModel : BaseViewModel() {
     }
 
     init {
-        MainScope().launch {
+        rxLifeScope.launch {
             idCard.set(IDCardUtils.getId(context()))
             val cardPath = IDCardUtils.getIDCardPath(context())
             val cardBean = IDCardUtils.loadIDCardByPath(cardPath)

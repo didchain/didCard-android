@@ -42,7 +42,7 @@ class MainViewModel : BaseViewModel(), KoinComponent {
     }
 
     fun getId() {
-        MainScope().launch {
+        rxLifeScope.launch {
             id.set(IDCardUtils.getId(context()))
         }
     }
@@ -69,7 +69,7 @@ class MainViewModel : BaseViewModel(), KoinComponent {
             }
             showDialog()
 
-            MainScope().launch {
+            rxLifeScope.launch {
                 try {
                     val result = model.verify(id.get()!!, randomToken, authUrl, currentAccount)
                     dismissDialog()

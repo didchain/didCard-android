@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.lifecycle.Observer
+import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseActivity
 import com.didchain.android.lib.utils.toast
 import com.didchain.didcard.BR
@@ -77,7 +78,7 @@ class SaveAccountActivity : BaseActivity<SaveAccountViewModel, ActivitySaveAccou
 
     @AfterPermissionGranted(Constants.CODE_WRITE_EXTERNAL_PERMISSION)
     fun saveCard() {
-        MainScope().launch {
+        rxLifeScope.launch {
             val card = IDCardUtils.loadIDCardJson(IDCardUtils.getIDCardPath(this@SaveAccountActivity))
             mViewModel.saveCard2Album(card)
         }

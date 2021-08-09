@@ -3,6 +3,7 @@ package com.didchain.didcard.ui.guide
 import androidgolib.Androidgolib
 import com.didchain.didcard.utils.CommonSchedulers
 import com.didchain.didcard.utils.IDCardUtils
+import com.rxlife.coroutine.RxLifeScope
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleOnSubscribe
 import kotlinx.coroutines.MainScope
@@ -17,7 +18,7 @@ class GuideModel {
 
     fun loadCard(path: String): Single<Boolean> {
         return Single.create(SingleOnSubscribe<Boolean> { emitter ->
-            MainScope().launch {
+            RxLifeScope().launch {
                 val idCardJson = IDCardUtils.loadIDCardJson(path)
                 val loadResult = Androidgolib.loadCard(idCardJson)
                 emitter.onSuccess(loadResult)

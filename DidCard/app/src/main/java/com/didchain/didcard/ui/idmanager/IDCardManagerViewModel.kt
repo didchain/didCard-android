@@ -1,5 +1,6 @@
 package com.didchain.didcard.ui.idmanager
 
+import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseViewModel
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
@@ -49,7 +50,7 @@ class IDCardManagerViewModel : BaseViewModel() {
     })
 
     fun saveIDCard() {
-        MainScope().launch {
+        rxLifeScope.launch {
             withContext(Dispatchers.IO) {
                 val cardPath = IDCardUtils.getIDCardPath(context())
                 val cardBean = IDCardUtils.loadIDCardByPath(cardPath)

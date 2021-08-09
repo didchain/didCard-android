@@ -4,6 +4,7 @@ import androidgolib.Androidgolib
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
+import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseViewModel
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
@@ -59,7 +60,7 @@ class HomeViewModel : BaseViewModel(), KoinComponent {
             items.add(HomeItemViewModel(this, ServiceBean(DidCardApp.instance.getString(itemTitles[index]), itemIcons[index])))
         }
 
-        MainScope().launch {
+        rxLifeScope.launch {
             cardBean = model.getIDCard()
             id.set(cardBean?.did)
             if (Androidgolib.isOpen()) {

@@ -16,6 +16,7 @@ import com.didchain.didcard.provider.context
 import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import com.orhanobut.logger.Logger
+import com.rxlife.coroutine.RxLifeScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -43,7 +44,7 @@ object IDCardUtils {
         if (file.exists()) {
             file.delete()
         }
-        MainScope().launch {
+        RxLifeScope().launch {
             withContext(Dispatchers.IO) {
                 val encryptedFile = getEncryptedFile(path)
                 saveIDCard(encryptedFile, data)

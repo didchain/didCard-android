@@ -1,5 +1,6 @@
 package com.didchain.didcard.ui.saveaccount
 
+import androidx.lifecycle.rxLifeScope
 import com.didchain.android.lib.base.BaseViewModel
 import com.didchain.android.lib.command.BindingAction
 import com.didchain.android.lib.command.BindingCommand
@@ -40,7 +41,7 @@ class SaveAccountViewModel : BaseViewModel() {
     })
 
     fun saveCard2Album(data: String) {
-        MainScope().launch {
+        rxLifeScope.launch {
             withContext(Dispatchers.IO) {
                 val isSave = BitmapUtils.saveBitmapToAlbum(context(), BitmapUtils.stringToQRBitmap(data), context().getString(R.string.qr_name))
                 if (isSave) {
