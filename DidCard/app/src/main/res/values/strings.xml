@@ -1,7 +1,7 @@
 <resources>
     <!--    common-->
-    <string name="app_name">易ID</string>
-    <string name="qr_name">EASY_ID.png</string>
+    <string name="app_name">身份证试点</string>
+    <string name="qr_name">id.png</string>
     <string name="create_account">创建账号</string>
     <string name="sure">确定</string>
     <string name="delete">删除</string>
@@ -106,7 +106,7 @@
     <string name="home_lock_des">身份证二维码被锁定请输入密码解锁</string>
     <string name="home_location">正在定位…</string>
 
-    <string name="create_account_tip">提示：\n易ID身份系统，创建时无需网络无需验证，\n无密码找回功能</string>
+    <string name="create_account_tip">提示：\n身份证试点 系统，创建时无需网络无需验证，\n无密码找回功能</string>
     <string name="import_success">身份证导入成功</string>
     <string name="export_success">身份证导出成功</string>
     <string name="home_unlock">解锁</string>
